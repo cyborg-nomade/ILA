@@ -50,6 +50,7 @@ import DeleteModal from "./modals/DeleteModal";
 import _ from "lodash";
 import LoadingModal from "./modals/LoadingModal";
 import { usePrompt } from "../../shared/hooks/prompt-hook";
+import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 
 type onSubmitFn = (item: Case) => void;
 
@@ -69,6 +70,7 @@ const CaseForm = (props: {
     const [message, setMessage] = useState("");
     const [isEditing, setIsEditing] = useState(props.new || false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showInvalidFieldsModal, setShowInvalidFieldsModal] = useState(false);
     const [formIsValid, setFormIsValid] = useState(true);
     const [isFormAllTouched, setIsFormAllTouched] = useState({
         "0": true,
@@ -307,6 +309,8 @@ const CaseForm = (props: {
                 "15": true,
             });
             setFormIsValid(false);
+
+            setShowInvalidFieldsModal(true);
         }
         // props.onSendToApprovalSubmit!(item);
     };
@@ -366,6 +370,12 @@ const CaseForm = (props: {
                     )}
                 </React.Fragment>
             </DeleteModal>
+            <InvalidFieldsModal
+                onHideInvalidFieldsModal={() =>
+                    setShowInvalidFieldsModal(false)
+                }
+                showInvalidFieldsModal={showInvalidFieldsModal}
+            />
             {methods.getValues().comentarioReprovacao && props.reprovado && (
                 <Alert variant="danger">
                     Este processo foi reprovado pelo seguinte motivo:{" "}

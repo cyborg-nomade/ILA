@@ -20,6 +20,7 @@ import {
 } from "../../../shared/models/case-helpers/case-helpers.model";
 import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
 import Section7FormRowSub from "./Section7FormRowSub";
+import { AiFillQuestionCircle } from "react-icons/ai";
 
 const Section7FormRow = (props: {
     tooltip?: JSX.Element;
@@ -81,7 +82,17 @@ const Section7FormRow = (props: {
                             </Tooltip>
                         }
                     >
-                        <Form.Label as={Col}>{props.itemRef.title}</Form.Label>
+                        <Form.Label as={Col}>
+                            {props.itemRef.title}{" "}
+                            {props.itemRef.number === "7.1.1" ||
+                            props.itemRef.number === "7.1.2" ||
+                            props.itemRef.number === "7.1.3" ||
+                            props.itemRef.number === "7.1.4" ? (
+                                <AiFillQuestionCircle />
+                            ) : (
+                                ""
+                            )}
+                        </Form.Label>
                     </OverlayTrigger>
                 ) : (
                     <Form.Label as={Col}>{props.itemRef.title}</Form.Label>

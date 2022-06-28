@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Controller, UseFormReturn } from "react-hook-form";
+import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,22 +16,21 @@ const Section3FormRow = (props: {
     radioCheckedHandler: (radioChackedName: string) => void;
     isNew: boolean;
 }) => {
-    const { getValues } = props.methods;
-    const [atua, setAtua] = useState("INVALID");
+    const fasesCicloTratamentoObjeto = useWatch({
+        name: "fasesCicloTratamento",
+        control: props.methods.control,
+    });
+
+    const [atua, setAtua] = useState(props.isNew ? "INVALID" : "NÃO");
 
     useEffect(() => {
-        const values = getValues();
-        for (const value of Object.values(values.fasesCicloTratamento)) {
-            if (value) {
+        for (const value of Object.values(fasesCicloTratamentoObjeto)) {
+            if (value === true) {
                 setAtua("SIM");
-            } else if (props.isNew) {
-                setAtua("INVALID");
-            } else {
-                setAtua("NÃO");
             }
         }
         return () => {};
-    }, [getValues, props.isNew]);
+    }, [fasesCicloTratamentoObjeto, props.isNew]);
 
     const handleTrataRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.currentTarget.value === "SIM") {

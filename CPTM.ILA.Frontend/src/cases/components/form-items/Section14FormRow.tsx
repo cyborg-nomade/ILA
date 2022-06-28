@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -6,7 +6,10 @@ import Col from "react-bootstrap/Col";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 
-import { emptyItemContratoTI } from "../../../shared/models/case-helpers/case-helpers.model";
+import {
+    emptyItemContratoTI,
+    itemContratoTI,
+} from "../../../shared/models/case-helpers/case-helpers.model";
 import { CaseIndexDictionary } from "../../../shared/models/case-index.dictionary";
 import { Case } from "../../../shared/models/cases.model";
 import CreateCommentBox from "./../../../threads-comments/components/CreateCommentBox";
@@ -25,6 +28,17 @@ const Section14FormRow = (props: {
 
     const [trata, setTrata] = useState("INVALID");
 
+    useEffect(() => {
+        if (fields && fields.length > 0) {
+            setTrata("SIM");
+        } else if (props.isNew) {
+            setTrata("INVALID");
+        } else {
+            setTrata("NÃO");
+        }
+        return () => {};
+    }, [fields, props.isNew]);
+
     const handleTrataRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTrata(event.currentTarget.value);
         if (event.currentTarget.value !== "INVALID") {
@@ -32,6 +46,9 @@ const Section14FormRow = (props: {
         }
         if (event.currentTarget.value === "NÃO") {
             props.methods.setValue("contratoServicosTITratamentoDados", []);
+        }
+        if (event.currentTarget.value === "SIM") {
+            append(emptyItemContratoTI());
         }
     };
 
@@ -101,6 +118,7 @@ const Section14FormRow = (props: {
                                 }`}
                                 name={`contratoServicosTITratamentoDados[${index}]`}
                                 methods={props.methods}
+                                disabled={props.disabled}
                             />
                             <Row className="justify-content-center">
                                 <ButtonGroup
@@ -110,6 +128,7 @@ const Section14FormRow = (props: {
                                 >
                                     <Button
                                         variant="primary"
+                                        disabled={props.disabled}
                                         onClick={() =>
                                             append(emptyItemContratoTI())
                                         }
@@ -118,6 +137,7 @@ const Section14FormRow = (props: {
                                     </Button>
                                     <Button
                                         variant="danger"
+                                        disabled={props.disabled}
                                         onClick={() => remove(index)}
                                     >
                                         -

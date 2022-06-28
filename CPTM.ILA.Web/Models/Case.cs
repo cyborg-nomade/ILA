@@ -58,15 +58,15 @@ namespace CPTM.ILA.Web.Models
 
         public Case FillStandardValues()
         {
-            Controlador = new AgenteTratamento()
-            {
-                Area = "CPTM"
-            };
-            Encarregado = new AgenteTratamento()
-            {
-                Nome = "Olivia Shibata Nishiyama", Area = "Encarregado de Dados (DPO)",
-                Telefone = "+ 55 11 3117 – 7001", Email = "encarregado.dados@cptm.sp.gov.br"
-            };
+            //Controlador = new AgenteTratamento()
+            //{
+            //    Area = "CPTM"
+            //};
+            //Encarregado = new AgenteTratamento()
+            //{
+            //    Nome = "Olivia Shibata Nishiyama", Area = "Encarregado de Dados (DPO)",
+            //    Telefone = "+ 55 11 3117 – 7001", Email = "encarregado.dados@cptm.sp.gov.br"
+            //};
             FinalidadeTratamento.DescricaoFinalidade =
                 "Atendimento de finalidade pública, na persecução do interesse público, com o objetivo de executar as competências legais ou cumprir as atribuições legais do serviço público.";
             return this;

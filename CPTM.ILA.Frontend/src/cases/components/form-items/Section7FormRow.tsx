@@ -65,6 +65,9 @@ const Section7FormRow = (props: {
         if (event.currentTarget.value === "NÃO") {
             props.methods.setValue(props.name, []);
         }
+        if (event.currentTarget.value === "SIM") {
+            append(emptyItemCategoriaDadosPessoais());
+        }
     };
 
     return (

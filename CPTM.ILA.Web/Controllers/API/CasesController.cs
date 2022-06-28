@@ -1067,7 +1067,7 @@ namespace CPTM.ILA.Web.Controllers.API
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
                     message = $"Processo ID {responseCase.Id} - {responseCase.Nome} registrado com sucesso!",
-                    caseToSave = responseCase
+                    caseToSave = responseCase, savedCase = caseToSave
                 });
             }
             catch (Exception e)
@@ -1553,7 +1553,7 @@ namespace CPTM.ILA.Web.Controllers.API
                 return Request.CreateResponse(HttpStatusCode.OK, new
                 {
                     message = $"Processo ID {responseCase.Id} - {responseCase.Nome} alterado com sucesso!",
-                    caseToSave = responseCase
+                    caseToSave = responseCase, savedCase = caseToSave
                 });
             }
             catch (Exception e)

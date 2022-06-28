@@ -118,6 +118,24 @@ const getFirstError = (errors: FieldErrors<Case>) => {
                                         );
 
                                         return `${level1Key}.${level2Key}.${level3Key}[${index}].${level4Key}` as keyof typeof errors;
+                                    } else {
+                                        for (const [
+                                            level5Key,
+                                            level5Value,
+                                        ] of Object.entries(
+                                            level4Value as object
+                                        )) {
+                                            if (
+                                                (level5Value as FieldError).type
+                                            ) {
+                                                console.log(
+                                                    "level5Key returned: ",
+                                                    `${level1Key}.${level2Key}.${level3Key}[${index}].${level4Key}.${level5Key}`
+                                                );
+
+                                                return `${level1Key}.${level2Key}.${level3Key}[${index}].${level4Key}.${level5Key}` as keyof typeof errors;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -127,6 +145,8 @@ const getFirstError = (errors: FieldErrors<Case>) => {
             }
         }
     }
+
+    return "finalidadeTratamento.beneficiosEsperados" as keyof typeof errors;
 };
 
 const CaseForm = (props: {
@@ -245,6 +265,7 @@ const CaseForm = (props: {
         transferenciaInternacional: false,
         contratoServicosTITratamentoDados: false,
     });
+    const [shouldFocusError, setShouldFocusError] = useState(false);
 
     const { token, tokenExpirationDate, user, changeGroup } =
         useContext(AuthContext);
@@ -417,12 +438,13 @@ const CaseForm = (props: {
         const firstError = getFirstError(errors);
         console.log("firstError: ", firstError);
 
-        if (firstError && !showInvalidFieldsModal) {
+        if (firstError && !showInvalidFieldsModal && shouldFocusError) {
             setFocus(firstError);
+            setShouldFocusError(false);
         }
 
         return () => {};
-    }, [errors, setFocus, showInvalidFieldsModal]);
+    }, [errors, setFocus, shouldFocusError, showInvalidFieldsModal]);
 
     return (
         <React.Fragment>
@@ -467,7 +489,8 @@ const CaseForm = (props: {
             </DeleteModal>
             <InvalidFieldsModal
                 onHideInvalidFieldsModal={() => {
-                    return setShowInvalidFieldsModal(false);
+                    setShowInvalidFieldsModal(false);
+                    setShouldFocusError(true);
                 }}
                 showInvalidFieldsModal={showInvalidFieldsModal}
             />

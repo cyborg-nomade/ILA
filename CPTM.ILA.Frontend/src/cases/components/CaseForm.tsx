@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import {
+    Controller,
+    useFieldArray,
+    useForm,
+    FieldError,
+    FieldErrors,
+} from "react-hook-form";
 import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -50,8 +56,78 @@ import DeleteModal from "./modals/DeleteModal";
 import _ from "lodash";
 import LoadingModal from "./modals/LoadingModal";
 import { usePrompt } from "../../shared/hooks/prompt-hook";
+import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 
 type onSubmitFn = (item: Case) => void;
+
+const getFirstError = (errors: FieldErrors<Case>) => {
+    console.log("made it into the function", errors);
+
+    for (const [level1Key, level1Value] of Object.entries(errors)) {
+        console.log("made it into the first loop", level1Key, level1Value);
+        if ((level1Value as FieldError).type) {
+            console.log("level1Key returned: ", level1Key);
+
+            return level1Key as keyof typeof errors;
+        } else {
+            for (const [level2Key, level2Value] of Object.entries(
+                level1Value
+            )) {
+                console.log(
+                    "made it into the 2nd loop",
+                    level2Key,
+                    level2Value
+                );
+                if ((level2Value as FieldError).type) {
+                    console.log(
+                        "level2Key returned: ",
+                        `${level1Key}.${level2Key}`
+                    );
+                    return `${level1Key}.${level2Key}` as keyof typeof errors;
+                } else {
+                    for (const [level3Key, level3Value] of Object.entries(
+                        level2Value
+                    )) {
+                        console.log(
+                            "made it into the 3rd loop",
+                            level3Key,
+                            level3Value
+                        );
+
+                        if ((level3Value as FieldError).type) {
+                            console.log(
+                                "level3Key returned: ",
+                                `${level1Key}.${level2Key}.${level3Key}`
+                            );
+                            return `${level1Key}.${level2Key}.${level3Key}` as keyof typeof errors;
+                        } else if (Array.isArray(level3Value)) {
+                            for (
+                                let index = 0;
+                                index < level3Value.length;
+                                index++
+                            ) {
+                                const element = level3Value[index];
+                                for (const [
+                                    level4Key,
+                                    level4Value,
+                                ] of Object.entries(element)) {
+                                    if ((level4Value as FieldError).type) {
+                                        console.log(
+                                            "level4Key returned: ",
+                                            `${level1Key}.${level2Key}.${level3Key}[${index}].${level4Key}`
+                                        );
+
+                                        return `${level1Key}.${level2Key}.${level3Key}[${index}].${level4Key}` as keyof typeof errors;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+};
 
 const CaseForm = (props: {
     item: Case;
@@ -69,6 +145,7 @@ const CaseForm = (props: {
     const [message, setMessage] = useState("");
     const [isEditing, setIsEditing] = useState(props.new || false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showInvalidFieldsModal, setShowInvalidFieldsModal] = useState(false);
     const [formIsValid, setFormIsValid] = useState(true);
     const [isFormAllTouched, setIsFormAllTouched] = useState({
         "0": true,
@@ -188,8 +265,14 @@ const CaseForm = (props: {
             },
             encarregado: dpo,
         },
+        shouldFocusError: true,
     });
-    const { reset, getValues } = methods;
+    const {
+        reset,
+        getValues,
+        setFocus,
+        formState: { errors },
+    } = methods;
     useEffect(
         () =>
             reset({
@@ -307,6 +390,8 @@ const CaseForm = (props: {
                 "15": true,
             });
             setFormIsValid(false);
+
+            setShowInvalidFieldsModal(true);
         }
         // props.onSendToApprovalSubmit!(item);
     };
@@ -324,6 +409,20 @@ const CaseForm = (props: {
         minutes,
         props.onSaveProgressSubmit,
     ]);
+
+    // handle error focus
+    useEffect(() => {
+        console.log("new error");
+        console.log("errors: ", errors);
+        const firstError = getFirstError(errors);
+        console.log("firstError: ", firstError);
+
+        if (firstError && !showInvalidFieldsModal) {
+            setFocus(firstError);
+        }
+
+        return () => {};
+    }, [errors, setFocus, showInvalidFieldsModal]);
 
     return (
         <React.Fragment>
@@ -366,6 +465,12 @@ const CaseForm = (props: {
                     )}
                 </React.Fragment>
             </DeleteModal>
+            <InvalidFieldsModal
+                onHideInvalidFieldsModal={() => {
+                    return setShowInvalidFieldsModal(false);
+                }}
+                showInvalidFieldsModal={showInvalidFieldsModal}
+            />
             {methods.getValues().comentarioReprovacao && props.reprovado && (
                 <Alert variant="danger">
                     Este processo foi reprovado pelo seguinte motivo:{" "}
@@ -1286,14 +1391,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.nome"
                                         render={({
@@ -1324,14 +1431,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.area"
                                         render={({
@@ -1362,14 +1471,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.telefone"
                                         render={({
@@ -1400,14 +1511,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.email"
                                         render={({

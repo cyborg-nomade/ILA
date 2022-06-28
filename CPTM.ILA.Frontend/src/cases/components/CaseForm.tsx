@@ -1391,14 +1391,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.nome"
                                         render={({
@@ -1429,14 +1431,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.area"
                                         render={({
@@ -1467,14 +1471,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.telefone"
                                         render={({
@@ -1505,14 +1511,16 @@ const CaseForm = (props: {
                                 </Col>
                                 <Col>
                                     <Controller
-                                        rules={
-                                            hasOperador === "SIM"
-                                                ? {
-                                                      required: true,
-                                                      maxLength: 250,
-                                                  }
-                                                : {}
-                                        }
+                                        rules={{
+                                            validate: {
+                                                required: () => {
+                                                    if (hasOperador === "SIM")
+                                                        return false;
+                                                    return true;
+                                                },
+                                            },
+                                            maxLength: 250,
+                                        }}
                                         control={methods.control}
                                         name="operador.email"
                                         render={({

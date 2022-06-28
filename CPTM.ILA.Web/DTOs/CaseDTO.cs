@@ -53,7 +53,7 @@ namespace CPTM.ILA.Web.DTOs
         public ICollection<ItemCompartilhamentoDados> CompartilhamentoDadosPessoais { get; set; }
         public ICollection<ItemMedidaSegurancaPrivacidade> MedidasSegurancaPrivacidade { get; set; }
         public ICollection<ItemTransferenciaInternacional> TransferenciaInternacional { get; set; }
-        public ICollection<ItemContratoTi> ContratoServicosTi { get; set; }
+        public ICollection<ItemContratoTi> ContratoServicosTITratamentoDados { get; set; }
         public ICollection<ItemRiscoPrivacidade> RiscosPrivacidade { get; set; }
         public ICollection<ItemObservacoesProcesso> ObservacoesProcesso { get; set; }
 
@@ -244,7 +244,7 @@ namespace CPTM.ILA.Web.DTOs
                 CategoriasTitulares = fullCase.CategoriasTitulares,
                 ComentarioReprovacao = fullCase.ComentarioReprovacao,
                 CompartilhamentoDadosPessoais = fullCase.CompartilhamentoDadosPessoais,
-                ContratoServicosTi = fullCase.ContratoServicosTi,
+                ContratoServicosTITratamentoDados = fullCase.ContratoServicosTi,
                 Controlador = fullCase.Controlador,
                 DadosPessoaisSensiveis = fullCase.DadosPessoaisSensiveis,
                 Nome = fullCase.Nome,
@@ -294,7 +294,7 @@ namespace CPTM.ILA.Web.DTOs
                 CategoriasTitulares = caseDto.CategoriasTitulares,
                 ComentarioReprovacao = caseDto.ComentarioReprovacao,
                 CompartilhamentoDadosPessoais = caseDto.CompartilhamentoDadosPessoais,
-                ContratoServicosTi = caseDto.ContratoServicosTi,
+                ContratoServicosTi = caseDto.ContratoServicosTITratamentoDados,
                 Controlador = caseDto.Controlador,
                 DadosPessoaisSensiveis = caseDto.DadosPessoaisSensiveis,
                 DataAtualizacao = caseDto.DataAtualizacao,

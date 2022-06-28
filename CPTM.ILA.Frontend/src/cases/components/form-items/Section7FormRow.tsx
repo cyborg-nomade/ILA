@@ -33,8 +33,6 @@ const Section7FormRow = (props: {
     radioCheckedHandler: (radioChackedName: string) => void;
     isNew: boolean;
 }) => {
-    const { getValues } = props.methods;
-
     const { fields, append, remove } = useFieldArray({
         control: props.methods.control, // control props comes from useForm
         name: props.name as FieldArrayPath<Case>, // unique name for your Field Array
@@ -43,11 +41,7 @@ const Section7FormRow = (props: {
     const [trata, setTrata] = useState("INVALID");
 
     useEffect(() => {
-        const categoriaArrayUseEffect: itemCategoriaDadosPessoais[] = getValues(
-            props.name
-        ) as itemCategoriaDadosPessoais[];
-
-        if (categoriaArrayUseEffect && categoriaArrayUseEffect.length > 0) {
+        if (fields && fields.length > 0) {
             setTrata("SIM");
         } else if (props.isNew) {
             setTrata("INVALID");
@@ -55,7 +49,7 @@ const Section7FormRow = (props: {
             setTrata("NÃO");
         }
         return () => {};
-    }, [getValues, props.isNew, props.name]);
+    }, [fields, props.isNew, props.name]);
 
     const handleTrataRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTrata(event.currentTarget.value);
@@ -167,6 +161,7 @@ const Section7FormRow = (props: {
                                 >
                                     <Button
                                         variant="primary"
+                                        disabled={props.disabled}
                                         onClick={() =>
                                             append(
                                                 emptyItemCategoriaDadosPessoais()
@@ -177,6 +172,7 @@ const Section7FormRow = (props: {
                                     </Button>
                                     <Button
                                         variant="danger"
+                                        disabled={props.disabled}
                                         onClick={() => remove(index)}
                                     >
                                         -

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -7,7 +7,10 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 
 import { Case } from "../../../shared/models/cases.model";
-import { emptyItemTransferenciaInternacional } from "../../../shared/models/case-helpers/case-helpers.model";
+import {
+    emptyItemTransferenciaInternacional,
+    itemTransferenciaInternacional,
+} from "../../../shared/models/case-helpers/case-helpers.model";
 import { CaseIndexDictionary } from "../../../shared/models/case-index.dictionary";
 import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
 import Section13FormRowSub from "./Section13FormRowSub";
@@ -26,6 +29,17 @@ const Section13FormRow = (props: {
 
     const [trata, setTrata] = useState("INVALID");
 
+    useEffect(() => {
+        if (fields && fields.length > 0) {
+            setTrata("SIM");
+        } else if (props.isNew) {
+            setTrata("INVALID");
+        } else {
+            setTrata("NÃO");
+        }
+        return () => {};
+    }, [fields, props.isNew]);
+
     const handleTrataRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTrata(event.currentTarget.value);
         if (event.currentTarget.value !== "INVALID") {
@@ -33,6 +47,9 @@ const Section13FormRow = (props: {
         }
         if (event.currentTarget.value === "NÃO") {
             props.methods.setValue("transferenciaInternacional", []);
+        }
+        if (event.currentTarget.value === "SIM") {
+            append(emptyItemTransferenciaInternacional());
         }
     };
 
@@ -111,6 +128,7 @@ const Section13FormRow = (props: {
                                 >
                                     <Button
                                         variant="primary"
+                                        disabled={props.disabled}
                                         onClick={() =>
                                             append(
                                                 emptyItemTransferenciaInternacional()
@@ -121,6 +139,7 @@ const Section13FormRow = (props: {
                                     </Button>
                                     <Button
                                         variant="danger"
+                                        disabled={props.disabled}
                                         onClick={() => remove(index)}
                                     >
                                         -

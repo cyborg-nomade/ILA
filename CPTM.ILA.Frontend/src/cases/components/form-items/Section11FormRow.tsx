@@ -26,15 +26,11 @@ const Section11FormRow = (props: {
         name: "compartilhamentoDadosPessoais" as const, // unique name for your Field Array
     });
 
-    const [trata, setTrata] = useState("INVALID");
+    const [trata, setTrata] = useState(props.isNew ? "INVALID" : "NÃO");
 
     useEffect(() => {
         if (fields && fields.length > 0) {
             setTrata("SIM");
-        } else if (props.isNew) {
-            setTrata("INVALID");
-        } else {
-            setTrata("NÃO");
         }
         return () => {};
     }, [fields, props.isNew]);

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using RestSharp;
 
@@ -6,11 +7,14 @@ namespace CPTM.ILA.Web.Util
 {
     public class ItsmUtil
     {
-        private const string ItsmUrl = "https://10.200.77.162:8443/api/";
+        //homolog integration
+        //private const string ItsmUrl = "https://10.200.77.162:8443/api/";
+        //prod integration
+        private const string ItsmUrl = "https://10.200.175.89:8443/api/";
         private const string ApiLogin = "INTEGRACAO_CPTM_LGPD";
         private const string ApiPass = "INTEGRACAO_CPTM_LGPD";
 
-        public static async Task<bool> AbrirChamado(string username, string descricao, bool isDuvida)
+        public static async Task<bool> AbrirChamado(string username, string descricao, TipoChamado tipoChamado)
         {
             ServicePointManager.ServerCertificateValidationCallback +=
                 (sender, certificate, chain, sslPolicyErrors) => true;
@@ -21,9 +25,25 @@ namespace CPTM.ILA.Web.Util
             };
             //client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
 
-            var template = isDuvida
-                ? "INC AUT DUVIDA INVENTARIO LGPD AUTOMATIZADO"
-                : "INC AUT SOLICITACAO INVENTARIO LGPD AUTOMATIZADO";
+            var template = "";
+
+            switch (tipoChamado)
+            {
+                case TipoChamado.ACESSO_AO_SISTEMA:
+                    template = "INC AUT SOLICITACAO INVENTARIO LGPD AUTOMATIZADO";
+                    break;
+                case TipoChamado.DUVIDA:
+                    template = "INC AUT DUVIDA INVENTARIO LGPD AUTOMATIZADO";
+                    break;
+                case TipoChamado.ACESSO_A_GRUPOS:
+                    template = "INC AUT ACESSO GRUPO INVENTARIO LGPD AUTOMATIZADO";
+                    break;
+                case TipoChamado.ERRO:
+                    template = "INC AUT ERRO INVENTARIO LGPD AUTOMATIZADO";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(tipoChamado), tipoChamado, null);
+            }
 
 
             var loginRequest = new RestRequest(Method.POST);
@@ -58,5 +78,13 @@ namespace CPTM.ILA.Web.Util
 
             return enviado;
         }
+    }
+
+    public enum TipoChamado
+    {
+        DUVIDA,
+        ACESSO_A_GRUPOS,
+        ACESSO_AO_SISTEMA,
+        ERRO
     }
 }

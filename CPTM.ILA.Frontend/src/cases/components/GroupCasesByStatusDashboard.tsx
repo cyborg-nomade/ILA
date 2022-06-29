@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import Badge from "react-bootstrap/Badge";
@@ -308,7 +308,7 @@ const GroupCasesByStatusDashboard = () => {
                                         if (!user.isComite) {
                                             return navigate("../cases/edit");
                                         }
-                                        if (user.isComite && !user.isDPO) {
+                                        if (user.isComite) {
                                             return navigate("../cases/");
                                         }
                                     }}

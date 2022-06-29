@@ -5507,7 +5507,6 @@ const CaseForm = (props: {
                         </Button>
                         <Button
                             type="button"
-                            disabled={!methods.formState.isDirty}
                             variant="secondary"
                             className="ms-auto"
                             onClick={() =>
@@ -5518,7 +5517,6 @@ const CaseForm = (props: {
                         </Button>
                         <Button
                             type="button"
-                            disabled={!methods.formState.isDirty}
                             variant="warning"
                             onClick={() =>
                                 handleSendToApprovalClick(methods.getValues())
@@ -5636,9 +5634,6 @@ const CaseForm = (props: {
                         </Button>
                         <Button
                             type="button"
-                            disabled={_.isEmpty(
-                                methods.formState.touchedFields
-                            )}
                             variant="warning"
                             onClick={() =>
                                 handleSendToApprovalClick(methods.getValues())

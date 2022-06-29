@@ -23,7 +23,7 @@ const PendingCasesCounter = (props: { gid: number }) => {
                     }
                 );
 
-                const loadedTotals: number = responseData.totalPending;
+                const loadedTotals: number = responseData.totalInStatus;
                 console.log("groupCase pendingTotal: ", loadedTotals);
 
                 setPendingCasesCount(loadedTotals);

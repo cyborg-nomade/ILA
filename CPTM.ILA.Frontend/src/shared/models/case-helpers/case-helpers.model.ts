@@ -132,7 +132,7 @@ export interface CategoriaTitulares {
 }
 
 export const emptyCategoriaTitulares = (): CategoriaTitulares => ({
-    categorias: [],
+    categorias: [emptyItemCategoriaTitulares()],
     criancasAdolescentes: emptyItemCategoriaTitularesExtra(),
     outrosGruposVulneraveis: emptyItemCategoriaTitularesExtra(),
 });

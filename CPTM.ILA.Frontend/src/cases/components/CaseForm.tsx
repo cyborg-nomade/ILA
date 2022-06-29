@@ -4817,6 +4817,11 @@ const CaseForm = (props: {
                             <Accordion
                                 defaultActiveKey={formIsValid ? "" : "0"}
                                 alwaysOpen={!formIsValid}
+                                activeKey={
+                                    !formIsValid
+                                        ? ["90", "91", "92"]
+                                        : undefined
+                                }
                             >
                                 <Accordion.Item eventKey="90">
                                     <Accordion.Header>
@@ -4907,7 +4912,11 @@ const CaseForm = (props: {
                                                                     </Button>
                                                                     <Button
                                                                         disabled={
-                                                                            !isEditing
+                                                                            !isEditing ||
+                                                                            categoriasTitularesCategorias
+                                                                                .fields
+                                                                                .length <=
+                                                                                1
                                                                         }
                                                                         variant="danger"
                                                                         onClick={() =>

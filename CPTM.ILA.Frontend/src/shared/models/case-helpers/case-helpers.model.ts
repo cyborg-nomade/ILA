@@ -355,7 +355,7 @@ export interface radiosClicked {
 
 export const emptyRadiosClicked = (): radiosClicked => ({
     fasesCicloTratamento: statusRadios.INVALID,
-    "categoriaDadosPessoais.identificacao.idPessoal": statusRadios.NÃO,
+    "categoriaDadosPessoais.identificacao.idPessoal": statusRadios.INVALID,
     "categoriaDadosPessoais.identificacao.idGov": statusRadios.INVALID,
     "categoriaDadosPessoais.identificacao.idEletronica": statusRadios.INVALID,
     "categoriaDadosPessoais.identificacao.locEletronica": statusRadios.INVALID,

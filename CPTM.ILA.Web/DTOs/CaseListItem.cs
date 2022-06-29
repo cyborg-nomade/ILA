@@ -67,7 +67,7 @@ namespace CPTM.ILA.Web.DTOs
 
             if (selectedComiteMember == null)
             {
-                return "OLIVIA SHIBATA NISHIYAMA";
+                return "GRUPO SEM RESPONSÁVEL";
             }
 
             if (selectedComiteMember.OriginGroup.Nome == "LGPDTESTE")

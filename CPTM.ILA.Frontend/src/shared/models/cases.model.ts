@@ -9,6 +9,7 @@ import {
     emptyCategoriaTitulares,
     emptyFasesCicloTratamento,
     emptyFinalidadeTratamento,
+    emptyRadiosClicked,
     FasesCicloTratamento,
     FinalidadeTratamento,
     itemCompartilhamentoDados,
@@ -17,6 +18,7 @@ import {
     itemObservacoesProcesso,
     itemRiscoPrivacidade,
     itemTransferenciaInternacional,
+    radiosClicked,
 } from "./case-helpers/case-helpers.model";
 import {
     tipoAbrangenciaGeografica,
@@ -61,6 +63,7 @@ export interface BaseCase {
     contratoServicosTITratamentoDados: itemContratoTI[];
     riscosPrivacidade: itemRiscoPrivacidade[];
     observacoesProcesso: itemObservacoesProcesso[];
+    radiosClicked: radiosClicked;
 }
 
 export interface Case extends BaseCase {
@@ -105,6 +108,7 @@ export const emptyBaseCase = (): BaseCase => ({
     contratoServicosTITratamentoDados: [],
     riscosPrivacidade: [],
     observacoesProcesso: [],
+    radiosClicked: emptyRadiosClicked(),
 });
 
 export const emptyCase = (
@@ -163,4 +167,5 @@ export const emptyCase = (
     contratoServicosTITratamentoDados: [],
     riscosPrivacidade: [],
     observacoesProcesso: [],
+    radiosClicked: emptyRadiosClicked(),
 });

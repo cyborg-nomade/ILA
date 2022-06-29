@@ -7,6 +7,7 @@ using CPTM.ILA.Web.Models;
 using CPTM.ILA.Web.Models.CaseHelpers;
 using CPTM.ILA.Web.Models.CaseHelpers.Enums;
 using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 
 namespace CPTM.ILA.Web.DTOs
 {
@@ -56,6 +57,7 @@ namespace CPTM.ILA.Web.DTOs
         public ICollection<ItemContratoTi> ContratoServicosTITratamentoDados { get; set; }
         public ICollection<ItemRiscoPrivacidade> RiscosPrivacidade { get; set; }
         public ICollection<ItemObservacoesProcesso> ObservacoesProcesso { get; set; }
+        public RadiosClicked RadiosClicked { get; set; }
 
         public static CaseDTO ConvertToCaseDTO(Case fullCase)
         {

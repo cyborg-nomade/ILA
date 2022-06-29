@@ -122,3 +122,9 @@ export enum tipoTempoRetencao {
     maisQue30 = "Mais que 30 anos",
     na = "",
 }
+
+export enum statusRadios {
+    INVALID,
+    NÃO,
+    SIM,
+}

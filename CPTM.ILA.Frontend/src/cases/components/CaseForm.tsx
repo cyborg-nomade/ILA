@@ -334,7 +334,16 @@ const CaseForm = (props: {
     const toggleEnableOperador = (value: string) => {
         console.log("hasOperador: ", value);
         if (value === "NÃO") {
-            methods.clearErrors(["operador"]);
+            methods.clearErrors([
+                "operador.nome",
+                "operador.area",
+                "operador.telefone",
+                "operador.email",
+            ]);
+            methods.setValue("operador.nome", "");
+            methods.setValue("operador.area", "");
+            methods.setValue("operador.telefone", "");
+            methods.setValue("operador.email", "");
         }
         setHasOperador(value);
     };
@@ -1419,8 +1428,16 @@ const CaseForm = (props: {
                                     <Controller
                                         rules={{
                                             validate: {
-                                                required: () => {
-                                                    if (hasOperador === "SIM")
+                                                required: (value) => {
+                                                    console.log(
+                                                        "value, hasOperador: ",
+                                                        value,
+                                                        hasOperador
+                                                    );
+                                                    if (
+                                                        !value &&
+                                                        hasOperador === "SIM"
+                                                    )
                                                         return false;
                                                     return true;
                                                 },
@@ -1459,8 +1476,16 @@ const CaseForm = (props: {
                                     <Controller
                                         rules={{
                                             validate: {
-                                                required: () => {
-                                                    if (hasOperador === "SIM")
+                                                required: (value) => {
+                                                    console.log(
+                                                        "value, hasOperador: ",
+                                                        value,
+                                                        hasOperador
+                                                    );
+                                                    if (
+                                                        !value &&
+                                                        hasOperador === "SIM"
+                                                    )
                                                         return false;
                                                     return true;
                                                 },
@@ -1499,8 +1524,16 @@ const CaseForm = (props: {
                                     <Controller
                                         rules={{
                                             validate: {
-                                                required: () => {
-                                                    if (hasOperador === "SIM")
+                                                required: (value) => {
+                                                    console.log(
+                                                        "value, hasOperador: ",
+                                                        value,
+                                                        hasOperador
+                                                    );
+                                                    if (
+                                                        !value &&
+                                                        hasOperador === "SIM"
+                                                    )
                                                         return false;
                                                     return true;
                                                 },
@@ -1539,8 +1572,16 @@ const CaseForm = (props: {
                                     <Controller
                                         rules={{
                                             validate: {
-                                                required: () => {
-                                                    if (hasOperador === "SIM")
+                                                required: (value) => {
+                                                    console.log(
+                                                        "value, hasOperador: ",
+                                                        value,
+                                                        hasOperador
+                                                    );
+                                                    if (
+                                                        !value &&
+                                                        hasOperador === "SIM"
+                                                    )
                                                         return false;
                                                     return true;
                                                 },

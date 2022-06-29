@@ -1043,7 +1043,7 @@ namespace CPTM.ILA.Web.Controllers.API
                 if (!ModelState.IsValid)
                 {
                     return Request.CreateResponse(HttpStatusCode.BadRequest,
-                        new { message = "Objeto enviado não corresponde ao tipo CaseChange" });
+                        new { message = "Objeto enviado não corresponde ao tipo CaseChange", caseChange });
                 }
 
                 var caseToSave = CaseDTO.ConvertToDomainCase(caseChange.Case);

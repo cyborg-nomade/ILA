@@ -66,6 +66,7 @@ const ApproveCase = () => {
 
     const hideApproveHandler = () => {
         setShowApproveModal(false);
+        clearError();
     };
 
     const approveCaseHandler = async () => {
@@ -87,7 +88,6 @@ const ApproveCase = () => {
             setMessage(approveRespose.message);
         } catch (err) {
             console.log(err);
-            setFullCase(fullCase);
         }
     };
 
@@ -98,6 +98,7 @@ const ApproveCase = () => {
 
     const hideRepproveModalHandler = () => {
         setShowRepproveModal(false);
+        clearError();
     };
 
     const reproveCaseHandler = async (comentarioReprovado: string) => {
@@ -120,7 +121,6 @@ const ApproveCase = () => {
             setMessage(repproveResponse.message);
         } catch (err) {
             console.log(err);
-            setFullCase(fullCase);
         }
     };
 

@@ -362,6 +362,7 @@
     <Compile Include="DTOs\CaseHelpers\CategoriasDadosPessoais\Residenciais.cs" />
     <Compile Include="Models\CaseHelpers\Enums\CategoriaDadosPessoaisEnum.cs" />
     <Compile Include="Models\CaseHelpers\Enums\Pais.cs" />
+    <Compile Include="Models\CaseHelpers\Enums\StatusRadios.cs" />
     <Compile Include="Models\CaseHelpers\Enums\TipoTempoRetencao.cs" />
     <Compile Include="Models\CaseHelpers\CategoriasTitulares.cs" />
     <Compile Include="Models\CaseHelpers\ItemCategoriaTitularesExtra.cs" />

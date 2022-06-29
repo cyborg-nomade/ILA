@@ -307,7 +307,7 @@ namespace CPTM.ILA.Web.Controllers.API
 
             try
             {
-                var comiteMembersUsers = await _context.Users.Where(u => u.IsComite)
+                var comiteMembersUsers = await _context.Users.Where(u => u.IsComite && !u.IsDPO)
                     .ToListAsync();
 
                 var comiteMembers =

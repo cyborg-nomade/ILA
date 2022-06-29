@@ -65,7 +65,7 @@ namespace CPTM.ILA.Web.DTOs
 
             if (selectedComiteMember == null)
             {
-                return "OLIVIA SHIBATA NISHIYAMA";
+                return "GRUPO SEM RESPONSÁVEL";
             }
 
             var comiteMemberUserAd = Seguranca.ObterUsuario(selectedComiteMember.Username.ToUpper());

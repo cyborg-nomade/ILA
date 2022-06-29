@@ -76,15 +76,7 @@ const Section7FormRow = (props: {
                         }
                     >
                         <Form.Label as={Col}>
-                            {props.itemRef.title}{" "}
-                            {props.itemRef.number === "7.1.1" ||
-                            props.itemRef.number === "7.1.2" ||
-                            props.itemRef.number === "7.1.3" ||
-                            props.itemRef.number === "7.1.4" ? (
-                                <AiFillQuestionCircle />
-                            ) : (
-                                ""
-                            )}
+                            {props.itemRef.title} <AiFillQuestionCircle />
                         </Form.Label>
                     </OverlayTrigger>
                 ) : (

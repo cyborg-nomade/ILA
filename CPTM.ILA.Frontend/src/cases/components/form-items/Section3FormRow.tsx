@@ -15,8 +15,6 @@ import { AiFillQuestionCircle } from "react-icons/ai";
 const Section3FormRow = (props: {
     disabled: boolean;
     methods: UseFormReturn<Case>;
-    radioCheckedHandler: (radioChackedName: string) => void;
-    isNew: boolean;
 }) => {
     const handleTrataRadio = (status: statusRadios) => {
         if (status === statusRadios.NÃO) {

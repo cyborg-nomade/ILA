@@ -186,86 +186,7 @@ const CaseForm = (props: {
         "14": false,
         "15": false,
     });
-    const [hasOperador, setHasOperador] = useState(
-        props.item.operador.nome ||
-            props.item.operador.area ||
-            props.item.operador.telefone ||
-            props.item.operador.email
-            ? "SIM"
-            : "NÃO"
-    );
-    const [isAllRadioClicked, setIsAllRadioClicked] = useState({
-        fasesCicloTratamento: false,
-        "categoriaDadosPessoais.identificacao.idPessoal": false,
-        "categoriaDadosPessoais.identificacao.idGov": false,
-        "categoriaDadosPessoais.identificacao.idEletronica": false,
-        "categoriaDadosPessoais.identificacao.locEletronica": false,
-        "categoriaDadosPessoais.financeiros.idFin": false,
-        "categoriaDadosPessoais.financeiros.recursosFin": false,
-        "categoriaDadosPessoais.financeiros.dividasDespesas": false,
-        "categoriaDadosPessoais.financeiros.solvencia": false,
-        "categoriaDadosPessoais.financeiros.emprestimosHipotecaCredito": false,
-        "categoriaDadosPessoais.financeiros.assistenciaFin": false,
-        "categoriaDadosPessoais.financeiros.apoliceSeguro": false,
-        "categoriaDadosPessoais.financeiros.planoPensao": false,
-        "categoriaDadosPessoais.financeiros.transacaoFin": false,
-        "categoriaDadosPessoais.financeiros.compensacao": false,
-        "categoriaDadosPessoais.financeiros.atividadeProfissional": false,
-        "categoriaDadosPessoais.financeiros.acordosAjustes": false,
-        "categoriaDadosPessoais.financeiros.autorizacoesConsentimentos": false,
-        "categoriaDadosPessoais.caracteristicas.detalhesPessoais": false,
-        "categoriaDadosPessoais.caracteristicas.detalhesMilitares": false,
-        "categoriaDadosPessoais.caracteristicas.situacaoImigracao": false,
-        "categoriaDadosPessoais.caracteristicas.descricaoFisica": false,
-        "categoriaDadosPessoais.habitos.habitosPessoais": false,
-        "categoriaDadosPessoais.habitos.estiloVida": false,
-        "categoriaDadosPessoais.habitos.viagensDeslocamento": false,
-        "categoriaDadosPessoais.habitos.contatosSociais": false,
-        "categoriaDadosPessoais.habitos.posses": false,
-        "categoriaDadosPessoais.habitos.denunciasIncAcidentes": false,
-        "categoriaDadosPessoais.habitos.distincoes": false,
-        "categoriaDadosPessoais.habitos.usoMidia": false,
-        "categoriaDadosPessoais.caracteristicasPsicologicas.descricaoPsi":
-            false,
-        "categoriaDadosPessoais.composicaoFamiliar.casamentoCoabitacao": false,
-        "categoriaDadosPessoais.composicaoFamiliar.historicoConjugal": false,
-        "categoriaDadosPessoais.composicaoFamiliar.membrosFamilia": false,
-        "categoriaDadosPessoais.interessesLazer.atividadesInteressesLaz": false,
-        "categoriaDadosPessoais.associacoes.outrasAssNaoSensiveis": false,
-        "categoriaDadosPessoais.processoJudAdmCrim.suspeitas": false,
-        "categoriaDadosPessoais.processoJudAdmCrim.condenacoesSentencas": false,
-        "categoriaDadosPessoais.processoJudAdmCrim.acoesJud": false,
-        "categoriaDadosPessoais.processoJudAdmCrim.penalidadesAdm": false,
-        "categoriaDadosPessoais.habitosConsumo.dadosBensServicos": false,
-        "categoriaDadosPessoais.residenciais.dadosResidencia": false,
-        "categoriaDadosPessoais.educacaoTreinamento.academicosEscolares": false,
-        "categoriaDadosPessoais.educacaoTreinamento.registroFinanceiro": false,
-        "categoriaDadosPessoais.educacaoTreinamento.qualificacaoExperienciaProf":
-            false,
-        "categoriaDadosPessoais.profissaoEmprego.empregoAtual": false,
-        "categoriaDadosPessoais.profissaoEmprego.recrutamento": false,
-        "categoriaDadosPessoais.profissaoEmprego.rescisao": false,
-        "categoriaDadosPessoais.profissaoEmprego.carreira": false,
-        "categoriaDadosPessoais.profissaoEmprego.absenteismoDisciplina": false,
-        "categoriaDadosPessoais.profissaoEmprego.avaliacaoDesempenho": false,
-        "categoriaDadosPessoais.regVideoImgVoz.videoImagem": false,
-        "categoriaDadosPessoais.regVideoImgVoz.imagemVigilancia": false,
-        "categoriaDadosPessoais.regVideoImgVoz.voz": false,
-        "categoriaDadosPessoais.outros.outrosItems": false,
-        "catDadosPessoaisSensiveis.origemRacialEtnica": false,
-        "catDadosPessoaisSensiveis.conviccaoReligiosa": false,
-        "catDadosPessoaisSensiveis.opiniaoPolitica": false,
-        "catDadosPessoaisSensiveis.filiacaoSindicato": false,
-        "catDadosPessoaisSensiveis.filiacaoOrgReligiosa": false,
-        "catDadosPessoaisSensiveis.filiacaoCrencaFilosofica": false,
-        "catDadosPessoaisSensiveis.filiacaoPreferenciaPolitica": false,
-        "catDadosPessoaisSensiveis.saudeVidaSexual": false,
-        "catDadosPessoaisSensiveis.geneticos": false,
-        "catDadosPessoaisSensiveis.biometricos": false,
-        compartilhamentoDadosPessoais: false,
-        transferenciaInternacional: false,
-        contratoServicosTITratamentoDados: false,
-    });
+
     const [shouldFocusError, setShouldFocusError] = useState(false);
 
     const { token, tokenExpirationDate, user, changeGroup } =
@@ -348,12 +269,6 @@ const CaseForm = (props: {
         }
     };
 
-    const checkAllRadiosHandler = (radioCheckedName: string) => {
-        setIsAllRadioClicked((prevState) => {
-            return { ...prevState, [radioCheckedName]: true };
-        });
-    };
-
     const onStartEditing = () => {
         setIsEditing(true);
     };
@@ -389,19 +304,12 @@ const CaseForm = (props: {
                   return t && n;
               })
             : true;
-        const isAllRadioTouched =
-            props.new || props.continue
-                ? Object.values(isAllRadioClicked).reduce((t, n) => {
-                      return t && n;
-                  })
-                : true;
         const valid = await methods.trigger();
         console.log("valid: ", valid);
         console.log("isAllTouched", isAllTouched);
-        console.log("isAllRadioTouched", isAllRadioTouched);
         console.log("methods.formState.errors: ", methods.formState.errors);
 
-        if (valid && isAllTouched && isAllRadioTouched) {
+        if (valid && isAllTouched) {
             props.onSendToApprovalSubmit!(item);
         } else {
             setIsFormAllTouched({
@@ -426,7 +334,6 @@ const CaseForm = (props: {
 
             setShowInvalidFieldsModal(true);
         }
-        // props.onSendToApprovalSubmit!(item);
     };
 
     // handle auto-save
@@ -815,7 +722,7 @@ const CaseForm = (props: {
                                                     {
                                                         CaseIndexDictionary
                                                             .controlador.title
-                                                    }{" "}
+                                                    }
                                                     <AiFillQuestionCircle />
                                                 </Form.Label>
                                             </OverlayTrigger>
@@ -1878,12 +1785,6 @@ const CaseForm = (props: {
                                     <Section3FormRow
                                         disabled={!isEditing}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -2330,7 +2231,7 @@ const CaseForm = (props: {
                                                   ]
                                                 : undefined
                                         }
-                                        alwaysOpen={!formIsValid}
+                                        alwaysOpen={true}
                                     >
                                         <Accordion.Item eventKey="60">
                                             <Accordion.Header>
@@ -2419,14 +2320,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2452,14 +2345,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -2482,14 +2367,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2513,14 +2390,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -2601,14 +2470,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2639,14 +2500,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -2671,14 +2524,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2703,14 +2548,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -2740,14 +2577,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2771,14 +2600,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -2808,14 +2629,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2842,14 +2655,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -2878,14 +2683,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2911,14 +2708,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -2950,14 +2739,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -2983,14 +2764,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -3015,14 +2788,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -3102,14 +2867,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -3133,14 +2890,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -3170,14 +2919,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -3208,14 +2949,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -3294,14 +3027,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -3326,14 +3051,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -3359,14 +3076,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -3392,14 +3101,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -3420,14 +3121,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -3456,14 +3149,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -3485,14 +3170,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -3515,14 +3192,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -3600,14 +3269,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -3691,14 +3352,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -3725,14 +3378,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -3756,14 +3401,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -3840,14 +3477,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -3929,14 +3558,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -4023,14 +3644,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -4052,14 +3665,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -4084,14 +3689,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -4121,14 +3718,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -4207,14 +3796,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -4302,14 +3883,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -4392,14 +3965,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -4425,14 +3990,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -4462,14 +4019,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -4558,14 +4107,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -4595,14 +4136,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -4627,14 +4160,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -4659,14 +4184,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -4690,14 +4207,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -4724,14 +4233,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -4810,14 +4311,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -4841,14 +4334,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                                 <Section7FormRow
                                                     className="mb-3 pt-2 pb-2"
@@ -4872,14 +4357,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -4958,14 +4435,6 @@ const CaseForm = (props: {
                                                     }
                                                     systems={systems}
                                                     methods={methods}
-                                                    radioCheckedHandler={
-                                                        checkAllRadiosHandler
-                                                    }
-                                                    isNew={
-                                                        props.new ||
-                                                        props.continue ||
-                                                        false
-                                                    }
                                                 />
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -5039,12 +4508,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -5057,12 +4520,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 pt-2 pb-2"
@@ -5075,12 +4532,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -5093,12 +4544,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 pt-2 pb-2"
@@ -5111,12 +4556,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -5129,12 +4568,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 pt-2 pb-2"
@@ -5147,12 +4580,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -5165,12 +4592,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 pt-2 pb-2"
@@ -5183,12 +4604,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                     <Section7FormRow
                                         className="mb-3 bg-primary bg-opacity-10 pt-2 pb-2"
@@ -5201,12 +4616,6 @@ const CaseForm = (props: {
                                         }
                                         systems={systems}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -5639,12 +5048,6 @@ const CaseForm = (props: {
                                     <Section11FormRow
                                         disabled={!isEditing}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -5809,12 +5212,6 @@ const CaseForm = (props: {
                                         countries={countries}
                                         disabled={!isEditing}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -5856,12 +5253,6 @@ const CaseForm = (props: {
                                     <Section14FormRow
                                         disabled={!isEditing}
                                         methods={methods}
-                                        radioCheckedHandler={
-                                            checkAllRadiosHandler
-                                        }
-                                        isNew={
-                                            props.new || props.continue || false
-                                        }
                                     />
                                 </Accordion.Body>
                             </Accordion.Item>

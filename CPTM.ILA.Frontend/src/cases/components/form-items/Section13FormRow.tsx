@@ -25,8 +25,6 @@ const Section13FormRow = (props: {
     countries: string[];
     disabled: boolean;
     methods: UseFormReturn<Case>;
-    radioCheckedHandler: (radioChackedName: string) => void;
-    isNew: boolean;
 }) => {
     const { fields, append, remove } = useFieldArray({
         control: props.methods.control, // control props comes from useForm

@@ -178,10 +178,11 @@ const App = () => {
         routes = (
             <React.Fragment>
                 <Route path="/dpo" element={<DpoHomePage />}>
-                    <Route
-                        path="cases"
-                        element={<DpoInventarioCasesListGetter />}
-                    >
+                    <Route path="cases" element={<DpoHomePage />}>
+                        <Route
+                            index
+                            element={<DpoInventarioCasesListGetter />}
+                        />
                         <Route path=":cid" element={<CheckCase />} />
                     </Route>
                 </Route>

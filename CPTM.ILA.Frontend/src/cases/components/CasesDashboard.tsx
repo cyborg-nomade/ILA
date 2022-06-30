@@ -230,34 +230,37 @@ const CasesDashboard = () => {
 
         if (name === "Em Preenchimento") {
             if (!user.isComite) {
-                console.log("Em Preenchimento");
-                return navigate("../cases/continue");
+                return navigate("../cases/continue/");
+            }
+            if (user.isComite) {
+                return navigate("../cases/");
             }
         }
         if (name === "Pendente Aprovação") {
             if (user.isDPO) {
-                console.log("Pendente Aprovação");
-                return navigate("../cases/pending");
+                return navigate("../cases/pending/");
             }
             if (user.isComite && !user.isDPO) {
-                console.log("Pendente Aprovação");
-                return navigate("../cases/approve");
+                return navigate("../cases/approve/");
             }
         }
         if (name === "Concluído") {
             if (!user.isComite) {
-                console.log("Concluído");
-                return navigate("../cases/edit");
+                return navigate("../cases/edit/");
             }
-            if (user.isComite) {
-                console.log("Concluído");
+            if (user.isComite && !user.isDPO) {
                 return navigate("../cases/");
+            }
+            if (user.isComite && user.isDPO) {
+                return navigate("../cases/inventario/");
             }
         }
         if (name === "Reprovado") {
             if (!user.isComite) {
-                console.log("Reprovado");
-                return navigate("../cases/reprovados");
+                return navigate("../cases/reprovados/");
+            }
+            if (user.isComite && !user.isDPO) {
+                return navigate("../cases/");
             }
         }
 

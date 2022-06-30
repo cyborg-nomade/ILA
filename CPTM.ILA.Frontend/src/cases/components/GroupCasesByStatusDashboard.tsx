@@ -255,13 +255,16 @@ const GroupCasesByStatusDashboard = () => {
                                 <Badge
                                     bg="warning"
                                     style={{
-                                        cursor: !user.isComite ? "pointer" : "",
+                                        cursor: "pointer",
                                     }}
                                     onClick={() => {
                                         if (!user.isComite) {
                                             return navigate(
-                                                "../cases/continue"
+                                                "../cases/continue/"
                                             );
+                                        }
+                                        if (user.isComite) {
+                                            return navigate("../cases/");
                                         }
                                     }}
                                 >
@@ -281,10 +284,14 @@ const GroupCasesByStatusDashboard = () => {
                                     }}
                                     onClick={() => {
                                         if (user.isDPO) {
-                                            return navigate("../cases/pending");
+                                            return navigate(
+                                                "../cases/pending/"
+                                            );
                                         }
                                         if (user.isComite && !user.isDPO) {
-                                            return navigate("../cases/approve");
+                                            return navigate(
+                                                "../cases/approve/"
+                                            );
                                         }
                                     }}
                                 >
@@ -306,10 +313,15 @@ const GroupCasesByStatusDashboard = () => {
                                     }}
                                     onClick={() => {
                                         if (!user.isComite) {
-                                            return navigate("../cases/edit");
+                                            return navigate("../cases/edit/");
                                         }
-                                        if (user.isComite) {
+                                        if (user.isComite && !user.isDPO) {
                                             return navigate("../cases/");
+                                        }
+                                        if (user.isComite && user.isDPO) {
+                                            return navigate(
+                                                "../cases/inventario/"
+                                            );
                                         }
                                     }}
                                 >
@@ -325,13 +337,16 @@ const GroupCasesByStatusDashboard = () => {
                                 <Badge
                                     bg="danger"
                                     style={{
-                                        cursor: !user.isComite ? "pointer" : "",
+                                        cursor: "pointer",
                                     }}
                                     onClick={() => {
                                         if (!user.isComite) {
                                             return navigate(
-                                                "../cases/reprovados"
+                                                "../cases/reprovados/"
                                             );
+                                        }
+                                        if (user.isComite) {
+                                            return navigate("../cases/");
                                         }
                                     }}
                                 >

@@ -1,208 +1,213 @@
-﻿using CPTM.ILA.Web.Models.CaseHelpers.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using CPTM.ILA.Web.Models.CaseHelpers.Enums;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
-namespace CPTM.ILA.Web.Models.CaseHelpers
+namespace CPTMILAWebModelsCaseHelpers
 {
+    [Table("ILA_RADIOS_CLICKED")]
     public class RadiosClicked
     {
+        public int Id { get; set; }
+        public StatusRadios HasOperador { get; set; }
         public StatusRadios FasesCicloTratamento { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.identificacao.idPessoal")]
-        public StatusRadios CategoriaDadosPessoaisIdentificacaoIdPessoal { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisidentificacaoidPessoal")]
+        public StatusRadios CatDadosPessoaisIdIdPessoal { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.identificacao.idGov")]
-        public StatusRadios CategoriaDadosPessoaisIdentificacaoIdGov { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisidentificacaoidGov")]
+        public StatusRadios CatDadosPessoaisIdIdGov { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.identificacao.idEletronica")]
-        public StatusRadios CategoriaDadosPessoaisIdentificacaoIdEletronica { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisidentificacaoidEletronica")]
+        public StatusRadios CatDadosPessoaisIdIdEletronica { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.identificacao.locEletronica")]
-        public StatusRadios CategoriaDadosPessoaisIdentificacaoLocEletronica { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisidentificacaolocEletronica")]
+        public StatusRadios CatDadosPessoaisIdLocEletronic { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.idFin")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosIdFin { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosidFin")]
+        public StatusRadios CatDadosPessoaisFinIdFin { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.recursosFin")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosRecursosFin { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosrecursosFin")]
+        public StatusRadios CatDadosPessoaisFinRecursosFin { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.dividasDespesas")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosDividasDespesas { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosdividasDespesas")]
+        public StatusRadios CatDadosPessoaisFinDivDespesas { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.solvencia")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosSolvencia { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirossolvencia")]
+        public StatusRadios CatDadosPessoaisFinSolvencia { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.emprestimosHipotecaCredito")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosEmprestimosHipotecaCredito { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosemprestimosHipotecaCredito")]
+        public StatusRadios CatDadosPessoaisFinEmpHipCred { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.assistenciaFin")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosAssistenciaFin { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosassistenciaFin")]
+        public StatusRadios CatDadosPessoaisFinAssistFin { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.apoliceSeguro")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosApoliceSeguro { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosapoliceSeguro")]
+        public StatusRadios CatDadosPessoaisFinApoliceSeg { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.planoPensao")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosPlanoPensao { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosplanoPensao")]
+        public StatusRadios CatDadosPessoaisFinPlanoPensao { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.transacaoFin")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosTransacaoFin { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirostransacaoFin")]
+        public StatusRadios CatDadosPessoaisFinTransFin { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.compensacao")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosCompensacao { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceiroscompensacao")]
+        public StatusRadios CatDadosPessoaisFinCompensacao { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.atividadeProfissional")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosAtividadeProfissional { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosatividadeProfissional")]
+        public StatusRadios CatDadosPessoaisFinAtivProf { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.acordosAjustes")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosAcordosAjustes { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosacordosAjustes")]
+        public StatusRadios CatDadosPessoaisFinAcordAjust { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.financeiros.autorizacoesConsentimentos")]
-        public StatusRadios CategoriaDadosPessoaisFinanceirosAutorizacoesConsentimentos { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisfinanceirosautorizacoesConsentimentos")]
+        public StatusRadios CatDadosPessoaisFinAutConsent { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicas.detalhesPessoais")]
-        public StatusRadios CategoriaDadosPessoaisCaracteristicasDetalhesPessoais { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscaracteristicasdetalhesPessoais")]
+        public StatusRadios CatDadosPessoaisCaracDetPess { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicas.detalhesMilitares")]
-        public StatusRadios CategoriaDadosPessoaisCaracteristicasDetalhesMilitares { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscaracteristicasdetalhesMilitares")]
+        public StatusRadios CatDadosPessoaisCaracDetMil { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicas.situacaoImigracao")]
-        public StatusRadios CategoriaDadosPessoaisCaracteristicasSituacaoImigracao { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscaracteristicassituacaoImigracao")]
+        public StatusRadios CatDadosPessoaisCaracSitImi { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicas.situacaoImigracao")]
-        public StatusRadios CategoriaDadosPessoaisCaracteristicasDescricaoFisica { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscaracteristicasdescricaoFisica")]
+        public StatusRadios CatDadosPessoaisCaracDescFis { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.habitosPessoais")]
-        public StatusRadios CategoriaDadosPessoaisHabitosHabitosPessoais { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitoshabitosPessoais")]
+        public StatusRadios CatDadosPessoaisHabHabPessoais { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.estiloVida")]
-        public StatusRadios CategoriaDadosPessoaisHabitosEstiloVida { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitosestiloVida")]
+        public StatusRadios CatDadosPessoaisHabEstiloVida { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.viagensDeslocamento")]
-        public StatusRadios CategoriaDadosPessoaisHabitosViagensDeslocamento { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitosviagensDeslocamento")]
+        public StatusRadios CatDadosPessoaisHabViagensDesl { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.contatosSociais")]
-        public StatusRadios CategoriaDadosPessoaisHabitosContatosSociais { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitoscontatosSociais")]
+        public StatusRadios CatDadosPessoaisHabContatosSoc { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.posses")]
-        public StatusRadios CategoriaDadosPessoaisHabitosPosses { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitosposses")]
+        public StatusRadios CatDadosPessoaisHabPosses { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.denunciasIncAcidentes")]
-        public StatusRadios CategoriaDadosPessoaisHabitosDenunciasIncAcidentes { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitosdenunciasIncAcidentes")]
+        public StatusRadios CatDadosPessoaisHabDenIncAci { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.distincoes")]
-        public StatusRadios CategoriaDadosPessoaisHabitosDistincoes { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitosdistincoes")]
+        public StatusRadios CatDadosPessoaisHabDistincoes { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.usoMidia")]
-        public StatusRadios CategoriaDadosPessoaisHabitosUsoMidia { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitosusoMidia")]
+        public StatusRadios CatDadosPessoaisHabUsoMidia { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicasPsicologicas.descricaoPsi")]
-        public StatusRadios CategoriaDadosPessoaisCaracteristicasPsicologicasDescricaoPsi { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscaracteristicasPsicologicasdescricaoPsi")]
+        public StatusRadios CatDadosPessCaracPsicDescPsi { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.composicaoFamiliar.casamentoCoabitacao")]
-        public StatusRadios CategoriaDadosPessoaisComposicaoFamiliarCasamentoCoabitacao { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscomposicaoFamiliarcasamentoCoabitacao")]
+        public StatusRadios CatDadosPessoaisCompFamCasCoab { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.composicaoFamiliar.historicoConjugal")]
-        public StatusRadios CategoriaDadosPessoaisComposicaoFamiliarHistoricoConjugal { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscomposicaoFamiliarhistoricoConjugal")]
+        public StatusRadios CatDadosPessoaisCompFamHistCon { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.composicaoFamiliar.membrosFamilia")]
-        public StatusRadios CategoriaDadosPessoaisComposicaoFamiliarMembrosFamilia { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiscomposicaoFamiliarmembrosFamilia")]
+        public StatusRadios CatDadosPessoaisCompFamMemFam { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.interessesLazer.atividadesInteressesLaz")]
-        public StatusRadios CategoriaDadosPessoaisInteressesLazerAtividadesInteressesLaz { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisinteressesLazeratividadesInteressesLaz")]
+        public StatusRadios CatDadosPessIntLazAtivIntLaz { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.associacoes.outrasAssNaoSensiveis")]
-        public StatusRadios CategoriaDadosPessoaisAssociacoesOutrasAssNaoSensiveis { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisassociacoesoutrasAssNaoSensiveis")]
+        public StatusRadios CatDadosPessoaisAssOutAssNSen { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.processoJudAdmCrim.suspeitas")]
-        public StatusRadios CategoriaDadosPessoaisProcessoJudAdmCrimSuspeitas { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprocessoJudAdmCrimsuspeitas")]
+        public StatusRadios CatDadosPessProcJudAdmCrimSus { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.processoJudAdmCrim.condenacoesSentencas")]
-        public StatusRadios CategoriaDadosPessoaisProcessoJudAdmCrimCondenacoesSentencas { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprocessoJudAdmCrimcondenacoesSentencas")]
+        public StatusRadios CatDadPessProcJudAdmCrimConSen { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.processoJudAdmCrim.acoesJud")]
-        public StatusRadios CategoriaDadosPessoaisProcessoJudAdmCrimAcoesJud { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprocessoJudAdmCrimacoesJud")]
+        public StatusRadios CatDadPessProcJudAdmCrimAcJud { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.processoJudAdmCrim.penalidadesAdm")]
-        public StatusRadios CategoriaDadosPessoaisProcessoJudAdmCrimPenalidadesAdm { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprocessoJudAdmCrimpenalidadesAdm")]
+        public StatusRadios CatDadPessProcJudAdmCrimPenAdm { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.habitosConsumo.dadosBensServicos")]
-        public StatusRadios CategoriaDadosPessoaisHabitosConsumoDadosBensServicos { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaishabitosConsumodadosBensServicos")]
+        public StatusRadios CatDadPessHabConsDadBensServ { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.residenciais.dadosResidencia")]
-        public StatusRadios CategoriaDadosPessoaisResidenciaisDadosResidencia { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisresidenciaisdadosResidencia")]
+        public StatusRadios CatDadosPessoaisResDadRes { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.educacaoTreinamento.academicosEscolares")]
-        public StatusRadios CategoriaDadosPessoaisEducacaoTreinamentoAcademicosEscolares { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiseducacaoTreinamentoacademicosEscolares")]
+        public StatusRadios CatDadosPessoaisEduTrAcadEsc { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.educacaoTreinamento.registroFinanceiro")]
-        public StatusRadios CategoriaDadosPessoaisEducacaoTreinamentoRegistroFinanceiro { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiseducacaoTreinamentoregistroFinanceiro")]
+        public StatusRadios CatDadosPessoaisEduTrRegFin { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.educacaoTreinamento.qualificacaoExperienciaProf")]
-        public StatusRadios CategoriaDadosPessoaisEducacaoTreinamentoQualificacaoExperienciaProf { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaiseducacaoTreinamentoqualificacaoExperienciaProf")]
+        public StatusRadios CatDadosPessEduTrQualiExpProf { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.profissaoEmprego.empregoAtual")]
-        public StatusRadios CategoriaDadosPessoaisProfissaoEmpregoEmpregoAtual { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprofissaoEmpregoempregoAtual")]
+        public StatusRadios CatDadosPessoaisProfEmpEmpAt { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.profissaoEmprego.recrutamento")]
-        public StatusRadios CategoriaDadosPessoaisProfissaoEmpregoRecrutamento { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprofissaoEmpregorecrutamento")]
+        public StatusRadios CatDadosPessoaisProfEmpRec { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.profissaoEmprego.rescisao")]
-        public StatusRadios CategoriaDadosPessoaisProfissaoEmpregoRescisao { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprofissaoEmpregorescisao")]
+        public StatusRadios CatDadosPessoaisProfEmpResc { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.profissaoEmprego.carreira")]
-        public StatusRadios CategoriaDadosPessoaisProfissaoEmpregoCarreira { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprofissaoEmpregocarreira")]
+        public StatusRadios CatDadosPessoaisProfEmpCarr { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.profissaoEmprego.absenteismoDisciplina")]
-        public StatusRadios CategoriaDadosPessoaisProfissaoEmpregoAbsenteismoDisciplina { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprofissaoEmpregoabsenteismoDisciplina")]
+        public StatusRadios CatDadosPessoaisProfEmpAbsDisc { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.profissaoEmprego.avaliacaoDesempenho")]
-        public StatusRadios CategoriaDadosPessoaisProfissaoEmpregoAvaliacaoDesempenho { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisprofissaoEmpregoavaliacaoDesempenho")]
+        public StatusRadios CatDadosPessoaisProfEmpAvDes { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.regVideoImgVoz.videoImagem")]
-        public StatusRadios CategoriaDadosPessoaisRegVideoImgVozVideoImagem { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisregVideoImgVozvideoImagem")]
+        public StatusRadios CatDadosPessRegVidImgVozVidImg { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.regVideoImgVoz.imagemVigilancia")]
-        public StatusRadios CategoriaDadosPessoaisRegVideoImgVozImagemVigilancia { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisregVideoImgVozimagemVigilancia")]
+        public StatusRadios CatDadosPessRegVidImgVozImgVig { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.regVideoImgVoz.voz")]
-        public StatusRadios CategoriaDadosPessoaisRegVideoImgVozVoz { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisregVideoImgVozvoz")]
+        public StatusRadios CatDadosPessRegVidImgVozVoz { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.outros.outrosItems")]
-        public StatusRadios CategoriaDadosPessoaisOutrosOutrosItems { get; set; }
+        [JsonProperty(PropertyName = "categoriaDadosPessoaisoutrosoutrosItems")]
+        public StatusRadios CatDadosPessoaisOutOutItems { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.origemRacialEtnica")]
-        public StatusRadios CatDadosPessoaisSensiveisOrigemRacialEtnica { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisorigemRacialEtnica")]
+        public StatusRadios CatDadosPessSensOrigemRacEtn { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.conviccaoReligiosa")]
-        public StatusRadios CatDadosPessoaisSensiveisConviccaoReligiosa { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisconviccaoReligiosa")]
+        public StatusRadios CatDadosPessoaisSensConvRelig { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.opiniaoPolitica")]
-        public StatusRadios CatDadosPessoaisSensiveisOpiniaoPolitica { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisopiniaoPolitica")]
+        public StatusRadios CatDadosPessoaisSensOpiniaoPol { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.filiacaoSindicato")]
-        public StatusRadios CatDadosPessoaisSensiveisFiliacaoSindicato { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisfiliacaoSindicato")]
+        public StatusRadios CatDadosPessoaisSensFilSind { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.filiacaoOrgReligiosa")]
-        public StatusRadios CatDadosPessoaisSensiveisFiliacaoOrgReligiosa { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisfiliacaoOrgReligiosa")]
+        public StatusRadios CatDadosPessoaisSensFilOrgRel { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.filiacaoCrencaFilosofica")]
-        public StatusRadios CatDadosPessoaisSensiveisFiliacaoCrencaFilosofica { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisfiliacaoCrencaFilosofica")]
+        public StatusRadios CatDadosPessoaisSensFilCrenFil { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.filiacaoPreferenciaPolitica")]
-        public StatusRadios CatDadosPessoaisSensiveisFiliacaoPreferenciaPolitica { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisfiliacaoPreferenciaPolitica")]
+        public StatusRadios CatDadosPessoaisSensFilPrefPol { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.saudeVidaSexual")]
-        public StatusRadios CatDadosPessoaisSensiveisSaudeVidaSexual { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveissaudeVidaSexual")]
+        public StatusRadios CatDadosPessSensSaudeVidaSex { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.geneticos")]
-        public StatusRadios CatDadosPessoaisSensiveisGeneticos { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisgeneticos")]
+        public StatusRadios CatDadosPessoaisSensGeneticos { get; set; }
 
-        [JsonProperty(PropertyName = "catDadosPessoaisSensiveis.biometricos")]
-        public StatusRadios CatDadosPessoaisSensiveisBiometricos { get; set; }
+        [JsonProperty(PropertyName = "catDadosPessoaisSensiveisbiometricos")]
+        public StatusRadios CatDadosPessoaisSensBiometric { get; set; }
 
 
         public StatusRadios CompartilhamentoDadosPessoais { get; set; }
         public StatusRadios TransferenciaInternacional { get; set; }
-        public StatusRadios ContratoServicosTITratamentoDados { get; set; }
+
+        [JsonProperty(PropertyName = "contratoServicosTITratamentoDados")]
+        public StatusRadios ContratoServicosTITrataDad { get; set; }
     }
 }

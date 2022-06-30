@@ -33,6 +33,7 @@ import { Case } from "../../shared/models/cases.model";
 import { CaseIndexDictionary } from "../../shared/models/case-index.dictionary";
 import {
     hipotesesTratamento,
+    statusRadios,
     tipoAbrangenciaGeografica,
     tipoFrequenciaTratamento,
 } from "../../shared/models/case-helpers/enums.model";
@@ -331,9 +332,9 @@ const CaseForm = (props: {
         name: "observacoesProcesso",
     });
 
-    const toggleEnableOperador = (value: string) => {
+    const toggleEnableOperador = (value: statusRadios) => {
         console.log("hasOperador: ", value);
-        if (value === "NÃO") {
+        if (value === statusRadios.NÃO) {
             methods.clearErrors([
                 "operador.nome",
                 "operador.area",
@@ -345,7 +346,6 @@ const CaseForm = (props: {
             methods.setValue("operador.telefone", "");
             methods.setValue("operador.email", "");
         }
-        setHasOperador(value);
     };
 
     const checkAllRadiosHandler = (radioCheckedName: string) => {
@@ -1463,65 +1463,161 @@ const CaseForm = (props: {
                                             </p>
                                         </Col>
                                         <Col className="d-flex justify-content-between">
-                                            <OverlayTrigger
-                                                placement="right"
-                                                overlay={
-                                                    <Tooltip className="text-muted">
-                                                        Pessoa natural ou
-                                                        jurídica, de direito
-                                                        público ou privado, que
-                                                        realiza o tratamento de
-                                                        dados pessoais em nome
-                                                        do controlador; (LGPD,
-                                                        art. 5º, VII)
-                                                    </Tooltip>
-                                                }
-                                            >
-                                                <Form.Label>
-                                                    {
-                                                        CaseIndexDictionary
-                                                            .operador.title
-                                                    }
-                                                </Form.Label>
-                                            </OverlayTrigger>
-                                            <ToggleButtonGroup
-                                                type="radio"
-                                                name="hasOperador"
-                                                value={hasOperador}
-                                                onChange={(val) => {
-                                                    toggleEnableOperador(val);
-                                                }}
-                                            >
-                                                <ToggleButton
-                                                    id={`operador-toggle-1`}
-                                                    disabled={!isEditing}
-                                                    value="SIM"
-                                                >
-                                                    SIM
-                                                </ToggleButton>
-                                                <ToggleButton
-                                                    id={`operador-toggle-2`}
-                                                    disabled={!isEditing}
-                                                    value="NÃO"
-                                                >
-                                                    NÃO
-                                                </ToggleButton>
-                                            </ToggleButtonGroup>
+                                            <Row>
+                                                <Col>
+                                                    <OverlayTrigger
+                                                        placement="right"
+                                                        overlay={
+                                                            <Tooltip className="text-muted">
+                                                                Pessoa natural
+                                                                ou jurídica, de
+                                                                direito público
+                                                                ou privado, que
+                                                                realiza o
+                                                                tratamento de
+                                                                dados pessoais
+                                                                em nome do
+                                                                controlador;
+                                                                (LGPD, art. 5º,
+                                                                VII)
+                                                            </Tooltip>
+                                                        }
+                                                    >
+                                                        <Form.Label>
+                                                            {
+                                                                CaseIndexDictionary
+                                                                    .operador
+                                                                    .title
+                                                            }
+                                                        </Form.Label>
+                                                    </OverlayTrigger>
+                                                </Col>
+                                                <Col>
+                                                    <Controller
+                                                        rules={{
+                                                            validate: {
+                                                                required: (
+                                                                    value
+                                                                ) => {
+                                                                    if (
+                                                                        value ===
+                                                                        statusRadios.INVALID
+                                                                    )
+                                                                        return false;
+                                                                    return true;
+                                                                },
+                                                            },
+                                                        }}
+                                                        control={
+                                                            methods.control
+                                                        }
+                                                        name="radiosClicked.hasOperador"
+                                                        render={({
+                                                            field: {
+                                                                onChange,
+                                                                onBlur,
+                                                                value,
+                                                                ref,
+                                                            },
+                                                        }) => (
+                                                            <React.Fragment>
+                                                                <Form.Check
+                                                                    type="radio"
+                                                                    name="radiosClicked.hasOperador-1"
+                                                                    label="Sim"
+                                                                    value={
+                                                                        statusRadios.SIM
+                                                                    }
+                                                                    checked={
+                                                                        (value as statusRadios) ===
+                                                                        statusRadios.SIM
+                                                                    }
+                                                                    disabled={
+                                                                        !isEditing
+                                                                    }
+                                                                    onChange={(
+                                                                        val
+                                                                    ) => {
+                                                                        if (
+                                                                            val
+                                                                                .target
+                                                                                .value ===
+                                                                            "2"
+                                                                        ) {
+                                                                            toggleEnableOperador(
+                                                                                statusRadios.SIM
+                                                                            );
+                                                                            onChange(
+                                                                                statusRadios.SIM
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                    isInvalid={
+                                                                        value ===
+                                                                        statusRadios.INVALID
+                                                                    }
+                                                                    onBlur={
+                                                                        onBlur
+                                                                    }
+                                                                    ref={ref}
+                                                                />
+                                                                <Form.Check
+                                                                    type="radio"
+                                                                    name="radiosClicked.hasOperador-1"
+                                                                    label="Não"
+                                                                    value={
+                                                                        statusRadios.NÃO
+                                                                    }
+                                                                    checked={
+                                                                        (value as statusRadios) ===
+                                                                        statusRadios.NÃO
+                                                                    }
+                                                                    disabled={
+                                                                        !isEditing
+                                                                    }
+                                                                    onChange={(
+                                                                        val
+                                                                    ) => {
+                                                                        if (
+                                                                            val
+                                                                                .target
+                                                                                .value ===
+                                                                            "1"
+                                                                        ) {
+                                                                            toggleEnableOperador(
+                                                                                statusRadios.NÃO
+                                                                            );
+                                                                            onChange(
+                                                                                statusRadios.NÃO
+                                                                            );
+                                                                        }
+                                                                    }}
+                                                                    isInvalid={
+                                                                        value ===
+                                                                        statusRadios.INVALID
+                                                                    }
+                                                                    onBlur={
+                                                                        onBlur
+                                                                    }
+                                                                    ref={ref}
+                                                                />
+                                                            </React.Fragment>
+                                                        )}
+                                                    />
+                                                </Col>
+                                            </Row>
                                         </Col>
                                         <Col>
                                             <Controller
                                                 rules={{
                                                     validate: {
                                                         required: (value) => {
-                                                            console.log(
-                                                                "value, hasOperador: ",
-                                                                value,
-                                                                hasOperador
-                                                            );
                                                             if (
                                                                 !value &&
-                                                                hasOperador ===
-                                                                    "SIM"
+                                                                methods.watch(
+                                                                    "radiosClicked.hasOperador"
+                                                                ) ===
+                                                                    statusRadios.SIM
                                                             )
                                                                 return false;
                                                             return true;
@@ -1542,8 +1638,10 @@ const CaseForm = (props: {
                                                     <Form.Control
                                                         disabled={
                                                             !isEditing ||
-                                                            hasOperador ===
-                                                                "NÃO"
+                                                            methods.watch(
+                                                                "radiosClicked.hasOperador"
+                                                            ) !==
+                                                                statusRadios.SIM
                                                         }
                                                         type="text"
                                                         onChange={onChange}
@@ -1564,15 +1662,12 @@ const CaseForm = (props: {
                                                 rules={{
                                                     validate: {
                                                         required: (value) => {
-                                                            console.log(
-                                                                "value, hasOperador: ",
-                                                                value,
-                                                                hasOperador
-                                                            );
                                                             if (
                                                                 !value &&
-                                                                hasOperador ===
-                                                                    "SIM"
+                                                                methods.watch(
+                                                                    "radiosClicked.hasOperador"
+                                                                ) ===
+                                                                    statusRadios.SIM
                                                             )
                                                                 return false;
                                                             return true;
@@ -1593,8 +1688,10 @@ const CaseForm = (props: {
                                                     <Form.Control
                                                         disabled={
                                                             !isEditing ||
-                                                            hasOperador ===
-                                                                "NÃO"
+                                                            methods.watch(
+                                                                "radiosClicked.hasOperador"
+                                                            ) !==
+                                                                statusRadios.SIM
                                                         }
                                                         type="text"
                                                         onChange={onChange}
@@ -1615,15 +1712,12 @@ const CaseForm = (props: {
                                                 rules={{
                                                     validate: {
                                                         required: (value) => {
-                                                            console.log(
-                                                                "value, hasOperador: ",
-                                                                value,
-                                                                hasOperador
-                                                            );
                                                             if (
                                                                 !value &&
-                                                                hasOperador ===
-                                                                    "SIM"
+                                                                methods.watch(
+                                                                    "radiosClicked.hasOperador"
+                                                                ) ===
+                                                                    statusRadios.SIM
                                                             )
                                                                 return false;
                                                             return true;
@@ -1644,8 +1738,10 @@ const CaseForm = (props: {
                                                     <Form.Control
                                                         disabled={
                                                             !isEditing ||
-                                                            hasOperador ===
-                                                                "NÃO"
+                                                            methods.watch(
+                                                                "radiosClicked.hasOperador"
+                                                            ) !==
+                                                                statusRadios.SIM
                                                         }
                                                         type="text"
                                                         onChange={onChange}
@@ -1666,15 +1762,12 @@ const CaseForm = (props: {
                                                 rules={{
                                                     validate: {
                                                         required: (value) => {
-                                                            console.log(
-                                                                "value, hasOperador: ",
-                                                                value,
-                                                                hasOperador
-                                                            );
                                                             if (
                                                                 !value &&
-                                                                hasOperador ===
-                                                                    "SIM"
+                                                                methods.watch(
+                                                                    "radiosClicked.hasOperador"
+                                                                ) ===
+                                                                    statusRadios.SIM
                                                             )
                                                                 return false;
                                                             return true;
@@ -1695,8 +1788,10 @@ const CaseForm = (props: {
                                                     <Form.Control
                                                         disabled={
                                                             !isEditing ||
-                                                            hasOperador ===
-                                                                "NÃO"
+                                                            methods.watch(
+                                                                "radiosClicked.hasOperador"
+                                                            ) !==
+                                                                statusRadios.SIM
                                                         }
                                                         type="text"
                                                         onChange={onChange}

@@ -51,7 +51,7 @@ const Section12FormRow = (props: {
                 <Controller
                     rules={{ required: true }}
                     control={props.methods.control}
-                    name={`${props.name}.descricaoControles` as FieldPath<Case>}
+                    name={`${props.name}.descricao` as FieldPath<Case>}
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <Form.Control
                             type="text"
@@ -61,7 +61,7 @@ const Section12FormRow = (props: {
                             isInvalid={
                                 !!_.get(
                                     props.methods.formState.errors,
-                                    `${props.name}.descricaoControles`
+                                    `${props.name}.descricao`
                                 )
                             }
                             disabled={props.disabled}

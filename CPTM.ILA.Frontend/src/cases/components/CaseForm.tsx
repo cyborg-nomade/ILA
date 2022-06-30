@@ -815,7 +815,8 @@ const CaseForm = (props: {
                                                     {
                                                         CaseIndexDictionary
                                                             .controlador.title
-                                                    }
+                                                    }{" "}
+                                                    <AiFillQuestionCircle />
                                                 </Form.Label>
                                             </OverlayTrigger>
                                         </Col>
@@ -1051,7 +1052,8 @@ const CaseForm = (props: {
                                                     {
                                                         CaseIndexDictionary
                                                             .encarregado.title
-                                                    }
+                                                    }{" "}
+                                                    <AiFillQuestionCircle />
                                                 </Form.Label>
                                             </OverlayTrigger>
                                         </Col>
@@ -1184,7 +1186,8 @@ const CaseForm = (props: {
                                                         CaseIndexDictionary
                                                             .extensaoEncarregado
                                                             .title
-                                                    }
+                                                    }{" "}
+                                                    <AiFillQuestionCircle />
                                                 </Form.Label>
                                             </OverlayTrigger>
                                         </Col>
@@ -1317,7 +1320,8 @@ const CaseForm = (props: {
                                                         CaseIndexDictionary
                                                             .areaTratamentoDados
                                                             .title
-                                                    }
+                                                    }{" "}
+                                                    <AiFillQuestionCircle />
                                                 </Form.Label>
                                             </OverlayTrigger>
                                         </Col>
@@ -1488,7 +1492,8 @@ const CaseForm = (props: {
                                                                 CaseIndexDictionary
                                                                     .operador
                                                                     .title
-                                                            }
+                                                            }{" "}
+                                                            <AiFillQuestionCircle />
                                                         </Form.Label>
                                                     </OverlayTrigger>
                                                 </Col>
@@ -1927,7 +1932,8 @@ const CaseForm = (props: {
                                                     CaseIndexDictionary
                                                         .descricaoFluxoTratamento
                                                         .title
-                                                }
+                                                }{" "}
+                                                <AiFillQuestionCircle />
                                             </Form.Label>
                                         </OverlayTrigger>
                                         <Col lg={8}>
@@ -5263,7 +5269,8 @@ const CaseForm = (props: {
                                                     CaseIndexDictionary
                                                         .frequenciaTratamento
                                                         .title
-                                                }
+                                                }{" "}
+                                                <AiFillQuestionCircle />
                                             </Form.Label>
                                         </OverlayTrigger>
                                         <Col lg={8}>

@@ -15,6 +15,7 @@ using CPTM.ILA.Web.Models.ChangeLogging;
 using CPTM.ILA.Web.Util;
 using CPTM.ILA.Web.Models.AccessControl;
 using CPTM.ILA.Web.Models.CaseHelpers;
+using CPTMILAWebModelsCaseHelpers;
 using Microsoft.Ajax.Utilities;
 
 
@@ -963,6 +964,7 @@ namespace CPTM.ILA.Web.Controllers.API
                     .Include(c => c.ContratoServicosTi)
                     .Include(c => c.RiscosPrivacidade)
                     .Include(c => c.ObservacoesProcesso)
+                    .Include(c => c.RadiosClicked)
                     .SingleOrDefaultAsync();
 
                 if (uniqueCase == null)
@@ -1155,6 +1157,7 @@ namespace CPTM.ILA.Web.Controllers.API
                     .Include(c => c.ContratoServicosTi)
                     .Include(c => c.RiscosPrivacidade)
                     .Include(c => c.ObservacoesProcesso)
+                    .Include(c => c.RadiosClicked)
                     .SingleOrDefaultAsync();
 
                 if (caseInDb == null)
@@ -1208,6 +1211,11 @@ namespace CPTM.ILA.Web.Controllers.API
                 if (caseToSave.FinalidadeTratamento.Id != caseInDb.FinalidadeTratamento.Id)
                 {
                     _context.FinalidadesTratamento.Remove(caseInDb.FinalidadeTratamento);
+                }
+
+                if (caseToSave.RadiosClicked.Id != caseInDb.RadiosClicked.Id)
+                {
+                    _context.RadiosClicked.Remove(caseInDb.RadiosClicked);
                 }
 
                 foreach (var item in caseInDb.CategoriasTitulares.Categorias.ToList()
@@ -1397,6 +1405,89 @@ namespace CPTM.ILA.Web.Controllers.API
                         ResultadosTitular = caseToSave.FinalidadeTratamento.ResultadosTitular,
                     };
                     caseInDb.FinalidadeTratamento = newFinalidadeTratamento;
+                }
+
+                var radiosClickedInDb = caseInDb.RadiosClicked;
+                if (radiosClickedInDb != null)
+                    // Update child
+                    _context.Entry(radiosClickedInDb)
+                        .CurrentValues.SetValues(caseToSave.RadiosClicked);
+                else
+                {
+                    // Insert child
+                    var newFinalidadeTratamento = new RadiosClicked()
+                    {
+                        CompartilhamentoDadosPessoais = caseToSave.RadiosClicked.CompartilhamentoDadosPessoais,
+                        TransferenciaInternacional = caseToSave.RadiosClicked.TransferenciaInternacional,
+                        CatDadPessHabConsDadBensServ = caseToSave.RadiosClicked.CatDadPessHabConsDadBensServ,
+                        CatDadPessProcJudAdmCrimAcJud = caseToSave.RadiosClicked.CatDadPessProcJudAdmCrimAcJud,
+                        CatDadPessProcJudAdmCrimConSen = caseToSave.RadiosClicked.CatDadPessProcJudAdmCrimConSen,
+                        CatDadPessProcJudAdmCrimPenAdm = caseToSave.RadiosClicked.CatDadPessProcJudAdmCrimPenAdm,
+                        CatDadosPessCaracPsicDescPsi = caseToSave.RadiosClicked.CatDadosPessCaracPsicDescPsi,
+                        CatDadosPessEduTrQualiExpProf = caseToSave.RadiosClicked.CatDadosPessEduTrQualiExpProf,
+                        CatDadosPessIntLazAtivIntLaz = caseToSave.RadiosClicked.CatDadosPessIntLazAtivIntLaz,
+                        CatDadosPessProcJudAdmCrimSus = caseToSave.RadiosClicked.CatDadosPessProcJudAdmCrimSus,
+                        CatDadosPessRegVidImgVozImgVig = caseToSave.RadiosClicked.CatDadosPessRegVidImgVozImgVig,
+                        CatDadosPessRegVidImgVozVidImg = caseToSave.RadiosClicked.CatDadosPessRegVidImgVozVidImg,
+                        CatDadosPessRegVidImgVozVoz = caseToSave.RadiosClicked.CatDadosPessRegVidImgVozVoz,
+                        CatDadosPessSensOrigemRacEtn = caseToSave.RadiosClicked.CatDadosPessSensOrigemRacEtn,
+                        CatDadosPessSensSaudeVidaSex = caseToSave.RadiosClicked.CatDadosPessSensSaudeVidaSex,
+                        CatDadosPessoaisAssOutAssNSen = caseToSave.RadiosClicked.CatDadosPessoaisAssOutAssNSen,
+                        CatDadosPessoaisCaracDescFis = caseToSave.RadiosClicked.CatDadosPessoaisCaracDescFis,
+                        CatDadosPessoaisCaracDetMil = caseToSave.RadiosClicked.CatDadosPessoaisCaracDetMil,
+                        CatDadosPessoaisCaracDetPess = caseToSave.RadiosClicked.CatDadosPessoaisCaracDetPess,
+                        CatDadosPessoaisCaracSitImi = caseToSave.RadiosClicked.CatDadosPessoaisCaracSitImi,
+                        CatDadosPessoaisCompFamCasCoab = caseToSave.RadiosClicked.CatDadosPessoaisCompFamCasCoab,
+                        CatDadosPessoaisCompFamHistCon = caseToSave.RadiosClicked.CatDadosPessoaisCompFamHistCon,
+                        CatDadosPessoaisCompFamMemFam = caseToSave.RadiosClicked.CatDadosPessoaisCompFamMemFam,
+                        CatDadosPessoaisEduTrAcadEsc = caseToSave.RadiosClicked.CatDadosPessoaisEduTrAcadEsc,
+                        CatDadosPessoaisEduTrRegFin = caseToSave.RadiosClicked.CatDadosPessoaisEduTrRegFin,
+                        CatDadosPessoaisFinAcordAjust = caseToSave.RadiosClicked.CatDadosPessoaisFinAcordAjust,
+                        CatDadosPessoaisFinApoliceSeg = caseToSave.RadiosClicked.CatDadosPessoaisFinApoliceSeg,
+                        CatDadosPessoaisFinAssistFin = caseToSave.RadiosClicked.CatDadosPessoaisFinAssistFin,
+                        CatDadosPessoaisFinAtivProf = caseToSave.RadiosClicked.CatDadosPessoaisFinAtivProf,
+                        CatDadosPessoaisFinAutConsent = caseToSave.RadiosClicked.CatDadosPessoaisFinAutConsent,
+                        CatDadosPessoaisFinCompensacao = caseToSave.RadiosClicked.CatDadosPessoaisFinCompensacao,
+                        CatDadosPessoaisFinDivDespesas = caseToSave.RadiosClicked.CatDadosPessoaisFinDivDespesas,
+                        CatDadosPessoaisFinEmpHipCred = caseToSave.RadiosClicked.CatDadosPessoaisFinEmpHipCred,
+                        CatDadosPessoaisFinIdFin = caseToSave.RadiosClicked.CatDadosPessoaisFinIdFin,
+                        CatDadosPessoaisFinPlanoPensao = caseToSave.RadiosClicked.CatDadosPessoaisFinPlanoPensao,
+                        CatDadosPessoaisFinRecursosFin = caseToSave.RadiosClicked.CatDadosPessoaisFinRecursosFin,
+                        CatDadosPessoaisFinSolvencia = caseToSave.RadiosClicked.CatDadosPessoaisFinSolvencia,
+                        CatDadosPessoaisFinTransFin = caseToSave.RadiosClicked.CatDadosPessoaisFinTransFin,
+                        CatDadosPessoaisHabContatosSoc = caseToSave.RadiosClicked.CatDadosPessoaisHabContatosSoc,
+                        CatDadosPessoaisHabDenIncAci = caseToSave.RadiosClicked.CatDadosPessoaisHabDenIncAci,
+                        CatDadosPessoaisHabDistincoes = caseToSave.RadiosClicked.CatDadosPessoaisHabDistincoes,
+                        CatDadosPessoaisHabEstiloVida = caseToSave.RadiosClicked.CatDadosPessoaisHabEstiloVida,
+                        CatDadosPessoaisHabHabPessoais = caseToSave.RadiosClicked.CatDadosPessoaisHabHabPessoais,
+                        CatDadosPessoaisHabPosses = caseToSave.RadiosClicked.CatDadosPessoaisHabPosses,
+                        CatDadosPessoaisHabUsoMidia = caseToSave.RadiosClicked.CatDadosPessoaisHabUsoMidia,
+                        CatDadosPessoaisHabViagensDesl = caseToSave.RadiosClicked.CatDadosPessoaisHabViagensDesl,
+                        CatDadosPessoaisIdIdEletronica = caseToSave.RadiosClicked.CatDadosPessoaisIdIdEletronica,
+                        CatDadosPessoaisIdIdGov = caseToSave.RadiosClicked.CatDadosPessoaisIdIdGov,
+                        CatDadosPessoaisIdIdPessoal = caseToSave.RadiosClicked.CatDadosPessoaisIdIdPessoal,
+                        CatDadosPessoaisIdLocEletronic = caseToSave.RadiosClicked.CatDadosPessoaisIdLocEletronic,
+                        CatDadosPessoaisOutOutItems = caseToSave.RadiosClicked.CatDadosPessoaisOutOutItems,
+                        CatDadosPessoaisProfEmpAbsDisc = caseToSave.RadiosClicked.CatDadosPessoaisProfEmpAbsDisc,
+                        CatDadosPessoaisProfEmpAvDes = caseToSave.RadiosClicked.CatDadosPessoaisProfEmpAvDes,
+                        CatDadosPessoaisProfEmpCarr = caseToSave.RadiosClicked.CatDadosPessoaisProfEmpCarr,
+                        CatDadosPessoaisProfEmpEmpAt = caseToSave.RadiosClicked.CatDadosPessoaisProfEmpEmpAt,
+                        CatDadosPessoaisProfEmpRec = caseToSave.RadiosClicked.CatDadosPessoaisProfEmpRec,
+                        CatDadosPessoaisProfEmpResc = caseToSave.RadiosClicked.CatDadosPessoaisProfEmpResc,
+                        CatDadosPessoaisResDadRes = caseToSave.RadiosClicked.CatDadosPessoaisResDadRes,
+                        CatDadosPessoaisSensBiometric = caseToSave.RadiosClicked.CatDadosPessoaisSensBiometric,
+                        CatDadosPessoaisSensConvRelig = caseToSave.RadiosClicked.CatDadosPessoaisSensConvRelig,
+                        CatDadosPessoaisSensFilCrenFil = caseToSave.RadiosClicked.CatDadosPessoaisSensFilCrenFil,
+                        CatDadosPessoaisSensFilOrgRel = caseToSave.RadiosClicked.CatDadosPessoaisSensFilOrgRel,
+                        CatDadosPessoaisSensFilPrefPol = caseToSave.RadiosClicked.CatDadosPessoaisSensFilPrefPol,
+                        CatDadosPessoaisSensFilSind = caseToSave.RadiosClicked.CatDadosPessoaisSensFilSind,
+                        CatDadosPessoaisSensGeneticos = caseToSave.RadiosClicked.CatDadosPessoaisSensGeneticos,
+                        CatDadosPessoaisSensOpiniaoPol = caseToSave.RadiosClicked.CatDadosPessoaisSensOpiniaoPol,
+                        ContratoServicosTITrataDad = caseToSave.RadiosClicked.ContratoServicosTITrataDad,
+                        FasesCicloTratamento = caseToSave.RadiosClicked.FasesCicloTratamento,
+                        HasOperador = caseToSave.RadiosClicked.HasOperador,
+                    };
+                    caseInDb.RadiosClicked = newFinalidadeTratamento;
                 }
 
                 foreach (var item in caseToSave.CategoriasTitulares.Categorias)

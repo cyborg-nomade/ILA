@@ -5,6 +5,7 @@ using CPTM.ILA.Web.Models.AccessControl.VIEWS;
 using CPTM.ILA.Web.Models.CaseHelpers;
 using CPTM.ILA.Web.Models.ChangeLogging;
 using CPTM.ILA.Web.Models.Configuration;
+using CPTMILAWebModelsCaseHelpers;
 
 namespace CPTM.ILA.Web.Models
 {
@@ -45,6 +46,7 @@ namespace CPTM.ILA.Web.Models
         public virtual DbSet<ItemObservacoesProcesso> ItensObservacoesProcesso { get; set; }
         public virtual DbSet<ItemRiscoPrivacidade> ItensRiscoPrivacidade { get; set; }
         public virtual DbSet<ItemTransferenciaInternacional> ItensTransferenciaInternacional { get; set; }
+        public virtual DbSet<RadiosClicked> RadiosClicked { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

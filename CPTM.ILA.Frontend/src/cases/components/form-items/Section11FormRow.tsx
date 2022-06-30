@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useFieldArray, UseFormReturn } from "react-hook-form";
+import {
+    useFieldArray,
+    UseFormReturn,
+    Controller,
+    FieldPath,
+} from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,36 +19,22 @@ import {
 import { CaseIndexDictionary } from "../../../shared/models/case-index.dictionary";
 import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
 import NewSection11FormRowSub from "./Section11FormRowSub";
+import { statusRadios } from "../../../shared/models/case-helpers/enums.model";
 
 const Section11FormRow = (props: {
     disabled: boolean;
     methods: UseFormReturn<Case>;
-    radioCheckedHandler: (radioChackedName: string) => void;
-    isNew: boolean;
 }) => {
     const { fields, append, remove } = useFieldArray({
         control: props.methods.control, // control props comes from useForm
         name: "compartilhamentoDadosPessoais" as const, // unique name for your Field Array
     });
 
-    const [trata, setTrata] = useState(props.isNew ? "INVALID" : "NÃO");
-
-    useEffect(() => {
-        if (fields && fields.length > 0) {
-            setTrata("SIM");
-        }
-        return () => {};
-    }, [fields, props.isNew]);
-
-    const handleTrataRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setTrata(event.currentTarget.value);
-        if (event.currentTarget.value !== "INVALID") {
-            props.radioCheckedHandler("compartilhamentoDadosPessoais");
-        }
-        if (event.currentTarget.value === "NÃO") {
+    const handleTrataRadio = (status: statusRadios) => {
+        if (status === statusRadios.NÃO) {
             props.methods.setValue("compartilhamentoDadosPessoais", []);
         }
-        if (event.currentTarget.value === "SIM") {
+        if (status === statusRadios.SIM) {
             append(emptyItemCompatilhamentoDados());
         }
     };
@@ -52,39 +43,66 @@ const Section11FormRow = (props: {
         <React.Fragment>
             <Row>
                 <Col className="d-grid justify-content-center">
-                    <Form.Check
-                        type="radio"
-                        name={`trata-compartilhamentoDadosPessoais`}
-                        required
-                        label="Sim"
-                        value="SIM"
-                        checked={trata === "SIM"}
-                        disabled={props.disabled}
-                        onChange={handleTrataRadio}
-                        isInvalid={trata === "INVALID"}
-                    />
-                    <Form.Check
-                        type="radio"
-                        name={`trata-compartilhamentoDadosPessoais`}
-                        required
-                        inline
-                        label="Não"
-                        value="NÃO"
-                        checked={trata === "NÃO"}
-                        disabled={props.disabled}
-                        onChange={handleTrataRadio}
-                        isInvalid={trata === "INVALID"}
-                    />
-                    <Form.Check
-                        type="radio"
-                        name={`trata-compartilhamentoDadosPessoais`}
-                        required
-                        inline
-                        value="INVALID"
-                        checked={trata === "INVALID"}
-                        disabled={props.disabled}
-                        onChange={handleTrataRadio}
-                        style={{ display: "none" }}
+                    <Controller
+                        rules={{
+                            validate: {
+                                required: (value) => {
+                                    if (value === statusRadios.INVALID)
+                                        return false;
+                                    return true;
+                                },
+                            },
+                        }}
+                        control={props.methods.control}
+                        name={
+                            `radiosClicked.compartilhamentoDadosPessoais` as FieldPath<Case>
+                        }
+                        render={({
+                            field: { onChange, onBlur, value, ref },
+                        }) => (
+                            <React.Fragment>
+                                <Form.Check
+                                    type="radio"
+                                    name={`radiosClicked.compartilhamentoDadosPessoais-1`}
+                                    label="Sim"
+                                    value={statusRadios.SIM}
+                                    checked={
+                                        (value as statusRadios) ===
+                                        statusRadios.SIM
+                                    }
+                                    disabled={props.disabled}
+                                    onChange={(val) => {
+                                        if (val.target.value === "2") {
+                                            handleTrataRadio(statusRadios.SIM);
+                                            onChange(statusRadios.SIM);
+                                        }
+                                    }}
+                                    isInvalid={value === statusRadios.INVALID}
+                                    onBlur={onBlur}
+                                    ref={ref}
+                                />
+                                <Form.Check
+                                    type="radio"
+                                    name={`radiosClicked.compartilhamentoDadosPessoais-1`}
+                                    label="Não"
+                                    value={statusRadios.NÃO}
+                                    checked={
+                                        (value as statusRadios) ===
+                                        statusRadios.NÃO
+                                    }
+                                    disabled={props.disabled}
+                                    onChange={(val) => {
+                                        if (val.target.value === "1") {
+                                            handleTrataRadio(statusRadios.NÃO);
+                                            onChange(statusRadios.NÃO);
+                                        }
+                                    }}
+                                    isInvalid={value === statusRadios.INVALID}
+                                    onBlur={onBlur}
+                                    ref={ref}
+                                />
+                            </React.Fragment>
+                        )}
                     />
                 </Col>
                 <Form.Label as={Col}></Form.Label>
@@ -136,7 +154,15 @@ const Section11FormRow = (props: {
                                     <Button
                                         variant="danger"
                                         disabled={props.disabled}
-                                        onClick={() => remove(index)}
+                                        onClick={() => {
+                                            remove(index);
+                                            if (fields.length - 1 < 1) {
+                                                props.methods.setValue(
+                                                    `radiosClicked.compartilhamentoDadosPessoais` as FieldPath<Case>,
+                                                    statusRadios.INVALID
+                                                );
+                                            }
+                                        }}
                                     >
                                         -
                                     </Button>
@@ -152,7 +178,13 @@ const Section11FormRow = (props: {
                                 onClick={() =>
                                     append(emptyItemCompatilhamentoDados())
                                 }
-                                disabled={!(trata === "SIM")}
+                                disabled={
+                                    !(
+                                        props.methods.watch(
+                                            `radiosClicked.compartilhamentoDadosPessoais` as FieldPath<Case>
+                                        ) === statusRadios.SIM
+                                    )
+                                }
                             >
                                 +
                             </Button>

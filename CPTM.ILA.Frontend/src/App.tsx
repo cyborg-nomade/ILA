@@ -66,6 +66,9 @@ const AlterComiteMemberCockpit = React.lazy(
     () => import("./access-requests/pages/AlterComiteMemberCockpit")
 );
 const DpoHomePage = React.lazy(() => import("./users/pages/DpoHomePage"));
+const DpoAllCasesListGetter = React.lazy(
+    () => import("./users/pages/DpoAllCasesListGetter")
+);
 
 const App = () => {
     const {
@@ -178,11 +181,16 @@ const App = () => {
         routes = (
             <React.Fragment>
                 <Route path="/dpo" element={<DpoHomePage />}>
-                    <Route
-                        path="cases"
-                        element={<DpoInventarioCasesListGetter />}
-                    >
+                    <Route path="cases" element={<DpoHomePage />}>
+                        <Route index element={<DpoAllCasesListGetter />} />
                         <Route path=":cid" element={<CheckCase />} />
+                        <Route path="inventario" element={<DpoHomePage />}>
+                            <Route
+                                index
+                                element={<DpoInventarioCasesListGetter />}
+                            />
+                            <Route path=":cid" element={<CheckCase />} />
+                        </Route>
                     </Route>
                 </Route>
                 <Route path="/dpo" element={<DpoPage />}>

@@ -12,6 +12,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { Case } from "../../../shared/models/cases.model";
 import { tipoCategoriaTitulares } from "../../../shared/models/case-helpers/enums.model";
 import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
+import { AiFillQuestionCircle } from "react-icons/ai";
 
 const Section10FormRow = (props: {
     label: string;
@@ -48,7 +49,9 @@ const Section10FormRow = (props: {
                         </Tooltip>
                     }
                 >
-                    <Form.Label as={Col}>{props.label}</Form.Label>
+                    <Form.Label as={Col}>
+                        {props.label} <AiFillQuestionCircle />
+                    </Form.Label>
                 </OverlayTrigger>
             ) : (
                 <Form.Label as={Col}>{props.label}</Form.Label>

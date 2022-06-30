@@ -10,12 +10,11 @@ import { Case } from "../../../shared/models/cases.model";
 import { CaseIndexDictionary } from "../../../shared/models/case-index.dictionary";
 import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
 import { statusRadios } from "../../../shared/models/case-helpers/enums.model";
+import { AiFillQuestionCircle } from "react-icons/ai";
 
 const Section3FormRow = (props: {
     disabled: boolean;
     methods: UseFormReturn<Case>;
-    radioCheckedHandler: (radioChackedName: string) => void;
-    isNew: boolean;
 }) => {
     const handleTrataRadio = (status: statusRadios) => {
         if (status === statusRadios.NÃO) {
@@ -48,7 +47,8 @@ const Section3FormRow = (props: {
                     }
                 >
                     <Form.Label>
-                        {CaseIndexDictionary.fasesCicloTratamento.title}
+                        {CaseIndexDictionary.fasesCicloTratamento.title}{" "}
+                        <AiFillQuestionCircle />
                     </Form.Label>
                 </OverlayTrigger>
             </Col>

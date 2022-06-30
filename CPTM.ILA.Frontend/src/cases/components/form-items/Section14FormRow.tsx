@@ -24,8 +24,6 @@ import { statusRadios } from "../../../shared/models/case-helpers/enums.model";
 const Section14FormRow = (props: {
     disabled: boolean;
     methods: UseFormReturn<Case>;
-    radioCheckedHandler: (radioChackedName: string) => void;
-    isNew: boolean;
 }) => {
     const { fields, append, remove } = useFieldArray({
         control: props.methods.control, // control props comes from useForm

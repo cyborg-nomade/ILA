@@ -1210,9 +1210,22 @@ namespace CPTM.ILA.Web.Controllers.API
                     _context.FinalidadesTratamento.Remove(caseInDb.FinalidadeTratamento);
                 }
 
-                if (caseToSave.CategoriasTitulares.Id != caseInDb.CategoriasTitulares.Id)
+                foreach (var item in caseInDb.CategoriasTitulares.Categorias.ToList()
+                             .Where(item => caseToSave.CategoriasTitulares.Categorias.All(c => c.Id != item.Id)))
                 {
-                    _context.CategoriasTitulares.Remove(caseInDb.CategoriasTitulares);
+                    _context.ItensCategoriaTitulares.Remove(item);
+                }
+
+                if (caseToSave.CategoriasTitulares.CriancasAdolescentes.Id !=
+                    caseInDb.CategoriasTitulares.CriancasAdolescentes.Id)
+                {
+                    _context.ItensCategoriaTitularesExtra.Remove(caseInDb.CategoriasTitulares.CriancasAdolescentes);
+                }
+
+                if (caseToSave.CategoriasTitulares.OutrosGruposVulneraveis.Id !=
+                    caseInDb.CategoriasTitulares.OutrosGruposVulneraveis.Id)
+                {
+                    _context.ItensCategoriaTitularesExtra.Remove(caseInDb.CategoriasTitulares.OutrosGruposVulneraveis);
                 }
 
                 foreach (var item in caseInDb.ItensCategoriaDadosPessoais.ToList()
@@ -1386,21 +1399,57 @@ namespace CPTM.ILA.Web.Controllers.API
                     caseInDb.FinalidadeTratamento = newFinalidadeTratamento;
                 }
 
-                var categoriasTitularesInDb = caseInDb.CategoriasTitulares;
-                if (categoriasTitularesInDb != null)
+                foreach (var item in caseToSave.CategoriasTitulares.Categorias)
+                {
+                    var itemInDb =
+                        caseInDb.CategoriasTitulares.Categorias.SingleOrDefault(i => i.Id == item.Id && i.Id != 0);
+                    if (itemInDb != null)
+                        // Update child
+                        _context.Entry(itemInDb)
+                            .CurrentValues.SetValues(item);
+                    else
+                    {
+                        // Insert child
+                        var newItem = new ItemCategoriaTitulares()
+                        {
+                            Descricao = item.Descricao,
+                            TipoCategoria = item.TipoCategoria
+                        };
+                        caseInDb.CategoriasTitulares.Categorias.Add(newItem);
+                    }
+                }
+
+                var categoriasTitularesCriancasAdolescentesInDb = caseInDb.CategoriasTitulares.CriancasAdolescentes;
+                if (categoriasTitularesCriancasAdolescentesInDb != null)
                     // Update child
-                    _context.Entry(categoriasTitularesInDb)
-                        .CurrentValues.SetValues(caseToSave.CategoriasTitulares);
+                    _context.Entry(categoriasTitularesCriancasAdolescentesInDb)
+                        .CurrentValues.SetValues(caseToSave.CategoriasTitulares.CriancasAdolescentes);
                 else
                 {
                     // Insert child
-                    var newCategoriasTitulares = new CategoriasTitulares()
+                    var newCategoriasTitulares = new ItemCategoriaTitularesExtra()
                     {
-                        Categorias = caseToSave.CategoriasTitulares.Categorias,
-                        CriancasAdolescentes = caseToSave.CategoriasTitulares.CriancasAdolescentes,
-                        OutrosGruposVulneraveis = caseToSave.CategoriasTitulares.OutrosGruposVulneraveis,
+                        DescricaoDados = categoriasTitularesCriancasAdolescentesInDb.DescricaoDados,
+                        TrataDados = categoriasTitularesCriancasAdolescentesInDb.TrataDados,
                     };
-                    caseInDb.CategoriasTitulares = newCategoriasTitulares;
+                    caseInDb.CategoriasTitulares.CriancasAdolescentes = newCategoriasTitulares;
+                }
+
+                var categoriasTitularesOutrosGruposVulneraveisInDb =
+                    caseInDb.CategoriasTitulares.OutrosGruposVulneraveis;
+                if (categoriasTitularesOutrosGruposVulneraveisInDb != null)
+                    // Update child
+                    _context.Entry(categoriasTitularesOutrosGruposVulneraveisInDb)
+                        .CurrentValues.SetValues(caseToSave.CategoriasTitulares.OutrosGruposVulneraveis);
+                else
+                {
+                    // Insert child
+                    var newCategoriasTitulares = new ItemCategoriaTitularesExtra()
+                    {
+                        DescricaoDados = categoriasTitularesOutrosGruposVulneraveisInDb.DescricaoDados,
+                        TrataDados = categoriasTitularesOutrosGruposVulneraveisInDb.TrataDados,
+                    };
+                    caseInDb.CategoriasTitulares.OutrosGruposVulneraveis = newCategoriasTitulares;
                 }
 
                 foreach (var item in caseToSave.ItensCategoriaDadosPessoais)

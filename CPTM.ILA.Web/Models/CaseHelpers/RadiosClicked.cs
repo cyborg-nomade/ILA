@@ -68,7 +68,7 @@ namespace CPTM.ILA.Web.Models.CaseHelpers
         [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicas.situacaoImigracao")]
         public StatusRadios CategoriaDadosPessoaisCaracteristicasSituacaoImigracao { get; set; }
 
-        [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicas.situacaoImigracao")]
+        [JsonProperty(PropertyName = "categoriaDadosPessoais.caracteristicas.descricaoFisica")]
         public StatusRadios CategoriaDadosPessoaisCaracteristicasDescricaoFisica { get; set; }
 
         [JsonProperty(PropertyName = "categoriaDadosPessoais.habitos.habitosPessoais")]

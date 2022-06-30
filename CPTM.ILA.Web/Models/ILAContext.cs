@@ -36,6 +36,8 @@ namespace CPTM.ILA.Web.Models
         public virtual DbSet<CategoriasTitulares> CategoriasTitulares { get; set; }
         public virtual DbSet<FasesCicloTratamento> FasesCicloTratamento { get; set; }
         public virtual DbSet<FinalidadeTratamento> FinalidadesTratamento { get; set; }
+        public virtual DbSet<ItemCategoriaTitulares> ItensCategoriaTitulares { get; set; }
+        public virtual DbSet<ItemCategoriaTitularesExtra> ItensCategoriaTitularesExtra { get; set; }
         public virtual DbSet<ItemCategoriaDadosPessoais> ItensCategoriaDadosPessoais { get; set; }
         public virtual DbSet<ItemCompartilhamentoDados> ItensCompartilhamentoDados { get; set; }
         public virtual DbSet<ItemContratoTi> ItensContratoTi { get; set; }

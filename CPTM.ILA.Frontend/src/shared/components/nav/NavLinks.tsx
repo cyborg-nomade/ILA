@@ -36,11 +36,16 @@ const NavLinks = () => {
             )}
             {isLoggedIn && user.isComite && user.isDPO && (
                 <Nav.Link as={NavLink} to={`dpo/cases/`}>
+                    Todos os Processos
+                </Nav.Link>
+            )}
+            {isLoggedIn && user.isComite && user.isDPO && (
+                <Nav.Link as={NavLink} to={`dpo/cases/inventario/`}>
                     Inventário
                 </Nav.Link>
             )}
             {isLoggedIn && user.isComite && user.isDPO && (
-                <Nav.Link as={NavLink} to={`dpo/cases/pending`}>
+                <Nav.Link as={NavLink} to={`dpo/cases/pending/`}>
                     Pendentes
                 </Nav.Link>
             )}
@@ -65,18 +70,18 @@ const NavLinks = () => {
                 </Nav.Link>
             )}
             {isLoggedIn && user.isComite && user.isDPO && (
-                <Nav.Link as={NavLink} to={`/dpo/alter-comite-members`}>
+                <Nav.Link as={NavLink} to={`/dpo/alter-comite-members/`}>
                     Gerir Comitê
                 </Nav.Link>
             )}
             {isLoggedIn && user.isComite && user.isDPO && (
-                <Nav.Link as={NavLink} to={`/dpo/alter-users`}>
+                <Nav.Link as={NavLink} to={`/dpo/alter-users/`}>
                     Gerir Usuários
                 </Nav.Link>
             )}
             {isLoggedIn && <Nav.Link onClick={logout}>Sair</Nav.Link>}
             {!isLoggedIn && (
-                <Nav.Link as={NavLink} to="/login">
+                <Nav.Link as={NavLink} to="/login/">
                     Login
                 </Nav.Link>
             )}

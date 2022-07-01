@@ -27,6 +27,7 @@ namespace CPTM.ILA.Web.DTOs
         public bool Reprovado { get; set; }
         public bool EncaminhadoAprovacao { get; set; }
         public string ComiteMemberResp { get; set; }
+        public string StatusTexto { get; set; }
 
         public static CaseListItem ReduceToListItem(Case fullCase) =>
             new CaseListItem()
@@ -45,7 +46,12 @@ namespace CPTM.ILA.Web.DTOs
                 Aprovado = fullCase.Aprovado,
                 Reprovado = fullCase.Reprovado,
                 EncaminhadoAprovacao = fullCase.EncaminhadoAprovacao,
-                ComiteMemberResp = GetGroupComiteMemberRespNome(fullCase.GrupoCriadorId)
+                ComiteMemberResp = GetGroupComiteMemberRespNome(fullCase.GrupoCriadorId),
+                StatusTexto = fullCase.Aprovado
+                    ? "Concluído"
+                    : (fullCase.Reprovado
+                        ? "Reprovado"
+                        : (fullCase.EncaminhadoAprovacao ? "Pendente Aprovação" : "Em Preenchimento")),
             };
 
 
@@ -65,7 +71,7 @@ namespace CPTM.ILA.Web.DTOs
 
             if (selectedComiteMember == null)
             {
-                return "OLIVIA SHIBATA NISHIYAMA";
+                return "GRUPO SEM RESPONSÁVEL";
             }
 
             var comiteMemberUserAd = Seguranca.ObterUsuario(selectedComiteMember.Username.ToUpper());

@@ -6,6 +6,7 @@ using CPTM.ActiveDirectory;
 using CPTM.ILA.Web.Models.CaseHelpers;
 using CPTM.ILA.Web.Models.CaseHelpers.Enums;
 using CPTM.GNU.Library;
+using CPTMILAWebModelsCaseHelpers;
 
 namespace CPTM.ILA.Web.Models
 {
@@ -55,6 +56,7 @@ namespace CPTM.ILA.Web.Models
         public ICollection<ItemContratoTi> ContratoServicosTi { get; set; }
         public ICollection<ItemRiscoPrivacidade> RiscosPrivacidade { get; set; }
         public ICollection<ItemObservacoesProcesso> ObservacoesProcesso { get; set; }
+        public RadiosClicked RadiosClicked { get; set; }
 
         public Case FillStandardValues()
         {

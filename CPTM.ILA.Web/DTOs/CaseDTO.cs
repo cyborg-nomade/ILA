@@ -6,7 +6,9 @@ using CPTM.ILA.Web.DTOs.CaseHelpers.CategoriasDadosPessoais;
 using CPTM.ILA.Web.Models;
 using CPTM.ILA.Web.Models.CaseHelpers;
 using CPTM.ILA.Web.Models.CaseHelpers.Enums;
+using CPTMILAWebModelsCaseHelpers;
 using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
 
 namespace CPTM.ILA.Web.DTOs
 {
@@ -56,6 +58,7 @@ namespace CPTM.ILA.Web.DTOs
         public ICollection<ItemContratoTi> ContratoServicosTITratamentoDados { get; set; }
         public ICollection<ItemRiscoPrivacidade> RiscosPrivacidade { get; set; }
         public ICollection<ItemObservacoesProcesso> ObservacoesProcesso { get; set; }
+        public RadiosClicked RadiosClicked { get; set; }
 
         public static CaseDTO ConvertToCaseDTO(Case fullCase)
         {
@@ -273,6 +276,7 @@ namespace CPTM.ILA.Web.DTOs
                 RiscosPrivacidade = fullCase.RiscosPrivacidade,
                 TransferenciaInternacional = fullCase.TransferenciaInternacional,
                 UsernameResponsavel = fullCase.UsernameResponsavel,
+                RadiosClicked = fullCase.RadiosClicked,
             };
             return caseDto;
         }
@@ -317,7 +321,8 @@ namespace CPTM.ILA.Web.DTOs
                 QtdeDadosSensiveisTratados = caseDto.QtdeDadosSensiveisTratados,
                 QtdeDadosTratados = caseDto.QtdeDadosTratados,
                 RiscosPrivacidade = caseDto.RiscosPrivacidade,
-                TransferenciaInternacional = caseDto.TransferenciaInternacional
+                TransferenciaInternacional = caseDto.TransferenciaInternacional,
+                RadiosClicked = caseDto.RadiosClicked
             };
             return fullCase;
         }

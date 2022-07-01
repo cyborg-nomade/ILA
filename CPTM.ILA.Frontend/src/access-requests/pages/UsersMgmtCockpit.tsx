@@ -9,10 +9,8 @@ import Spinner from "react-bootstrap/Spinner";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 
-import { ComiteMember } from "../../shared/models/DTOs/comite-member";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import { ActionMeta, OptionsOrGroups, SingleValue } from "react-select";
 import { useNavigate } from "react-router-dom";
 import { UserDto } from "../../shared/models/DTOs/user-dto";
 
@@ -25,8 +23,6 @@ const UsersMgmtCockpit = () => {
     const [showUsers, setShowUsers] = useState<UserDto[]>([]);
     const [userSearch, setUserSearch] = useState("");
     const [message, setMessage] = useState("");
-
-    let navigate = useNavigate();
 
     useEffect(() => {
         const getAllUsers = async () => {
@@ -42,8 +38,12 @@ const UsersMgmtCockpit = () => {
 
             const loadedUsers: UserDto[] = responseData.users;
             console.log("loadedUsers: ", loadedUsers);
-            setUsers(loadedUsers);
-            setShowUsers(loadedUsers);
+            const sortedUsers = loadedUsers.sort((a, b) =>
+                a.nome > b.nome ? 1 : -1
+            );
+
+            setUsers(sortedUsers);
+            setShowUsers(sortedUsers);
         };
 
         getAllUsers().catch((error) => {

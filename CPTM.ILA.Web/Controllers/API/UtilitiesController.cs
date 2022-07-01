@@ -104,7 +104,10 @@ namespace CPTM.ILA.Web.Controllers.API
 
         //        return Request.CreateResponse(HttpStatusCode.OK, new
         //        {
-        //            erro, chamadoAbertoDuvida, chamadoAbertoAcessoGrupos, chamadoAbertoAcessoSistema,
+        //            erro,
+        //            chamadoAbertoDuvida,
+        //            chamadoAbertoAcessoGrupos,
+        //            chamadoAbertoAcessoSistema,
         //            message = "ITSM com sucesso!"
         //        });
         //    }

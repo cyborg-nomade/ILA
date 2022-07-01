@@ -97,11 +97,11 @@ const NewCase = () => {
 
     const hideSaveProgressModalHandler = () => {
         setShowSaveProgressModal(false);
+        clearError();
     };
 
     const saveProgressHandler = async () => {
         console.log("save progress, Initial item: ", initialCase);
-        setInitialCase(initialCase);
 
         initialCase.grupoCriadorId = currentGroup.id;
         initialCase.usernameResponsavel = user.username;
@@ -172,11 +172,11 @@ const NewCase = () => {
 
     const hideSendToApprovalModalHandler = () => {
         setShowSendToApprovalModal(false);
+        clearError();
     };
 
     const sendToApprovalHandler = async () => {
         console.log("send to approval, Initial item: ", initialCase);
-        setInitialCase(initialCase);
 
         initialCase.grupoCriadorId = currentGroup.id;
         initialCase.usernameResponsavel = user.username;

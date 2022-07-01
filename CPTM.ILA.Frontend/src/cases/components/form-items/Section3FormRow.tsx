@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Controller, UseFormReturn } from "react-hook-form";
+import { Controller, UseFormReturn, useWatch } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,36 +9,15 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { Case } from "../../../shared/models/cases.model";
 import { CaseIndexDictionary } from "../../../shared/models/case-index.dictionary";
 import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
+import { statusRadios } from "../../../shared/models/case-helpers/enums.model";
+import { AiFillQuestionCircle } from "react-icons/ai";
 
 const Section3FormRow = (props: {
     disabled: boolean;
     methods: UseFormReturn<Case>;
-    radioCheckedHandler: (radioChackedName: string) => void;
-    isNew: boolean;
 }) => {
-    const { getValues } = props.methods;
-    const [atua, setAtua] = useState("INVALID");
-
-    useEffect(() => {
-        const values = getValues();
-        for (const value of Object.values(values.fasesCicloTratamento)) {
-            if (value) {
-                setAtua("SIM");
-            } else if (props.isNew) {
-                setAtua("INVALID");
-            } else {
-                setAtua("NÃO");
-            }
-        }
-        return () => {};
-    }, [getValues, props.isNew]);
-
-    const handleTrataRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.value === "SIM") {
-            setAtua("SIM");
-        }
-        if (event.currentTarget.value === "NÃO") {
-            setAtua("NÃO");
+    const handleTrataRadio = (status: statusRadios) => {
+        if (status === statusRadios.NÃO) {
             props.methods.setValue("fasesCicloTratamento.coleta", false);
             props.methods.setValue("fasesCicloTratamento.retencao", false);
             props.methods.setValue("fasesCicloTratamento.processamento", false);
@@ -47,9 +26,6 @@ const Section3FormRow = (props: {
                 false
             );
             props.methods.setValue("fasesCicloTratamento.eliminacao", false);
-        }
-        if (event.currentTarget.value !== "INVALID") {
-            props.radioCheckedHandler("fasesCicloTratamento");
         }
     };
 
@@ -71,44 +47,66 @@ const Section3FormRow = (props: {
                     }
                 >
                     <Form.Label>
-                        {CaseIndexDictionary.fasesCicloTratamento.title}
+                        {CaseIndexDictionary.fasesCicloTratamento.title}{" "}
+                        <AiFillQuestionCircle />
                     </Form.Label>
                 </OverlayTrigger>
             </Col>
             <Col className="d-grid justify-content-center">
-                <Form.Check
-                    type="radio"
-                    name="atua"
-                    required
-                    label="Sim"
-                    value="SIM"
-                    checked={atua === "SIM"}
-                    disabled={props.disabled}
-                    onChange={handleTrataRadio}
-                    isInvalid={atua === "INVALID"}
-                />
-                <Form.Check
-                    type="radio"
-                    name="atua"
-                    required
-                    inline
-                    label="Não"
-                    value="NÃO"
-                    checked={atua === "NÃO"}
-                    disabled={props.disabled}
-                    onChange={handleTrataRadio}
-                    isInvalid={atua === "INVALID"}
-                />
-                <Form.Check
-                    type="radio"
-                    name="atua"
-                    required
-                    inline
-                    value="INVALID"
-                    checked={atua === "INVALID"}
-                    disabled={props.disabled}
-                    onChange={handleTrataRadio}
-                    style={{ display: "none" }}
+                <Controller
+                    rules={{
+                        validate: {
+                            required: (value) => {
+                                if (value === statusRadios.INVALID)
+                                    return false;
+                                return true;
+                            },
+                        },
+                    }}
+                    control={props.methods.control}
+                    name="radiosClicked.fasesCicloTratamento"
+                    render={({ field: { onChange, onBlur, value, ref } }) => (
+                        <React.Fragment>
+                            <Form.Check
+                                type="radio"
+                                name="radiosClicked.fasesCicloTratamento-1"
+                                label="Sim"
+                                value={statusRadios.SIM}
+                                checked={
+                                    (value as statusRadios) === statusRadios.SIM
+                                }
+                                disabled={props.disabled}
+                                onChange={(val) => {
+                                    if (val.target.value === "2") {
+                                        handleTrataRadio(statusRadios.SIM);
+                                        onChange(statusRadios.SIM);
+                                    }
+                                }}
+                                isInvalid={value === statusRadios.INVALID}
+                                onBlur={onBlur}
+                                ref={ref}
+                            />
+                            <Form.Check
+                                type="radio"
+                                name="radiosClicked.fasesCicloTratamento-1"
+                                label="Não"
+                                value={statusRadios.NÃO}
+                                checked={
+                                    (value as statusRadios) === statusRadios.NÃO
+                                }
+                                disabled={props.disabled}
+                                onChange={(val) => {
+                                    if (val.target.value === "1") {
+                                        handleTrataRadio(statusRadios.NÃO);
+                                        onChange(statusRadios.NÃO);
+                                    }
+                                }}
+                                isInvalid={value === statusRadios.INVALID}
+                                onBlur={onBlur}
+                                ref={ref}
+                            />
+                        </React.Fragment>
+                    )}
                 />
             </Col>
             <Col className="d-grid justify-content-center">
@@ -117,7 +115,13 @@ const Section3FormRow = (props: {
                     name="fasesCicloTratamento.coleta"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <Form.Check
-                            disabled={!(atua === "SIM") || props.disabled}
+                            disabled={
+                                !(
+                                    props.methods.watch(
+                                        "radiosClicked.fasesCicloTratamento"
+                                    ) === statusRadios.SIM
+                                ) || props.disabled
+                            }
                             type="checkbox"
                             onChange={onChange}
                             onBlur={onBlur}
@@ -137,7 +141,13 @@ const Section3FormRow = (props: {
                     name="fasesCicloTratamento.retencao"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <Form.Check
-                            disabled={!(atua === "SIM") || props.disabled}
+                            disabled={
+                                !(
+                                    props.methods.watch(
+                                        "radiosClicked.fasesCicloTratamento"
+                                    ) === statusRadios.SIM
+                                ) || props.disabled
+                            }
                             type="checkbox"
                             onChange={onChange}
                             onBlur={onBlur}
@@ -157,7 +167,13 @@ const Section3FormRow = (props: {
                     name="fasesCicloTratamento.processamento"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <Form.Check
-                            disabled={!(atua === "SIM") || props.disabled}
+                            disabled={
+                                !(
+                                    props.methods.watch(
+                                        "radiosClicked.fasesCicloTratamento"
+                                    ) === statusRadios.SIM
+                                ) || props.disabled
+                            }
                             type="checkbox"
                             onChange={onChange}
                             onBlur={onBlur}
@@ -177,7 +193,13 @@ const Section3FormRow = (props: {
                     name="fasesCicloTratamento.compartilhamento"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <Form.Check
-                            disabled={!(atua === "SIM") || props.disabled}
+                            disabled={
+                                !(
+                                    props.methods.watch(
+                                        "radiosClicked.fasesCicloTratamento"
+                                    ) === statusRadios.SIM
+                                ) || props.disabled
+                            }
                             type="checkbox"
                             onChange={onChange}
                             onBlur={onBlur}
@@ -197,7 +219,13 @@ const Section3FormRow = (props: {
                     name="fasesCicloTratamento.eliminacao"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
                         <Form.Check
-                            disabled={!(atua === "SIM") || props.disabled}
+                            disabled={
+                                !(
+                                    props.methods.watch(
+                                        "radiosClicked.fasesCicloTratamento"
+                                    ) === statusRadios.SIM
+                                ) || props.disabled
+                            }
                             type="checkbox"
                             onChange={onChange}
                             onBlur={onBlur}

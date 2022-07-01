@@ -32,6 +32,7 @@ import {
 } from "./categoria-dados-pessoais.model";
 import {
     hipotesesTratamento,
+    statusRadios,
     tipoCategoriaTitulares,
     tipoCompartilhamentoDados,
     tipoFinalidadeCompartilhamento,
@@ -131,7 +132,7 @@ export interface CategoriaTitulares {
 }
 
 export const emptyCategoriaTitulares = (): CategoriaTitulares => ({
-    categorias: [],
+    categorias: [emptyItemCategoriaTitulares()],
     criancasAdolescentes: emptyItemCategoriaTitularesExtra(),
     outrosGruposVulneraveis: emptyItemCategoriaTitularesExtra(),
 });
@@ -280,3 +281,165 @@ export const emptyItemTransferenciaInternacional =
         dadosTransferidos: "",
         tipoGarantia: "",
     });
+
+export interface radiosClicked {
+    hasOperador: statusRadios;
+    fasesCicloTratamento: statusRadios;
+    categoriaDadosPessoaisidentificacaoidPessoal: statusRadios;
+    categoriaDadosPessoaisidentificacaoidGov: statusRadios;
+    categoriaDadosPessoaisidentificacaoidEletronica: statusRadios;
+    categoriaDadosPessoaisidentificacaolocEletronica: statusRadios;
+    categoriaDadosPessoaisfinanceirosidFin: statusRadios;
+    categoriaDadosPessoaisfinanceirosrecursosFin: statusRadios;
+    categoriaDadosPessoaisfinanceirosdividasDespesas: statusRadios;
+    categoriaDadosPessoaisfinanceirossolvencia: statusRadios;
+    categoriaDadosPessoaisfinanceirosemprestimosHipotecaCredito: statusRadios;
+    categoriaDadosPessoaisfinanceirosassistenciaFin: statusRadios;
+    categoriaDadosPessoaisfinanceirosapoliceSeguro: statusRadios;
+    categoriaDadosPessoaisfinanceirosplanoPensao: statusRadios;
+    categoriaDadosPessoaisfinanceirostransacaoFin: statusRadios;
+    categoriaDadosPessoaisfinanceiroscompensacao: statusRadios;
+    categoriaDadosPessoaisfinanceirosatividadeProfissional: statusRadios;
+    categoriaDadosPessoaisfinanceirosacordosAjustes: statusRadios;
+    categoriaDadosPessoaisfinanceirosautorizacoesConsentimentos: statusRadios;
+    categoriaDadosPessoaiscaracteristicasdetalhesPessoais: statusRadios;
+    categoriaDadosPessoaiscaracteristicasdetalhesMilitares: statusRadios;
+    categoriaDadosPessoaiscaracteristicassituacaoImigracao: statusRadios;
+    categoriaDadosPessoaiscaracteristicasdescricaoFisica: statusRadios;
+    categoriaDadosPessoaishabitoshabitosPessoais: statusRadios;
+    categoriaDadosPessoaishabitosestiloVida: statusRadios;
+    categoriaDadosPessoaishabitosviagensDeslocamento: statusRadios;
+    categoriaDadosPessoaishabitoscontatosSociais: statusRadios;
+    categoriaDadosPessoaishabitosposses: statusRadios;
+    categoriaDadosPessoaishabitosdenunciasIncAcidentes: statusRadios;
+    categoriaDadosPessoaishabitosdistincoes: statusRadios;
+    categoriaDadosPessoaishabitosusoMidia: statusRadios;
+    categoriaDadosPessoaiscaracteristicasPsicologicasdescricaoPsi: statusRadios;
+    categoriaDadosPessoaiscomposicaoFamiliarcasamentoCoabitacao: statusRadios;
+    categoriaDadosPessoaiscomposicaoFamiliarhistoricoConjugal: statusRadios;
+    categoriaDadosPessoaiscomposicaoFamiliarmembrosFamilia: statusRadios;
+    categoriaDadosPessoaisinteressesLazeratividadesInteressesLaz: statusRadios;
+    categoriaDadosPessoaisassociacoesoutrasAssNaoSensiveis: statusRadios;
+    categoriaDadosPessoaisprocessoJudAdmCrimsuspeitas: statusRadios;
+    categoriaDadosPessoaisprocessoJudAdmCrimcondenacoesSentencas: statusRadios;
+    categoriaDadosPessoaisprocessoJudAdmCrimacoesJud: statusRadios;
+    categoriaDadosPessoaisprocessoJudAdmCrimpenalidadesAdm: statusRadios;
+    categoriaDadosPessoaishabitosConsumodadosBensServicos: statusRadios;
+    categoriaDadosPessoaisresidenciaisdadosResidencia: statusRadios;
+    categoriaDadosPessoaiseducacaoTreinamentoacademicosEscolares: statusRadios;
+    categoriaDadosPessoaiseducacaoTreinamentoregistroFinanceiro: statusRadios;
+    categoriaDadosPessoaiseducacaoTreinamentoqualificacaoExperienciaProf: statusRadios;
+    categoriaDadosPessoaisprofissaoEmpregoempregoAtual: statusRadios;
+    categoriaDadosPessoaisprofissaoEmpregorecrutamento: statusRadios;
+    categoriaDadosPessoaisprofissaoEmpregorescisao: statusRadios;
+    categoriaDadosPessoaisprofissaoEmpregocarreira: statusRadios;
+    categoriaDadosPessoaisprofissaoEmpregoabsenteismoDisciplina: statusRadios;
+    categoriaDadosPessoaisprofissaoEmpregoavaliacaoDesempenho: statusRadios;
+    categoriaDadosPessoaisregVideoImgVozvideoImagem: statusRadios;
+    categoriaDadosPessoaisregVideoImgVozimagemVigilancia: statusRadios;
+    categoriaDadosPessoaisregVideoImgVozvoz: statusRadios;
+    categoriaDadosPessoaisoutrosoutrosItems: statusRadios;
+    catDadosPessoaisSensiveisorigemRacialEtnica: statusRadios;
+    catDadosPessoaisSensiveisconviccaoReligiosa: statusRadios;
+    catDadosPessoaisSensiveisopiniaoPolitica: statusRadios;
+    catDadosPessoaisSensiveisfiliacaoSindicato: statusRadios;
+    catDadosPessoaisSensiveisfiliacaoOrgReligiosa: statusRadios;
+    catDadosPessoaisSensiveisfiliacaoCrencaFilosofica: statusRadios;
+    catDadosPessoaisSensiveisfiliacaoPreferenciaPolitica: statusRadios;
+    catDadosPessoaisSensiveissaudeVidaSexual: statusRadios;
+    catDadosPessoaisSensiveisgeneticos: statusRadios;
+    catDadosPessoaisSensiveisbiometricos: statusRadios;
+    compartilhamentoDadosPessoais: statusRadios;
+    transferenciaInternacional: statusRadios;
+    contratoServicosTITratamentoDados: statusRadios;
+}
+
+export const emptyRadiosClicked = (): radiosClicked => ({
+    hasOperador: statusRadios.INVALID,
+    fasesCicloTratamento: statusRadios.INVALID,
+    categoriaDadosPessoaisidentificacaoidPessoal: statusRadios.INVALID,
+    categoriaDadosPessoaisidentificacaoidGov: statusRadios.INVALID,
+    categoriaDadosPessoaisidentificacaoidEletronica: statusRadios.INVALID,
+    categoriaDadosPessoaisidentificacaolocEletronica: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosidFin: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosrecursosFin: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosdividasDespesas: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirossolvencia: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosemprestimosHipotecaCredito:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosassistenciaFin: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosapoliceSeguro: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosplanoPensao: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirostransacaoFin: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceiroscompensacao: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosatividadeProfissional:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosacordosAjustes: statusRadios.INVALID,
+    categoriaDadosPessoaisfinanceirosautorizacoesConsentimentos:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiscaracteristicasdetalhesPessoais: statusRadios.INVALID,
+    categoriaDadosPessoaiscaracteristicasdetalhesMilitares:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiscaracteristicassituacaoImigracao:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiscaracteristicasdescricaoFisica: statusRadios.INVALID,
+    categoriaDadosPessoaishabitoshabitosPessoais: statusRadios.INVALID,
+    categoriaDadosPessoaishabitosestiloVida: statusRadios.INVALID,
+    categoriaDadosPessoaishabitosviagensDeslocamento: statusRadios.INVALID,
+    categoriaDadosPessoaishabitoscontatosSociais: statusRadios.INVALID,
+    categoriaDadosPessoaishabitosposses: statusRadios.INVALID,
+    categoriaDadosPessoaishabitosdenunciasIncAcidentes: statusRadios.INVALID,
+    categoriaDadosPessoaishabitosdistincoes: statusRadios.INVALID,
+    categoriaDadosPessoaishabitosusoMidia: statusRadios.INVALID,
+    categoriaDadosPessoaiscaracteristicasPsicologicasdescricaoPsi:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiscomposicaoFamiliarcasamentoCoabitacao:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiscomposicaoFamiliarhistoricoConjugal:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiscomposicaoFamiliarmembrosFamilia:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisinteressesLazeratividadesInteressesLaz:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisassociacoesoutrasAssNaoSensiveis:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisprocessoJudAdmCrimsuspeitas: statusRadios.INVALID,
+    categoriaDadosPessoaisprocessoJudAdmCrimcondenacoesSentencas:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisprocessoJudAdmCrimacoesJud: statusRadios.INVALID,
+    categoriaDadosPessoaisprocessoJudAdmCrimpenalidadesAdm:
+        statusRadios.INVALID,
+    categoriaDadosPessoaishabitosConsumodadosBensServicos: statusRadios.INVALID,
+    categoriaDadosPessoaisresidenciaisdadosResidencia: statusRadios.INVALID,
+    categoriaDadosPessoaiseducacaoTreinamentoacademicosEscolares:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiseducacaoTreinamentoregistroFinanceiro:
+        statusRadios.INVALID,
+    categoriaDadosPessoaiseducacaoTreinamentoqualificacaoExperienciaProf:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisprofissaoEmpregoempregoAtual: statusRadios.INVALID,
+    categoriaDadosPessoaisprofissaoEmpregorecrutamento: statusRadios.INVALID,
+    categoriaDadosPessoaisprofissaoEmpregorescisao: statusRadios.INVALID,
+    categoriaDadosPessoaisprofissaoEmpregocarreira: statusRadios.INVALID,
+    categoriaDadosPessoaisprofissaoEmpregoabsenteismoDisciplina:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisprofissaoEmpregoavaliacaoDesempenho:
+        statusRadios.INVALID,
+    categoriaDadosPessoaisregVideoImgVozvideoImagem: statusRadios.INVALID,
+    categoriaDadosPessoaisregVideoImgVozimagemVigilancia: statusRadios.INVALID,
+    categoriaDadosPessoaisregVideoImgVozvoz: statusRadios.INVALID,
+    categoriaDadosPessoaisoutrosoutrosItems: statusRadios.INVALID,
+    catDadosPessoaisSensiveisorigemRacialEtnica: statusRadios.INVALID,
+    catDadosPessoaisSensiveisconviccaoReligiosa: statusRadios.INVALID,
+    catDadosPessoaisSensiveisopiniaoPolitica: statusRadios.INVALID,
+    catDadosPessoaisSensiveisfiliacaoSindicato: statusRadios.INVALID,
+    catDadosPessoaisSensiveisfiliacaoOrgReligiosa: statusRadios.INVALID,
+    catDadosPessoaisSensiveisfiliacaoCrencaFilosofica: statusRadios.INVALID,
+    catDadosPessoaisSensiveisfiliacaoPreferenciaPolitica: statusRadios.INVALID,
+    catDadosPessoaisSensiveissaudeVidaSexual: statusRadios.INVALID,
+    catDadosPessoaisSensiveisgeneticos: statusRadios.INVALID,
+    catDadosPessoaisSensiveisbiometricos: statusRadios.INVALID,
+    compartilhamentoDadosPessoais: statusRadios.INVALID,
+    transferenciaInternacional: statusRadios.INVALID,
+    contratoServicosTITratamentoDados: statusRadios.INVALID,
+});

@@ -1,19 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-// import { PieChart } from "react-minimal-pie-chart";
-import {
-    PieChart,
-    Pie,
-    Sector,
-    Cell,
-    ResponsiveContainer,
-    Tooltip,
-} from "recharts";
+import { useNavigate } from "react-router-dom";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import randomColor from "randomcolor";
 
-import { ExtensaoEncarregadoTotals } from "../../shared/models/DTOs/extensao-encarregado-totals.model";
 import { GroupTotals } from "../../shared/models/DTOs/group-totals.model";
 import { StatusTotals } from "../../shared/models/DTOs/status-totals.model";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -230,47 +221,50 @@ const CasesDashboard = () => {
         currentComiteMember.nome,
     ]);
 
-    const onClickChart = (arg: CategoricalChartState) => {
-        if (arg) {
-            console.log(arg.activePayload);
+    const onClickChart = (name: string | null | undefined) => {
+        console.log(name);
 
-            arg.activePayload?.forEach((ap) => {
-                if (ap.payload.name === "Em Preenchimento") {
-                    if (!user.isComite) {
-                        console.log("Em Preenchimento");
-                        return navigate("../cases/continue");
-                    }
-                }
-                if (ap.payload.name === "Pendente Aprovação") {
-                    if (user.isDPO) {
-                        console.log("Pendente Aprovação");
-                        return navigate("../cases/pending");
-                    }
-                    if (user.isComite && !user.isDPO) {
-                        console.log("Pendente Aprovação");
-                        return navigate("../cases/approve");
-                    }
-                }
-                if (ap.payload.name === "Concluído") {
-                    if (!user.isComite) {
-                        console.log("Concluído");
-                        return navigate("../cases/edit");
-                    }
-                    if (user.isComite && !user.isDPO) {
-                        console.log("Concluído");
-                        return navigate("../cases/");
-                    }
-                }
-                if (ap.payload.name === "Reprovado") {
-                    if (!user.isComite) {
-                        console.log("Reprovado");
-                        return navigate("../cases/reprovados");
-                    }
-                }
-
-                return console.log(ap.payload.name);
-            });
+        if (!name) {
+            return console.log(name);
         }
+
+        if (name === "Em Preenchimento") {
+            if (!user.isComite) {
+                return navigate("../cases/continue/");
+            }
+            if (user.isComite) {
+                return navigate("../cases/");
+            }
+        }
+        if (name === "Pendente Aprovação") {
+            if (user.isDPO) {
+                return navigate("../cases/pending/");
+            }
+            if (user.isComite && !user.isDPO) {
+                return navigate("../cases/approve/");
+            }
+        }
+        if (name === "Concluído") {
+            if (!user.isComite) {
+                return navigate("../cases/edit/");
+            }
+            if (user.isComite && !user.isDPO) {
+                return navigate("../cases/");
+            }
+            if (user.isComite && user.isDPO) {
+                return navigate("../cases/inventario/");
+            }
+        }
+        if (name === "Reprovado") {
+            if (!user.isComite) {
+                return navigate("../cases/reprovados/");
+            }
+            if (user.isComite) {
+                return navigate("../cases/");
+            }
+        }
+
+        return console.log(name);
     };
 
     if (isLoading) {
@@ -316,7 +310,7 @@ const CasesDashboard = () => {
                         <PieChart
                             width={400}
                             height={400}
-                            onClick={onClickChart}
+                            // onClick={onClickChart}
                         >
                             <Pie
                                 data={pieChartData}
@@ -332,6 +326,13 @@ const CasesDashboard = () => {
                                     <Cell
                                         key={`cell-${index}`}
                                         fill={getChartColor(entry.name, index)}
+                                        onClick={(e) => {
+                                            return onClickChart(
+                                                e.currentTarget.attributes.getNamedItem(
+                                                    "name"
+                                                )?.nodeValue
+                                            );
+                                        }}
                                     />
                                 ))}
                             </Pie>

@@ -8,33 +8,18 @@ import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import CasesList from "../../cases/components/CasesList";
 
-const ComiteCasesListGetter = () => {
+const DpoAllCasesListGetter = () => {
     const [cases, setCases] = useState<CaseListItem[]>([]);
 
-    const { token, currentGroup, user } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
         useHttpClient();
 
     useEffect(() => {
-        const getSelectedGroupApprovedCases = async () => {
+        const getAllCases = async () => {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/cases/group/${currentGroup.id}/`,
-                undefined,
-                undefined,
-                {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + token,
-                }
-            );
-
-            const loadedCases: CaseListItem[] = responseData.caseListItems;
-            console.log("loadedCases: ", loadedCases);
-            setCases(loadedCases);
-        };
-        const getAllComiteApprovedCases = async () => {
-            const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/cases/extensao-encarregado/${user.id}/`,
+                `${process.env.REACT_APP_CONNSTR}/cases/`,
                 undefined,
                 undefined,
                 {
@@ -48,23 +33,10 @@ const ComiteCasesListGetter = () => {
             setCases(loadedCases);
         };
 
-        if (user.isComite && currentGroup.nome === "TODOS") {
-            getAllComiteApprovedCases().catch((error) => {
-                console.log(error);
-            });
-        } else {
-            getSelectedGroupApprovedCases().catch((error) => {
-                console.log(error);
-            });
-        }
-    }, [
-        sendRequest,
-        token,
-        currentGroup.id,
-        user.isComite,
-        user.id,
-        currentGroup.nome,
-    ]);
+        getAllCases().catch((error) => {
+            console.log(error);
+        });
+    }, [sendRequest, token]);
 
     if (isLoading) {
         return (
@@ -78,18 +50,7 @@ const ComiteCasesListGetter = () => {
 
     return (
         <React.Fragment>
-            {currentGroup.nome !== "TODOS" && (
-                <h1>
-                    Meus Processos - Todos os processos aprovados do grupo
-                    selecionado
-                </h1>
-            )}
-            {currentGroup.nome === "TODOS" && (
-                <h1>
-                    Meus Processos - Todos os processos aprovados de todos os
-                    meus grupos
-                </h1>
-            )}
+            <h1>Todos os processos</h1>
             {error && (
                 <Alert
                     variant={isWarning ? "warning" : "danger"}
@@ -104,4 +65,4 @@ const ComiteCasesListGetter = () => {
     );
 };
 
-export default ComiteCasesListGetter;
+export default DpoAllCasesListGetter;

@@ -53,6 +53,12 @@ const headers: {
         isFilterable: true,
         isSortable: true,
     },
+    {
+        title: "Status",
+        prop: "statusTexto",
+        isFilterable: true,
+        isSortable: true,
+    },
 ];
 const headersDpo: {
     title: string;

@@ -5,6 +5,7 @@ using CPTM.ILA.Web.Models.AccessControl.VIEWS;
 using CPTM.ILA.Web.Models.CaseHelpers;
 using CPTM.ILA.Web.Models.ChangeLogging;
 using CPTM.ILA.Web.Models.Configuration;
+using CPTMILAWebModelsCaseHelpers;
 
 namespace CPTM.ILA.Web.Models
 {
@@ -36,6 +37,8 @@ namespace CPTM.ILA.Web.Models
         public virtual DbSet<CategoriasTitulares> CategoriasTitulares { get; set; }
         public virtual DbSet<FasesCicloTratamento> FasesCicloTratamento { get; set; }
         public virtual DbSet<FinalidadeTratamento> FinalidadesTratamento { get; set; }
+        public virtual DbSet<ItemCategoriaTitulares> ItensCategoriaTitulares { get; set; }
+        public virtual DbSet<ItemCategoriaTitularesExtra> ItensCategoriaTitularesExtra { get; set; }
         public virtual DbSet<ItemCategoriaDadosPessoais> ItensCategoriaDadosPessoais { get; set; }
         public virtual DbSet<ItemCompartilhamentoDados> ItensCompartilhamentoDados { get; set; }
         public virtual DbSet<ItemContratoTi> ItensContratoTi { get; set; }
@@ -43,6 +46,7 @@ namespace CPTM.ILA.Web.Models
         public virtual DbSet<ItemObservacoesProcesso> ItensObservacoesProcesso { get; set; }
         public virtual DbSet<ItemRiscoPrivacidade> ItensRiscoPrivacidade { get; set; }
         public virtual DbSet<ItemTransferenciaInternacional> ItensTransferenciaInternacional { get; set; }
+        public virtual DbSet<RadiosClicked> RadiosClicked { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

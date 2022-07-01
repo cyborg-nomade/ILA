@@ -177,6 +177,7 @@ const Section7FormRowSub = (props: {
                                     isSearchable
                                     isDisabled={props.disabled}
                                     placeholder="Selecione..."
+                                    noOptionsMessage={() => "Nenhum resultado"}
                                 />
                             )}
                         />

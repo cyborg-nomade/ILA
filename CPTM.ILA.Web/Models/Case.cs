@@ -69,8 +69,8 @@ namespace CPTM.ILA.Web.Models
             //    Nome = "Olivia Shibata Nishiyama", Area = "Encarregado de Dados (DPO)",
             //    Telefone = "+ 55 11 3117 – 7001", Email = "encarregado.dados@cptm.sp.gov.br"
             //};
-            FinalidadeTratamento.DescricaoFinalidade =
-                "Atendimento de finalidade pública, na persecução do interesse público, com o objetivo de executar as competências legais ou cumprir as atribuições legais do serviço público.";
+            //FinalidadeTratamento.DescricaoFinalidade =
+            //    "Atendimento de finalidade pública, na persecução do interesse público, com o objetivo de executar as competências legais ou cumprir as atribuições legais do serviço público.";
             return this;
         }
 

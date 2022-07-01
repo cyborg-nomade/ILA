@@ -163,8 +163,7 @@ export interface FinalidadeTratamento {
 
 export const emptyFinalidadeTratamento = (): FinalidadeTratamento => ({
     hipoteseTratamento: { value: hipotesesTratamento.na },
-    descricaoFinalidade:
-        "Atendimento de finalidade pública, na persecução do interesse público, com o objetivo de executar as competências legais ou cumprir as atribuições legais do serviço público.",
+    descricaoFinalidade: "",
     previsaoLegal: "",
     resultadosTitular: "",
     beneficiosEsperados: "",

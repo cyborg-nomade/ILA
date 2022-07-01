@@ -24,7 +24,7 @@ export const CaseIndexDictionary = {
     },
     finalidadeTratamento: {
         hipoteseTratamento: { number: "6.1", title: "Hipótese de Tratamento" },
-        descricaoFinalidade: { number: "6.2", title: "Finalidade" },
+        descricaoFinalidade: { number: "6.2.2", title: "Finalidade" },
         previsaoLegal: { number: "6.3", title: "Previsão legal" },
         resultadosTitular: {
             number: "6.4",

@@ -140,6 +140,44 @@ const getFirstError = (errors: FieldErrors<Case>) => {
                                     }
                                 }
                             }
+                        } else {
+                            for (const [
+                                level4Key,
+                                level4Value,
+                            ] of Object.entries(level3Value as any)) {
+                                console.log(
+                                    "made it into the 4th loop",
+                                    level4Key,
+                                    level4Value
+                                );
+
+                                if ((level4Value as FieldError).type) {
+                                    console.log(
+                                        "level4Key returned: ",
+                                        `${level1Key}.${level2Key}.${level3Key}.${level4Key}`
+                                    );
+                                    return `${level1Key}.${level2Key}.${level3Key}.${level4Key}` as keyof typeof errors;
+                                } else {
+                                    for (const [
+                                        level5Key,
+                                        level5Value,
+                                    ] of Object.entries(level4Value as any)) {
+                                        console.log(
+                                            "made it into the 5th loop",
+                                            level5Key,
+                                            level5Value
+                                        );
+
+                                        if ((level5Value as FieldError).type) {
+                                            console.log(
+                                                "level5Key returned: ",
+                                                `${level1Key}.${level2Key}.${level3Key}.${level4Key}.${level5Key}`
+                                            );
+                                            return `${level1Key}.${level2Key}.${level3Key}.${level4Key}.${level5Key}` as keyof typeof errors;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

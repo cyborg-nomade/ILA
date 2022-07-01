@@ -80,14 +80,12 @@ const ComiteCasesListGetter = () => {
         <React.Fragment>
             {currentGroup.nome !== "TODOS" && (
                 <h1>
-                    Meus Processos - Todos os processos aprovados do grupo
-                    selecionado
+                    Meus Processos - Todos os processos do grupo selecionado
                 </h1>
             )}
             {currentGroup.nome === "TODOS" && (
                 <h1>
-                    Meus Processos - Todos os processos aprovados de todos os
-                    meus grupos
+                    Meus Processos - Todos os processos de todos os meus grupos
                 </h1>
             )}
             {error && (

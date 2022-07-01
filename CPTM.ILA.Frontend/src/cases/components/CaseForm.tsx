@@ -58,6 +58,7 @@ import _ from "lodash";
 import LoadingModal from "./modals/LoadingModal";
 import { usePrompt } from "../../shared/hooks/prompt-hook";
 import InvalidFieldsModal from "./modals/InvalidFieldsModal";
+import Section6FormRowPhantasm from "./form-items/Section6FormRowPhantasm";
 
 type onSubmitFn = (item: Case) => void;
 
@@ -525,10 +526,10 @@ const CaseForm = (props: {
                                                 ofertado à sociedade ou nome do
                                                 processo de negócio que realiza
                                                 tratamento dos dados pessoais.
-                                                Exemplo: Avaliações de
-                                                Alimentos; Cancelamento e
-                                                Renovação de Registros de
-                                                Alimentos; e etc..
+                                                Exemplo: Cadastro de Trabalhador
+                                                Desempregado, Pesquisa de
+                                                Satisfação, Sistema de
+                                                Bicicletário, etc;
                                             </Form.Text>
                                             <Form.Control.Feedback type="invalid">
                                                 Esse campo é obrigatório
@@ -1470,15 +1471,10 @@ const CaseForm = (props: {
                                                 placement="right"
                                                 overlay={
                                                     <Tooltip className="text-muted">
-                                                        Pessoa indicada pelo
-                                                        controlador e operador
-                                                        para atuar como canal de
-                                                        comunicação entre o
-                                                        controlador, os
-                                                        titulares dos dados e a
-                                                        Autoridade Nacional de
-                                                        Proteção de Dados - ANPD
-                                                        (LGPD, art. 5º, VIII)
+                                                        Membro do Comite,
+                                                        responsável pelo
+                                                        acompanhamento da Área
+                                                        Tratamento Dados
                                                     </Tooltip>
                                                 }
                                             >
@@ -1604,15 +1600,9 @@ const CaseForm = (props: {
                                                 placement="right"
                                                 overlay={
                                                     <Tooltip className="text-muted">
-                                                        Pessoa indicada pelo
-                                                        controlador e operador
-                                                        para atuar como canal de
-                                                        comunicação entre o
-                                                        controlador, os
-                                                        titulares dos dados e a
-                                                        Autoridade Nacional de
-                                                        Proteção de Dados - ANPD
-                                                        (LGPD, art. 5º, VIII)
+                                                        Área gestora do processo
+                                                        em que há o tratamento
+                                                        de dados pessoais
                                                     </Tooltip>
                                                 }
                                             >
@@ -1851,7 +1841,12 @@ const CaseForm = (props: {
                                         <OverlayTrigger
                                             placement="right"
                                             overlay={
-                                                <Tooltip className="text-muted">
+                                                <Tooltip
+                                                    className="text-muted"
+                                                    style={{
+                                                        fontSize: "small",
+                                                    }}
+                                                >
                                                     Descrever como (de que
                                                     forma) os dados pessoais são
                                                     coletados,
@@ -1862,7 +1857,44 @@ const CaseForm = (props: {
                                                     desenho com um fluxo de
                                                     dados. Abaixo, segue exemplo
                                                     de descrição do fluxo de
-                                                    dados.
+                                                    dados. Exemplo descrição do
+                                                    fluxo de tratamento de dados
+                                                    pessoais do programa
+                                                    fictício de localização de
+                                                    desaparecidos do
+                                                    Departamento de Segurança
+                                                    Púbica - DSP. 1. Os dados
+                                                    pessoais são coletados
+                                                    mediante preenchimento
+                                                    formulário eletrônico do
+                                                    Sistema Nacional pelo
+                                                    titular dos dados pessoais.
+                                                    2. Os dados são transferidos
+                                                    armazenados nas instalações
+                                                    físicas da Empresa de
+                                                    Processamento e Tecnologia
+                                                    Fictum. 3. A empresa Fictum
+                                                    realiza processamento sobre
+                                                    os dados pessoais e
+                                                    disponibiliza para uso do
+                                                    DSP. O DSP disponibiliza os
+                                                    dados pessoais para
+                                                    utilização e consumo do
+                                                    comunicante. 4. O DSP
+                                                    transfere dados de
+                                                    comunicantes e pessoas
+                                                    desaparecidas para a SDH
+                                                    desenvolver as ações de
+                                                    apoio psicológico para as
+                                                    famílias do desaparecidos.
+                                                    5. Os dados pessoais podem
+                                                    ser eliminados à pedido do
+                                                    titular. Nesse caso, o DSP
+                                                    encaminha essa solicitação
+                                                    para a empresa Fictum
+                                                    executar a eliminação dos
+                                                    dados pessoais da base de
+                                                    dados do SND.”
                                                 </Tooltip>
                                             }
                                         >
@@ -2129,27 +2161,21 @@ const CaseForm = (props: {
                                         methods={methods}
                                         rules={{ required: true }}
                                     />
+                                    <Section6FormRowPhantasm />
                                     <Section6FormRow
                                         tooltip={
                                             <p>
                                                 Razão ou motivo pela qual se
                                                 deseja tratar os dados pessoais.
                                                 É importantíssimo estabelecer
-                                                claramente a finalidade, import
-                                                NewSection9QuantityRow from
-                                                './new-form-import
-                                                NewSection11FormRow fromimport
-                                                LoadingModal from
-                                                './modals/LoadingModal';
-                                                './new-form-items/NewSection11FormRow';
-                                                items/NewSection9QuantityRow';
-                                                pois é ela que justifica o
-                                                tratamento de dados pessoais e
-                                                fornece os elementos para
-                                                informar o titular dos dados.
+                                                claramente a finalidade, pois é
+                                                ela que justifica o tratamento
+                                                de dados pessoais e fornece os
+                                                elementos para informar o
+                                                titular dos dados.
                                             </p>
                                         }
-                                        disabled
+                                        disabled={!isEditing}
                                         name="finalidadeTratamento.descricaoFinalidade"
                                         type="text"
                                         invalid="Esse campo é obrigatório"
@@ -4959,7 +4985,7 @@ const CaseForm = (props: {
                                         </Accordion.Item>
                                         <Accordion.Item eventKey="91">
                                             <Accordion.Header>
-                                                10.3 - Categorias que envolvam
+                                                10.2 - Categorias que envolvam
                                                 crianças e adolescentes
                                             </Accordion.Header>
                                             <Accordion.Body>
@@ -5001,7 +5027,7 @@ const CaseForm = (props: {
                                         </Accordion.Item>
                                         <Accordion.Item eventKey="92">
                                             <Accordion.Header>
-                                                10.4 - Categorias que envolvam
+                                                10.3 - Categorias que envolvam
                                                 outros grupos vulneráveis
                                             </Accordion.Header>
                                             <Accordion.Body>

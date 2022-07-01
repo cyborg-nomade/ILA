@@ -1,8 +1,8 @@
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Swiss721", "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+        "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image: url("../public/background.png");
@@ -19,7 +19,7 @@ h3 {
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+        monospace;
 }
 
 .swiss721 {
@@ -28,18 +28,19 @@ code {
 
 @font-face {
     font-family: "Swiss721";
-    src: local("Swis721"), url(./shared/assets/fonts/swiss.ttf) format("truetype");
+    src: local("Swis721"),
+        url(./shared/assets/fonts/swiss.ttf) format("truetype");
 }
 
 .invalid-feedback-react-select {
     width: 100%;
-    margin-top: .25rem;
-    font-size: .875em;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
     color: #dc3545;
     display: block;
 }
 
 .invalid-border-react-select {
     border: 1px solid #dc3545;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
 }

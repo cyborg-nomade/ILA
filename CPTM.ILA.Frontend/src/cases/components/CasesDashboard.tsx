@@ -259,7 +259,7 @@ const CasesDashboard = () => {
             if (!user.isComite) {
                 return navigate("../cases/reprovados/");
             }
-            if (user.isComite && !user.isDPO) {
+            if (user.isComite) {
                 return navigate("../cases/");
             }
         }

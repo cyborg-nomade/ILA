@@ -181,9 +181,18 @@ const Section7FormRow = (props: {
                                             remove(index);
                                             if (fields.length - 1 < 1) {
                                                 console.log("hi");
+                                                console.log(
+                                                    `radiosClicked.${props.name
+                                                        .split(".")
+                                                        .join("")}`
+                                                );
 
                                                 props.methods.setValue(
-                                                    `radiosClicked.${props.name}` as FieldPath<Case>,
+                                                    `radiosClicked.${props.name
+                                                        .split(".")
+                                                        .join(
+                                                            ""
+                                                        )}` as FieldPath<Case>,
                                                     statusRadios.INVALID
                                                 );
                                             }
@@ -203,7 +212,9 @@ const Section7FormRow = (props: {
                                 disabled={
                                     !(
                                         props.methods.watch(
-                                            `radiosClicked.${props.name}` as FieldPath<Case>
+                                            `radiosClicked.${props.name
+                                                .split(".")
+                                                .join("")}` as FieldPath<Case>
                                         ) === statusRadios.SIM
                                     )
                                 }

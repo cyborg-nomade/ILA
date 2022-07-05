@@ -1919,7 +1919,6 @@ const CaseForm = (props: {
                                             <Controller
                                                 rules={{
                                                     required: true,
-                                                    maxLength: 250,
                                                 }}
                                                 control={methods.control}
                                                 name="descricaoFluxoTratamento"

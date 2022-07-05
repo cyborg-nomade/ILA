@@ -469,7 +469,7 @@ const CaseForm = (props: {
                                     ? Object.keys(isFormAllTouched)
                                     : undefined
                             }
-                            alwaysOpen={!formIsValid}
+                            alwaysOpen={true}
                         >
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>

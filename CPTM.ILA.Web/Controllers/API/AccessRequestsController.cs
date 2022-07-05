@@ -948,6 +948,7 @@ namespace CPTM.ILA.Web.Controllers.API
                 }
 
                 var userGroups = user.GroupAccessExpirations.Select(gae => gae.Group)
+                    .OrderBy(g => g.Nome)
                     .ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK,

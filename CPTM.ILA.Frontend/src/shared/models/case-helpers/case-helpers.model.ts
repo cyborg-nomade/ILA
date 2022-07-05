@@ -201,7 +201,7 @@ export interface itemCategoriaTitularesExtra {
 
 export const emptyItemCategoriaTitularesExtra =
     (): itemCategoriaTitularesExtra => ({
-        trataDados: "NÃO",
+        trataDados: "",
         descricaoDados: "",
     });
 

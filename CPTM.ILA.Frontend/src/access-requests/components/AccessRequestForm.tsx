@@ -112,6 +112,13 @@ const AccessRequestForm = (props: {
           })),
         },
         {
+          label: "Gerencias Gerais",
+          options: responseData.gerenciasGerais.map((gg: string) => ({
+            value: gg,
+            label: gg,
+          })),
+        },
+        {
           label: "Gerencias",
           options: responseData.gerencias.map((g: string) => ({
             value: g,

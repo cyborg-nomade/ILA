@@ -312,9 +312,11 @@ namespace CPTM.ILA.Web.Controllers.API
 
                 var comiteMembers =
                     comiteMembersUsers.ConvertAll<ComiteMember>(Models.AccessControl.User.ReduceToComiteMember);
+                var orderedComiteMembers = comiteMembers.OrderBy(cm => cm.Nome)
+                    .ToList();
 
                 return Request.CreateResponse(HttpStatusCode.OK,
-                    new { comiteMembers, message = "Membros do comitê obtidos com sucesso!" });
+                    new { comiteMembers = orderedComiteMembers, message = "Membros do comitê obtidos com sucesso!" });
             }
             catch (Exception e)
             {

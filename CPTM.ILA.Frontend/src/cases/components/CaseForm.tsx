@@ -59,6 +59,7 @@ import LoadingModal from "./modals/LoadingModal";
 import { usePrompt } from "../../shared/hooks/prompt-hook";
 import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 import Section6FormRowPhantasm from "./form-items/Section6FormRowPhantasm";
+import { emptyGroup } from "../../shared/models/access-control/group.model";
 
 type onSubmitFn = (item: Case) => void;
 
@@ -1660,7 +1661,19 @@ const CaseForm = (props: {
                                                             disabled={
                                                                 !isEditing
                                                             }
-                                                            onChange={onChange}
+                                                            onChange={(e) => {
+                                                                onChange(e);
+                                                                changeGroup(
+                                                                    user.groups.find(
+                                                                        (g) =>
+                                                                            g.nome ===
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                    ) ??
+                                                                        emptyGroup()
+                                                                );
+                                                            }}
                                                             onBlur={onBlur}
                                                             value={value}
                                                             ref={ref}
@@ -1673,11 +1686,6 @@ const CaseForm = (props: {
                                                                         }
                                                                         key={
                                                                             g.id
-                                                                        }
-                                                                        onClick={() =>
-                                                                            changeGroup(
-                                                                                g
-                                                                            )
                                                                         }
                                                                     >
                                                                         {g.nome}

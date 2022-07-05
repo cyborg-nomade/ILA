@@ -19,8 +19,6 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import Stack from "react-bootstrap/Stack";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-import ToggleButton from "react-bootstrap/ToggleButton";
 import { AiFillQuestionCircle } from "react-icons/ai";
 
 import {
@@ -56,7 +54,6 @@ import { useCountdown } from "../../shared/hooks/timer-hook";
 import DeleteModal from "./modals/DeleteModal";
 import _ from "lodash";
 import LoadingModal from "./modals/LoadingModal";
-import { usePrompt } from "../../shared/hooks/prompt-hook";
 import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 import Section6FormRowPhantasm from "./form-items/Section6FormRowPhantasm";
 import { emptyGroup } from "../../shared/models/access-control/group.model";
@@ -234,6 +231,7 @@ const CaseForm = (props: {
     const { minutes } = useCountdown(tokenExpirationDate);
     const { sendRequest, error, isLoading } = useHttpClient();
     const { systems, countries, dpo, isLoadingUtilities } = useUtilities();
+    const fonteSystems = ["Titular de Dados", ...systems];
     let navigate = useNavigate();
 
     const methods = useForm<Case>({
@@ -2076,13 +2074,13 @@ const CaseForm = (props: {
                                                 }) => (
                                                     <Select
                                                         ref={ref}
-                                                        options={systems.map(
+                                                        options={fonteSystems.map(
                                                             (s) => ({
                                                                 value: s,
                                                                 label: s,
                                                             })
                                                         )}
-                                                        value={systems
+                                                        value={fonteSystems
                                                             .map((s) => ({
                                                                 value: s,
                                                                 label: s,

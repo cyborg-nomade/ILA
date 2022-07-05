@@ -34,8 +34,13 @@ namespace CPTM.ILA.Web.Models.AccessControl
         {
             var userDto = new UserDto()
             {
-                Id = user.Id, Username = user.Username, IsComite = user.IsComite, IsDPO = user.IsDPO,
-                IsSystem = user.IsSystem, OriginGroup = user.OriginGroup, Groups = user.GroupAccessExpirations
+                Id = user.Id,
+                Username = user.Username,
+                IsComite = user.IsComite,
+                IsDPO = user.IsDPO,
+                IsSystem = user.IsSystem,
+                OriginGroup = user.OriginGroup,
+                Groups = user.GroupAccessExpirations.OrderBy(gae => gae.Group.Nome)
                     .Select(gae => gae.Group)
                     .ToList(),
                 Nome = user.Username == "LGPDCOMUM"

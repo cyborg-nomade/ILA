@@ -49,6 +49,14 @@ namespace CPTM.ILA.Web.Controllers.API
                     .OrderBy(s => s.Trim()
                         .ToLower())
                     .ToListAsync();
+                var gerenciasGerais = await _context.ILA_VW_ESTRUTURA_ORG
+                    .Where(os => os.FL_ATIVO == 1 && os.NR_NIVEL == 2)
+                    .OrderBy(os => os.DIR_SIGLA)
+                    .Select(os => os.GG_SIGLA)
+                    .Distinct()
+                    .OrderBy(s => s.Trim()
+                        .ToLower())
+                    .ToListAsync();
                 var gerencias = await _context.ILA_VW_ESTRUTURA_ORG.Where(os => os.FL_ATIVO == 1 && os.NR_NIVEL == 3)
                     .OrderBy(os => os.DIR_SIGLA)
                     .Select(os => os.GER_SIGLA)
@@ -64,7 +72,8 @@ namespace CPTM.ILA.Web.Controllers.API
                         .ToLower())
                     .ToListAsync();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { diretorias, gerencias, deptos });
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new { diretorias, gerenciasGerais, gerencias, deptos });
             }
             catch (Exception e)
             {

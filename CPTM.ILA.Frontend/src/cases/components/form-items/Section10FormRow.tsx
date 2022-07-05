@@ -24,7 +24,7 @@ const Section10FormRow = (props: {
     itemRef: { number: string; title: string };
     methods: UseFormReturn<Case>;
 }) => {
-    const [isDescricaoEnabled, setIsDescricaoEnabled] = useState(props.full);
+    const [isDescricaoEnabled, setIsDescricaoEnabled] = useState(!props.full);
 
     const toggleEnableDescricao = (value: string) => {
         if (value === "NÃO") {

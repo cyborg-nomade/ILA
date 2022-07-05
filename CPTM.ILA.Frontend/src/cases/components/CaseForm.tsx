@@ -19,8 +19,6 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import Stack from "react-bootstrap/Stack";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-import ToggleButton from "react-bootstrap/ToggleButton";
 import { AiFillQuestionCircle } from "react-icons/ai";
 
 import {
@@ -56,9 +54,9 @@ import { useCountdown } from "../../shared/hooks/timer-hook";
 import DeleteModal from "./modals/DeleteModal";
 import _ from "lodash";
 import LoadingModal from "./modals/LoadingModal";
-import { usePrompt } from "../../shared/hooks/prompt-hook";
 import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 import Section6FormRowPhantasm from "./form-items/Section6FormRowPhantasm";
+import { emptyGroup } from "../../shared/models/access-control/group.model";
 
 type onSubmitFn = (item: Case) => void;
 
@@ -233,6 +231,7 @@ const CaseForm = (props: {
     const { minutes } = useCountdown(tokenExpirationDate);
     const { sendRequest, error, isLoading } = useHttpClient();
     const { systems, countries, dpo, isLoadingUtilities } = useUtilities();
+    const fonteSystems = ["Titular de Dados", ...systems];
     let navigate = useNavigate();
 
     const methods = useForm<Case>({
@@ -468,7 +467,7 @@ const CaseForm = (props: {
                                     ? Object.keys(isFormAllTouched)
                                     : undefined
                             }
-                            alwaysOpen={!formIsValid}
+                            alwaysOpen={true}
                         >
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>
@@ -649,13 +648,14 @@ const CaseForm = (props: {
                                                     },
                                                 }) => (
                                                     <Form.Control
-                                                        disabled
+                                                        disabled={!isEditing}
+                                                        // disabled
                                                         type="text"
                                                         onChange={onChange}
                                                         onBlur={onBlur}
                                                         value={value}
                                                         ref={ref}
-                                                        readOnly
+                                                        // readOnly
                                                     />
                                                 )}
                                             />
@@ -1660,7 +1660,19 @@ const CaseForm = (props: {
                                                             disabled={
                                                                 !isEditing
                                                             }
-                                                            onChange={onChange}
+                                                            onChange={(e) => {
+                                                                onChange(e);
+                                                                changeGroup(
+                                                                    user.groups.find(
+                                                                        (g) =>
+                                                                            g.nome ===
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                    ) ??
+                                                                        emptyGroup()
+                                                                );
+                                                            }}
                                                             onBlur={onBlur}
                                                             value={value}
                                                             ref={ref}
@@ -1673,11 +1685,6 @@ const CaseForm = (props: {
                                                                         }
                                                                         key={
                                                                             g.id
-                                                                        }
-                                                                        onClick={() =>
-                                                                            changeGroup(
-                                                                                g
-                                                                            )
                                                                         }
                                                                     >
                                                                         {g.nome}
@@ -1911,7 +1918,6 @@ const CaseForm = (props: {
                                             <Controller
                                                 rules={{
                                                     required: true,
-                                                    maxLength: 250,
                                                 }}
                                                 control={methods.control}
                                                 name="descricaoFluxoTratamento"
@@ -2068,13 +2074,13 @@ const CaseForm = (props: {
                                                 }) => (
                                                     <Select
                                                         ref={ref}
-                                                        options={systems.map(
+                                                        options={fonteSystems.map(
                                                             (s) => ({
                                                                 value: s,
                                                                 label: s,
                                                             })
                                                         )}
-                                                        value={systems
+                                                        value={fonteSystems
                                                             .map((s) => ({
                                                                 value: s,
                                                                 label: s,

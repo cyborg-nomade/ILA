@@ -650,13 +650,14 @@ const CaseForm = (props: {
                                                     },
                                                 }) => (
                                                     <Form.Control
-                                                        disabled
+                                                        disabled={!isEditing}
+                                                        // disabled
                                                         type="text"
                                                         onChange={onChange}
                                                         onBlur={onBlur}
                                                         value={value}
                                                         ref={ref}
-                                                        readOnly
+                                                        // readOnly
                                                     />
                                                 )}
                                             />

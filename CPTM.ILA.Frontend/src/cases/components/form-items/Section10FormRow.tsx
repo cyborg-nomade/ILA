@@ -105,9 +105,7 @@ const Section10FormRow = (props: {
                                 field: { onChange, onBlur, value, ref },
                             }) => (
                                 <Form.Control
-                                    disabled={
-                                        props.disabled || !isDescricaoEnabled
-                                    }
+                                    disabled={props.disabled}
                                     type="text"
                                     value={value as string}
                                     onChange={onChange}

@@ -52,7 +52,6 @@ import Section15FormRow from "./form-items/Section15FormRow";
 import Section16FormRow from "./form-items/Section16FormRow";
 import { useCountdown } from "../../shared/hooks/timer-hook";
 import DeleteModal from "./modals/DeleteModal";
-import _ from "lodash";
 import LoadingModal from "./modals/LoadingModal";
 import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 import Section6FormRowPhantasm from "./form-items/Section6FormRowPhantasm";
@@ -304,6 +303,11 @@ const CaseForm = (props: {
             methods.setValue("operador.area", "");
             methods.setValue("operador.telefone", "");
             methods.setValue("operador.email", "");
+            methods.setValue("fasesCicloTratamento.coleta", false);
+            methods.setValue("fasesCicloTratamento.retencao", false);
+            methods.setValue("fasesCicloTratamento.processamento", false);
+            methods.setValue("fasesCicloTratamento.compartilhamento", false);
+            methods.setValue("fasesCicloTratamento.eliminacao", false);
         }
     };
 
@@ -785,7 +789,11 @@ const CaseForm = (props: {
                                                     <Form.Control
                                                         disabled={!isEditing}
                                                         type="text"
-                                                        onChange={(event) => {
+                                                        onChange={(event: {
+                                                            currentTarget: {
+                                                                value: string;
+                                                            };
+                                                        }) => {
                                                             if (
                                                                 event
                                                                     .currentTarget
@@ -1051,9 +1059,11 @@ const CaseForm = (props: {
                                                                     disabled={
                                                                         !isEditing
                                                                     }
-                                                                    onChange={(
-                                                                        val
-                                                                    ) => {
+                                                                    onChange={(val: {
+                                                                        target: {
+                                                                            value: string;
+                                                                        };
+                                                                    }) => {
                                                                         if (
                                                                             val
                                                                                 .target
@@ -1091,9 +1101,11 @@ const CaseForm = (props: {
                                                                     disabled={
                                                                         !isEditing
                                                                     }
-                                                                    onChange={(
-                                                                        val
-                                                                    ) => {
+                                                                    onChange={(val: {
+                                                                        target: {
+                                                                            value: string;
+                                                                        };
+                                                                    }) => {
                                                                         if (
                                                                             val
                                                                                 .target
@@ -1660,7 +1672,11 @@ const CaseForm = (props: {
                                                             disabled={
                                                                 !isEditing
                                                             }
-                                                            onChange={(e) => {
+                                                            onChange={(e: {
+                                                                target: {
+                                                                    value: string;
+                                                                };
+                                                            }) => {
                                                                 onChange(e);
                                                                 changeGroup(
                                                                     user.groups.find(
@@ -1776,12 +1792,6 @@ const CaseForm = (props: {
                                             lg={1}
                                         ></Form.Label>
                                         <Form.Label as={Col}></Form.Label>
-                                        <Form.Label
-                                            as={Col}
-                                            className="d-grid justify-content-center"
-                                        >
-                                            Atua?
-                                        </Form.Label>
                                         <Form.Label
                                             as={Col}
                                             className="d-grid justify-content-center"

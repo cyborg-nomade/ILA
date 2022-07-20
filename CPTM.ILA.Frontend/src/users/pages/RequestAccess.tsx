@@ -51,6 +51,8 @@ const RequestAccess = () => {
                 }
             );
 
+            setMessage(responseData.message);
+
             const savedAR: AccessRequest = responseData.accessRequest;
             console.log("savedAR: ", savedAR);
 
@@ -74,8 +76,6 @@ const RequestAccess = () => {
                     responseDataEmailFile.message
                 );
             }
-
-            setMessage(responseData.message);
         } catch (error) {
             console.log(error);
         }

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Controller, UseFormReturn, useWatch } from "react-hook-form";
+import React from "react";
+import { Controller, UseFormReturn } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,19 +16,6 @@ const Section3FormRow = (props: {
     disabled: boolean;
     methods: UseFormReturn<Case>;
 }) => {
-    const handleTrataRadio = (status: statusRadios) => {
-        if (status === statusRadios.NÃO) {
-            props.methods.setValue("fasesCicloTratamento.coleta", false);
-            props.methods.setValue("fasesCicloTratamento.retencao", false);
-            props.methods.setValue("fasesCicloTratamento.processamento", false);
-            props.methods.setValue(
-                "fasesCicloTratamento.compartilhamento",
-                false
-            );
-            props.methods.setValue("fasesCicloTratamento.eliminacao", false);
-        }
-    };
-
     return (
         <Row className="mb-3 align-items-center bg-primary bg-opacity-10">
             <Col lg={1}>
@@ -57,60 +44,26 @@ const Section3FormRow = (props: {
                     rules={{
                         validate: {
                             required: (value) => {
-                                if (value === statusRadios.INVALID)
-                                    return false;
-                                return true;
+                                if (
+                                    value ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.retencao"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.processamento"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.compartilhamento"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.eliminacao"
+                                    )
+                                )
+                                    return true;
+                                return false;
                             },
                         },
                     }}
-                    control={props.methods.control}
-                    name="radiosClicked.fasesCicloTratamento"
-                    render={({ field: { onChange, onBlur, value, ref } }) => (
-                        <React.Fragment>
-                            <Form.Check
-                                type="radio"
-                                name="radiosClicked.fasesCicloTratamento-1"
-                                label="Sim"
-                                value={statusRadios.SIM}
-                                checked={
-                                    (value as statusRadios) === statusRadios.SIM
-                                }
-                                disabled={props.disabled}
-                                onChange={(val) => {
-                                    if (val.target.value === "2") {
-                                        handleTrataRadio(statusRadios.SIM);
-                                        onChange(statusRadios.SIM);
-                                    }
-                                }}
-                                isInvalid={value === statusRadios.INVALID}
-                                onBlur={onBlur}
-                                ref={ref}
-                            />
-                            <Form.Check
-                                type="radio"
-                                name="radiosClicked.fasesCicloTratamento-1"
-                                label="Não"
-                                value={statusRadios.NÃO}
-                                checked={
-                                    (value as statusRadios) === statusRadios.NÃO
-                                }
-                                disabled={props.disabled}
-                                onChange={(val) => {
-                                    if (val.target.value === "1") {
-                                        handleTrataRadio(statusRadios.NÃO);
-                                        onChange(statusRadios.NÃO);
-                                    }
-                                }}
-                                isInvalid={value === statusRadios.INVALID}
-                                onBlur={onBlur}
-                                ref={ref}
-                            />
-                        </React.Fragment>
-                    )}
-                />
-            </Col>
-            <Col className="d-grid justify-content-center">
-                <Controller
                     control={props.methods.control}
                     name="fasesCicloTratamento.coleta"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
@@ -118,7 +71,7 @@ const Section3FormRow = (props: {
                             disabled={
                                 !(
                                     props.methods.watch(
-                                        "radiosClicked.fasesCicloTratamento"
+                                        "radiosClicked.hasOperador"
                                     ) === statusRadios.SIM
                                 ) || props.disabled
                             }
@@ -137,6 +90,29 @@ const Section3FormRow = (props: {
             </Col>
             <Col className="d-grid justify-content-center">
                 <Controller
+                    rules={{
+                        validate: {
+                            required: (value) => {
+                                if (
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.coleta"
+                                    ) ||
+                                    value ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.processamento"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.compartilhamento"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.eliminacao"
+                                    )
+                                )
+                                    return true;
+                                return false;
+                            },
+                        },
+                    }}
                     control={props.methods.control}
                     name="fasesCicloTratamento.retencao"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
@@ -144,7 +120,7 @@ const Section3FormRow = (props: {
                             disabled={
                                 !(
                                     props.methods.watch(
-                                        "radiosClicked.fasesCicloTratamento"
+                                        "radiosClicked.hasOperador"
                                     ) === statusRadios.SIM
                                 ) || props.disabled
                             }
@@ -163,6 +139,29 @@ const Section3FormRow = (props: {
             </Col>
             <Col className="d-grid justify-content-center">
                 <Controller
+                    rules={{
+                        validate: {
+                            required: (value) => {
+                                if (
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.coleta"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.retencao"
+                                    ) ||
+                                    value ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.compartilhamento"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.eliminacao"
+                                    )
+                                )
+                                    return true;
+                                return false;
+                            },
+                        },
+                    }}
                     control={props.methods.control}
                     name="fasesCicloTratamento.processamento"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
@@ -170,7 +169,7 @@ const Section3FormRow = (props: {
                             disabled={
                                 !(
                                     props.methods.watch(
-                                        "radiosClicked.fasesCicloTratamento"
+                                        "radiosClicked.hasOperador"
                                     ) === statusRadios.SIM
                                 ) || props.disabled
                             }
@@ -189,6 +188,29 @@ const Section3FormRow = (props: {
             </Col>
             <Col className="d-grid justify-content-center">
                 <Controller
+                    rules={{
+                        validate: {
+                            required: (value) => {
+                                if (
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.coleta"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.retencao"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.processamento"
+                                    ) ||
+                                    value ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.eliminacao"
+                                    )
+                                )
+                                    return true;
+                                return false;
+                            },
+                        },
+                    }}
                     control={props.methods.control}
                     name="fasesCicloTratamento.compartilhamento"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
@@ -196,7 +218,7 @@ const Section3FormRow = (props: {
                             disabled={
                                 !(
                                     props.methods.watch(
-                                        "radiosClicked.fasesCicloTratamento"
+                                        "radiosClicked.hasOperador"
                                     ) === statusRadios.SIM
                                 ) || props.disabled
                             }
@@ -215,6 +237,29 @@ const Section3FormRow = (props: {
             </Col>
             <Col className="d-grid justify-content-center">
                 <Controller
+                    rules={{
+                        validate: {
+                            required: (value) => {
+                                if (
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.coleta"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.retencao"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.processamento"
+                                    ) ||
+                                    props.methods.watch(
+                                        "fasesCicloTratamento.compartilhamento"
+                                    ) ||
+                                    value
+                                )
+                                    return true;
+                                return false;
+                            },
+                        },
+                    }}
                     control={props.methods.control}
                     name="fasesCicloTratamento.eliminacao"
                     render={({ field: { onChange, onBlur, value, ref } }) => (
@@ -222,7 +267,7 @@ const Section3FormRow = (props: {
                             disabled={
                                 !(
                                     props.methods.watch(
-                                        "radiosClicked.fasesCicloTratamento"
+                                        "radiosClicked.hasOperador"
                                     ) === statusRadios.SIM
                                 ) || props.disabled
                             }

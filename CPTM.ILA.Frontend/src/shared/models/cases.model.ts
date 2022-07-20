@@ -49,7 +49,7 @@ export interface BaseCase {
     fasesCicloTratamento: FasesCicloTratamento;
     descricaoFluxoTratamento: string;
     abrangenciaGeografica: { value: tipoAbrangenciaGeografica };
-    fonteDados: string;
+    fonteDados: { value: string }[];
     finalidadeTratamento: FinalidadeTratamento;
     categoriaDadosPessoais: CategoriaDadosPessoais;
     catDadosPessoaisSensiveis: CategoriaDadosPessoaisSensiveis;
@@ -94,7 +94,7 @@ export const emptyBaseCase = (): BaseCase => ({
     fasesCicloTratamento: emptyFasesCicloTratamento(),
     descricaoFluxoTratamento: "",
     abrangenciaGeografica: { value: tipoAbrangenciaGeografica.na },
-    fonteDados: "",
+    fonteDados: [{ value: "" }],
     finalidadeTratamento: emptyFinalidadeTratamento(),
     categoriaDadosPessoais: emptyCategoriaDadosPessoais(),
     catDadosPessoaisSensiveis: emptyCategoriaDadosPessoaisSensiveis(),
@@ -153,7 +153,7 @@ export const emptyCase = (
     fasesCicloTratamento: emptyFasesCicloTratamento(),
     descricaoFluxoTratamento: "",
     abrangenciaGeografica: { value: tipoAbrangenciaGeografica.na },
-    fonteDados: "",
+    fonteDados: [{ value: "" }],
     finalidadeTratamento: emptyFinalidadeTratamento(),
     categoriaDadosPessoais: emptyCategoriaDadosPessoais(),
     catDadosPessoaisSensiveis: emptyCategoriaDadosPessoaisSensiveis(),

@@ -540,6 +540,11 @@ namespace CPTM.ILA.Web.Controllers.API
 
                 if (!aprovado)
                 {
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
+
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
                     return Request.CreateResponse(HttpStatusCode.OK,
@@ -573,6 +578,11 @@ namespace CPTM.ILA.Web.Controllers.API
 
                     _context.Entry(userInDb)
                         .State = EntityState.Modified;
+
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
 
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
@@ -613,6 +623,11 @@ namespace CPTM.ILA.Web.Controllers.API
                     }
 
                     _context.Users.Add(newUser);
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
+
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
 
@@ -627,11 +642,21 @@ namespace CPTM.ILA.Web.Controllers.API
 
                     _context.Entry(userInDb)
                         .State = EntityState.Modified;
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
+
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
 
                     return Request.CreateResponse(HttpStatusCode.OK,
                         new { message = "Requisição de Acesso ao Comite LGPD aprovada", userInDb });
+                }
+
+                if (accessRequest.EmailSuperiorPath != null)
+                {
+                    File.Delete(accessRequest.EmailSuperiorPath);
                 }
 
                 _context.AccessRequests.Remove(accessRequest);

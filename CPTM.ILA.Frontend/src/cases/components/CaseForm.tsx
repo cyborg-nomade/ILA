@@ -52,11 +52,11 @@ import Section15FormRow from "./form-items/Section15FormRow";
 import Section16FormRow from "./form-items/Section16FormRow";
 import { useCountdown } from "../../shared/hooks/timer-hook";
 import DeleteModal from "./modals/DeleteModal";
-import _ from "lodash";
 import LoadingModal from "./modals/LoadingModal";
 import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 import Section6FormRowPhantasm from "./form-items/Section6FormRowPhantasm";
 import { emptyGroup } from "../../shared/models/access-control/group.model";
+import Section5FormRow from "./form-items/Section5FormRow";
 
 type onSubmitFn = (item: Case) => void;
 
@@ -274,6 +274,10 @@ const CaseForm = (props: {
         [reset, props.item, dpo]
     );
 
+    const fonteDados = useFieldArray({
+        control: methods.control,
+        name: "fonteDados",
+    });
     const categoriasTitularesCategorias = useFieldArray({
         control: methods.control,
         name: "categoriasTitulares.categorias",
@@ -304,6 +308,11 @@ const CaseForm = (props: {
             methods.setValue("operador.area", "");
             methods.setValue("operador.telefone", "");
             methods.setValue("operador.email", "");
+            methods.setValue("fasesCicloTratamento.coleta", false);
+            methods.setValue("fasesCicloTratamento.retencao", false);
+            methods.setValue("fasesCicloTratamento.processamento", false);
+            methods.setValue("fasesCicloTratamento.compartilhamento", false);
+            methods.setValue("fasesCicloTratamento.eliminacao", false);
         }
     };
 
@@ -785,7 +794,11 @@ const CaseForm = (props: {
                                                     <Form.Control
                                                         disabled={!isEditing}
                                                         type="text"
-                                                        onChange={(event) => {
+                                                        onChange={(event: {
+                                                            currentTarget: {
+                                                                value: string;
+                                                            };
+                                                        }) => {
                                                             if (
                                                                 event
                                                                     .currentTarget
@@ -1051,9 +1064,11 @@ const CaseForm = (props: {
                                                                     disabled={
                                                                         !isEditing
                                                                     }
-                                                                    onChange={(
-                                                                        val
-                                                                    ) => {
+                                                                    onChange={(val: {
+                                                                        target: {
+                                                                            value: string;
+                                                                        };
+                                                                    }) => {
                                                                         if (
                                                                             val
                                                                                 .target
@@ -1091,9 +1106,11 @@ const CaseForm = (props: {
                                                                     disabled={
                                                                         !isEditing
                                                                     }
-                                                                    onChange={(
-                                                                        val
-                                                                    ) => {
+                                                                    onChange={(val: {
+                                                                        target: {
+                                                                            value: string;
+                                                                        };
+                                                                    }) => {
                                                                         if (
                                                                             val
                                                                                 .target
@@ -1660,7 +1677,11 @@ const CaseForm = (props: {
                                                             disabled={
                                                                 !isEditing
                                                             }
-                                                            onChange={(e) => {
+                                                            onChange={(e: {
+                                                                target: {
+                                                                    value: string;
+                                                                };
+                                                            }) => {
                                                                 onChange(e);
                                                                 changeGroup(
                                                                     user.groups.find(
@@ -1776,12 +1797,6 @@ const CaseForm = (props: {
                                             lg={1}
                                         ></Form.Label>
                                         <Form.Label as={Col}></Form.Label>
-                                        <Form.Label
-                                            as={Col}
-                                            className="d-grid justify-content-center"
-                                        >
-                                            Atua?
-                                        </Form.Label>
                                         <Form.Label
                                             as={Col}
                                             className="d-grid justify-content-center"
@@ -2045,80 +2060,85 @@ const CaseForm = (props: {
                                             </Row>
                                         </Col>
                                     </Row>
-                                    <Row className="mb-3">
-                                        <Col lg={1}>
-                                            <p>
-                                                {
-                                                    CaseIndexDictionary
-                                                        .fonteDados.number
-                                                }
-                                            </p>
-                                        </Col>
-                                        <Form.Label as={Col}>
-                                            {
-                                                CaseIndexDictionary.fonteDados
-                                                    .title
-                                            }
-                                        </Form.Label>
-                                        <Col lg={8}>
-                                            <Controller
-                                                rules={{ required: true }}
-                                                control={methods.control}
-                                                name="fonteDados"
-                                                render={({
-                                                    field: {
-                                                        onChange,
-                                                        value,
-                                                        ref,
-                                                    },
-                                                }) => (
-                                                    <Select
-                                                        ref={ref}
-                                                        options={fonteSystems.map(
-                                                            (s) => ({
-                                                                value: s,
-                                                                label: s,
+                                    <React.Fragment>
+                                        {fonteDados.fields &&
+                                        fonteDados.fields.length > 0 ? (
+                                            fonteDados.fields.map(
+                                                (field, index) => (
+                                                    <React.Fragment
+                                                        key={field.id}
+                                                    >
+                                                        <Section5FormRow
+                                                            disabled={
+                                                                !isEditing
+                                                            }
+                                                            name={`fonteDados[${index}]`}
+                                                            methods={methods}
+                                                            fonteSystems={
+                                                                fonteSystems
+                                                            }
+                                                        />
+                                                        <Row className="justify-content-center">
+                                                            <ButtonGroup
+                                                                as={Col}
+                                                                className="mt-1 mb-3"
+                                                                lg={2}
+                                                            >
+                                                                <Button
+                                                                    disabled={
+                                                                        !isEditing
+                                                                    }
+                                                                    variant="primary"
+                                                                    onClick={() =>
+                                                                        fonteDados.append(
+                                                                            {
+                                                                                value: "",
+                                                                            }
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    +
+                                                                </Button>
+                                                                <Button
+                                                                    disabled={
+                                                                        !isEditing
+                                                                    }
+                                                                    variant="danger"
+                                                                    onClick={() =>
+                                                                        fonteDados.remove(
+                                                                            index
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    -
+                                                                </Button>
+                                                            </ButtonGroup>
+                                                        </Row>
+                                                    </React.Fragment>
+                                                )
+                                            )
+                                        ) : (
+                                            <Row className="justify-content-center">
+                                                <ButtonGroup
+                                                    as={Col}
+                                                    className="mt-1 mb-3"
+                                                    lg={2}
+                                                >
+                                                    <Button
+                                                        disabled={!isEditing}
+                                                        variant="primary"
+                                                        onClick={() =>
+                                                            fonteDados.append({
+                                                                value: "",
                                                             })
-                                                        )}
-                                                        value={fonteSystems
-                                                            .map((s) => ({
-                                                                value: s,
-                                                                label: s,
-                                                            }))
-                                                            .find(
-                                                                (c) =>
-                                                                    c.value ===
-                                                                    value
-                                                            )}
-                                                        onChange={(val) =>
-                                                            onChange(val?.value)
                                                         }
-                                                        isSearchable
-                                                        isDisabled={!isEditing}
-                                                        placeholder="Selecione a fonte de dados"
-                                                        noOptionsMessage={() =>
-                                                            "Nenhum resultado"
-                                                        }
-                                                    />
-                                                )}
-                                            />
-                                            {!!methods.formState.errors
-                                                .fonteDados && (
-                                                <div className="invalid-feedback-react-select">
-                                                    Esse campo é obrigatório
-                                                </div>
-                                            )}
-                                        </Col>
-                                        <Col lg={1}>
-                                            <Row>
-                                                <CreateCommentBox
-                                                    item={
-                                                        CaseIndexDictionary.fonteDados
-                                                    }
-                                                />
+                                                    >
+                                                        +
+                                                    </Button>
+                                                </ButtonGroup>
                                             </Row>
-                                        </Col>
-                                    </Row>
+                                        )}
+                                    </React.Fragment>
                                 </Accordion.Body>
                             </Accordion.Item>
                             <Accordion.Item

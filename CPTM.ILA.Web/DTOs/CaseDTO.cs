@@ -40,7 +40,7 @@ namespace CPTM.ILA.Web.DTOs
         public FasesCicloTratamento FasesCicloTratamento { get; set; }
         public string DescricaoFluxoTratamento { get; set; }
         public TipoAbrangenciaGeografica AbrangenciaGeografica { get; set; }
-        public string FonteDados { get; set; }
+        public List<FonteDados> FonteDados { get; set; }
         public FinalidadeTratamento FinalidadeTratamento { get; set; }
 
         public CategoriaDadosPessoais CategoriaDadosPessoais { get; set; }
@@ -264,7 +264,8 @@ namespace CPTM.ILA.Web.DTOs
                 ExtensaoEncarregado = fullCase.ExtensaoEncarregado,
                 FasesCicloTratamento = fullCase.FasesCicloTratamento,
                 FinalidadeTratamento = fullCase.FinalidadeTratamento,
-                FonteDados = fullCase.FonteDados,
+                FonteDados = fullCase.FonteDados.Split(',').ToList().Select(s => new FonteDados() { Value = s })
+                    .ToList(),
                 FrequenciaTratamento = fullCase.FrequenciaTratamento,
                 GrupoCriadorId = fullCase.GrupoCriadorId,
                 Id = fullCase.Id,
@@ -310,7 +311,7 @@ namespace CPTM.ILA.Web.DTOs
                 ExtensaoEncarregado = caseDto.ExtensaoEncarregado,
                 FasesCicloTratamento = caseDto.FasesCicloTratamento,
                 FinalidadeTratamento = caseDto.FinalidadeTratamento,
-                FonteDados = caseDto.FonteDados,
+                FonteDados = string.Join(",", caseDto.FonteDados.Select(fd => fd.Value).ToList()),
                 FrequenciaTratamento = caseDto.FrequenciaTratamento,
                 GrupoCriadorId = caseDto.GrupoCriadorId,
                 Id = caseDto.Id,

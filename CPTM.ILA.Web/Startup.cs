@@ -23,7 +23,7 @@ namespace CPTM.ILA.Web
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = "http://localhost/ILA", //some string, normally web url,  
                     ValidAudience = "http://localhost/ILA",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("DESILA_TOKEN_DEV"))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("HOMILA_TOKEN_DEV"))
                 }
             });
         }

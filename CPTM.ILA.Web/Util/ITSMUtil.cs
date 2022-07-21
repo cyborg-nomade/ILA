@@ -79,7 +79,12 @@ namespace CPTM.ILA.Web.Util
             var response = await chamadoClient.ExecuteAsync(request);
             var enviado = response.IsSuccessful;
 
-            return enviado;
+            if (!enviado)
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            return true;
         }
     }
 

@@ -450,14 +450,17 @@ namespace CPTM.ILA.Web.Controllers.API
                     new { message = "Requisição não contém arquivos" });
             }
 
-            var postedFile = HttpContext.Current.Request.Files[0];
-            var fileName = Path.GetFileName(postedFile?.FileName);
-            var root = HttpContext.Current.Server.MapPath("~/App_Data/emails-aprovacao");
-            var filePath = root + @"\" + fileName;
-            postedFile?.SaveAs(filePath);
-
             try
             {
+                var postedFile = HttpContext.Current.Request.Files[0];
+                var fileName = $"ARID{arid}-FILE-{postedFile?.FileName}";
+                var arFilesDirPath =
+                    Path.Combine(HttpContext.Current.Server.MapPath("~"), "ARFiles", "emails-aprovacao");
+                Directory.CreateDirectory(arFilesDirPath);
+
+                var filePath = arFilesDirPath + @"\" + fileName;
+                postedFile?.SaveAs(filePath);
+
                 var accessRequest = await _context.AccessRequests.FindAsync(arid);
 
                 if (accessRequest == null)
@@ -537,6 +540,11 @@ namespace CPTM.ILA.Web.Controllers.API
 
                 if (!aprovado)
                 {
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
+
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
                     return Request.CreateResponse(HttpStatusCode.OK,
@@ -570,6 +578,11 @@ namespace CPTM.ILA.Web.Controllers.API
 
                     _context.Entry(userInDb)
                         .State = EntityState.Modified;
+
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
 
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
@@ -610,6 +623,11 @@ namespace CPTM.ILA.Web.Controllers.API
                     }
 
                     _context.Users.Add(newUser);
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
+
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
 
@@ -624,11 +642,21 @@ namespace CPTM.ILA.Web.Controllers.API
 
                     _context.Entry(userInDb)
                         .State = EntityState.Modified;
+                    if (accessRequest.EmailSuperiorPath != null)
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
+
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
 
                     return Request.CreateResponse(HttpStatusCode.OK,
                         new { message = "Requisição de Acesso ao Comite LGPD aprovada", userInDb });
+                }
+
+                if (accessRequest.EmailSuperiorPath != null)
+                {
+                    File.Delete(accessRequest.EmailSuperiorPath);
                 }
 
                 _context.AccessRequests.Remove(accessRequest);

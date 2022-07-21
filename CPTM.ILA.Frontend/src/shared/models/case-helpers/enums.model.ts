@@ -18,6 +18,7 @@ export enum tipoAbrangenciaGeografica {
     estadual = "Estadual",
     municipal = "Municipal",
     regional = "Regional",
+    internacional = "Internacional",
     na = "",
 }
 

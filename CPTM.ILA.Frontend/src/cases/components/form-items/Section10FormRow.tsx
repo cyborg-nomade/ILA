@@ -105,9 +105,7 @@ const Section10FormRow = (props: {
                                 field: { onChange, onBlur, value, ref },
                             }) => (
                                 <Form.Control
-                                    disabled={
-                                        props.disabled || !isDescricaoEnabled
-                                    }
+                                    disabled={props.disabled}
                                     type="text"
                                     value={value as string}
                                     onChange={onChange}
@@ -138,7 +136,7 @@ const Section10FormRow = (props: {
                                     name={`${props.name}.trataDados-${props.itemRef.number}`}
                                     type="radio"
                                     value={value}
-                                    onChange={(val) => {
+                                    onChange={(val: string) => {
                                         toggleEnableDescricao(val);
                                         onChange(val);
                                     }}

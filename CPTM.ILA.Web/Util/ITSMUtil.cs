@@ -8,14 +8,14 @@ namespace CPTM.ILA.Web.Util
     public class ItsmUtil
     {
         //homolog integration
-        private const string ItsmUrl = "https://10.200.77.162:8443/api/";
-        private const string ApiLogin = "INTEGRACAO_CPTM_LGPD";
-        private const string ApiPass = "INTEGRACAO_CPTM_LGPD";
+        //private const string ItsmUrl = "https://10.200.77.162:8443/api/";
+        //private const string ApiLogin = "INTEGRACAO_CPTM_LGPD";
+        //private const string ApiPass = "INTEGRACAO_CPTM_LGPD";
 
         //prod integration
-        //private const string ItsmUrl = "https://10.200.175.89:8443/api/";
-        //private const string ApiLogin = "INTEGRACAO_CPTM_LGPD";
-        //private const string ApiPass = "27-H@y;ZTkkfYhw{";
+        private const string ItsmUrl = "https://10.200.175.89:8443/api/";
+        private const string ApiLogin = "INTEGRACAO_CPTM_LGPD";
+        private const string ApiPass = "27-H@y;ZTkkfYhw{";
 
         public static async Task<bool> AbrirChamado(string username, string descricao, TipoChamado tipoChamado)
         {

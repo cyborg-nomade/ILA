@@ -136,7 +136,7 @@ const Section10FormRow = (props: {
                                     name={`${props.name}.trataDados-${props.itemRef.number}`}
                                     type="radio"
                                     value={value}
-                                    onChange={(val) => {
+                                    onChange={(val: string) => {
                                         toggleEnableDescricao(val);
                                         onChange(val);
                                     }}

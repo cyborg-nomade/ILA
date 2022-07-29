@@ -1193,19 +1193,19 @@ const CaseForm = (props: {
                                         <Col>
                                             <Controller
                                                 rules={{
-                                                    validate: {
-                                                        required: (value) => {
-                                                            if (
-                                                                !value &&
-                                                                methods.watch(
-                                                                    "radiosClicked.hasOperador"
-                                                                ) ===
-                                                                    statusRadios.SIM
-                                                            )
-                                                                return false;
-                                                            return true;
-                                                        },
-                                                    },
+                                                    // validate: {
+                                                    //     required: (value) => {
+                                                    //         if (
+                                                    //             !value &&
+                                                    //             methods.watch(
+                                                    //                 "radiosClicked.hasOperador"
+                                                    //             ) ===
+                                                    //                 statusRadios.SIM
+                                                    //         )
+                                                    //             return false;
+                                                    //         return true;
+                                                    //     },
+                                                    // },
                                                     maxLength: 250,
                                                 }}
                                                 control={methods.control}

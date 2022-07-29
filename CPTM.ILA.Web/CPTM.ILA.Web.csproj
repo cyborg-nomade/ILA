@@ -507,7 +507,6 @@
       <DependentUpon>dstProduto.xsd</DependentUpon>
     </Content>
     <Content Include="Relatorio\Produto.rdlc" />
-    <Content Include="Views\Shared\_ReferenciasCSSeJS.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
   </ItemGroup>

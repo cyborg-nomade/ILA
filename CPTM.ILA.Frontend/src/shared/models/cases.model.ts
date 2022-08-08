@@ -46,6 +46,7 @@ export interface BaseCase {
     extensaoEncarregado: AgenteTratamento;
     areaTratamentoDados: AgenteTratamento;
     operador: AgenteTratamento;
+    operadores: AgenteTratamento[];
     fasesCicloTratamento: FasesCicloTratamento;
     descricaoFluxoTratamento: string;
     abrangenciaGeografica: { value: tipoAbrangenciaGeografica };
@@ -91,6 +92,7 @@ export const emptyBaseCase = (): BaseCase => ({
     extensaoEncarregado: emptyAgenteTratamento(),
     areaTratamentoDados: emptyAgenteTratamento(),
     operador: emptyAgenteTratamento(),
+    operadores: [],
     fasesCicloTratamento: emptyFasesCicloTratamento(),
     descricaoFluxoTratamento: "",
     abrangenciaGeografica: { value: tipoAbrangenciaGeografica.na },
@@ -150,6 +152,7 @@ export const emptyCase = (
           )
         : emptyAgenteTratamento(),
     operador: emptyAgenteTratamento(),
+    operadores: [],
     fasesCicloTratamento: emptyFasesCicloTratamento(),
     descricaoFluxoTratamento: "",
     abrangenciaGeografica: { value: tipoAbrangenciaGeografica.na },

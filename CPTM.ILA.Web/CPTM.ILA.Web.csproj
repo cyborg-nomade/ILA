@@ -341,6 +341,10 @@
     <Compile Include="Migrations\202206301530081_AddRadios.designer.cs">
       <DependentUpon>202206301530081_AddRadios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208052006304_AddOperadores.cs" />
+    <Compile Include="Migrations\202208052006304_AddOperadores.designer.cs">
+      <DependentUpon>202208052006304_AddOperadores.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccessControl\AccessRequest.cs" />
     <Compile Include="DTOs\AuthUser.cs" />
@@ -507,7 +511,6 @@
       <DependentUpon>dstProduto.xsd</DependentUpon>
     </Content>
     <Content Include="Relatorio\Produto.rdlc" />
-    <Content Include="Views\Shared\_ReferenciasCSSeJS.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
   </ItemGroup>
@@ -523,6 +526,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206301530081_AddRadios.resx">
       <DependentUpon>202206301530081_AddRadios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208052006304_AddOperadores.resx">
+      <DependentUpon>202208052006304_AddOperadores.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

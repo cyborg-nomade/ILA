@@ -542,7 +542,14 @@ namespace CPTM.ILA.Web.Controllers.API
                 {
                     if (accessRequest.EmailSuperiorPath != null)
                     {
-                        File.Delete(accessRequest.EmailSuperiorPath);
+                        try
+                        {
+                            File.Delete(accessRequest.EmailSuperiorPath);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                     }
 
                     _context.AccessRequests.Remove(accessRequest);
@@ -581,7 +588,14 @@ namespace CPTM.ILA.Web.Controllers.API
 
                     if (accessRequest.EmailSuperiorPath != null)
                     {
-                        File.Delete(accessRequest.EmailSuperiorPath);
+                        try
+                        {
+                            File.Delete(accessRequest.EmailSuperiorPath);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                     }
 
                     _context.AccessRequests.Remove(accessRequest);
@@ -625,7 +639,14 @@ namespace CPTM.ILA.Web.Controllers.API
                     _context.Users.Add(newUser);
                     if (accessRequest.EmailSuperiorPath != null)
                     {
-                        File.Delete(accessRequest.EmailSuperiorPath);
+                        try
+                        {
+                            File.Delete(accessRequest.EmailSuperiorPath);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                     }
 
                     _context.AccessRequests.Remove(accessRequest);
@@ -644,7 +665,14 @@ namespace CPTM.ILA.Web.Controllers.API
                         .State = EntityState.Modified;
                     if (accessRequest.EmailSuperiorPath != null)
                     {
-                        File.Delete(accessRequest.EmailSuperiorPath);
+                        try
+                        {
+                            File.Delete(accessRequest.EmailSuperiorPath);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
                     }
 
                     _context.AccessRequests.Remove(accessRequest);
@@ -656,7 +684,14 @@ namespace CPTM.ILA.Web.Controllers.API
 
                 if (accessRequest.EmailSuperiorPath != null)
                 {
-                    File.Delete(accessRequest.EmailSuperiorPath);
+                    try
+                    {
+                        File.Delete(accessRequest.EmailSuperiorPath);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
 
                 _context.AccessRequests.Remove(accessRequest);

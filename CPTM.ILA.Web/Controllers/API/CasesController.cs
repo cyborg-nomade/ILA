@@ -951,6 +951,7 @@ namespace CPTM.ILA.Web.Controllers.API
                     .Include(c => c.ExtensaoEncarregado)
                     .Include(c => c.AreaTratamentoDados)
                     .Include(c => c.Operador)
+                    .Include(c => c.Operadores)
                     .Include(c => c.FasesCicloTratamento)
                     .Include(c => c.FinalidadeTratamento)
                     .Include(c => c.ItensCategoriaDadosPessoais)
@@ -1144,6 +1145,7 @@ namespace CPTM.ILA.Web.Controllers.API
                     .Include(c => c.ExtensaoEncarregado)
                     .Include(c => c.AreaTratamentoDados)
                     .Include(c => c.Operador)
+                    .Include(c => c.Operadores)
                     .Include(c => c.FasesCicloTratamento)
                     .Include(c => c.FinalidadeTratamento)
                     .Include(c => c.ItensCategoriaDadosPessoais)
@@ -1201,6 +1203,12 @@ namespace CPTM.ILA.Web.Controllers.API
                 if (caseToSave.Operador.Id != caseInDb.Operador.Id)
                 {
                     _context.AgentesTratamento.Remove(caseInDb.Operador);
+                }
+
+                foreach (var item in caseInDb.Operadores.ToList()
+                             .Where(item => caseToSave.Operadores.All(c => c.Id != item.Id)))
+                {
+                    _context.AgentesTratamento.Remove(item);
                 }
 
                 if (caseToSave.FasesCicloTratamento.Id != caseInDb.FasesCicloTratamento.Id)
@@ -1367,6 +1375,28 @@ namespace CPTM.ILA.Web.Controllers.API
                         Telefone = caseToSave.Operador.Telefone
                     };
                     caseInDb.Operador = newOperador;
+                }
+
+                foreach (var item in caseToSave.Operadores)
+                {
+                    var itemInDb =
+                        caseInDb.Operadores.SingleOrDefault(i => i.Id == item.Id && i.Id != 0);
+                    if (itemInDb != null)
+                        // Update child
+                        _context.Entry(itemInDb)
+                            .CurrentValues.SetValues(item);
+                    else
+                    {
+                        // Insert child
+                        var newOperador = new AgenteTratamento()
+                        {
+                            Nome = caseToSave.Operador.Nome,
+                            Area = caseToSave.Operador.Area,
+                            Email = caseToSave.Operador.Email,
+                            Telefone = caseToSave.Operador.Telefone
+                        };
+                        caseInDb.Operadores.Add(newOperador);
+                    }
                 }
 
                 var faseCicloTratamentoInDb = caseInDb.FasesCicloTratamento;
@@ -1731,6 +1761,7 @@ namespace CPTM.ILA.Web.Controllers.API
                     .Include(c => c.ExtensaoEncarregado)
                     .Include(c => c.AreaTratamentoDados)
                     .Include(c => c.Operador)
+                    .Include(c => c.Operadores)
                     .Include(c => c.FasesCicloTratamento)
                     .Include(c => c.FinalidadeTratamento)
                     .Include(c => c.ItensCategoriaDadosPessoais)

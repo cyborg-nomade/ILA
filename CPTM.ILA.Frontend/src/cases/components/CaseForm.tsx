@@ -57,6 +57,7 @@ import InvalidFieldsModal from "./modals/InvalidFieldsModal";
 import Section6FormRowPhantasm from "./form-items/Section6FormRowPhantasm";
 import { emptyGroup } from "../../shared/models/access-control/group.model";
 import Section5FormRow from "./form-items/Section5FormRow";
+import Section2FormRow from "./form-items/Section2FormRow";
 
 type onSubmitFn = (item: Case) => void;
 
@@ -981,7 +982,22 @@ const CaseForm = (props: {
                                             />
                                         </Col>
                                     </Row>
-                                    <Row className="mb-3">
+                                    <Section2FormRow
+                                        className="mb-3"
+                                        disabled={!isEditing}
+                                        itemRef={CaseIndexDictionary.operador}
+                                        methods={methods}
+                                        tooltip={
+                                            <p>
+                                                Pessoa natural ou jurídica, de
+                                                direito público ou privado, que
+                                                realiza o tratamento de dados
+                                                pessoais em nome do controlador;
+                                                (LGPD, art. 5º, VII)
+                                            </p>
+                                        }
+                                    />
+                                    {/* <Row className="mb-3">
                                         <Col lg={1}>
                                             <p>
                                                 {
@@ -1340,7 +1356,7 @@ const CaseForm = (props: {
                                                 )}
                                             />
                                         </Col>
-                                    </Row>
+                                    </Row> */}
                                     <Row className="mb-3">
                                         <Col lg={1}>
                                             <p>

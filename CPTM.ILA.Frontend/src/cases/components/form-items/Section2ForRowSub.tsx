@@ -14,6 +14,8 @@ const Section2ForRowSub = (props: {
 }) => {
     return (
         <Row className="mb-3">
+            <Col lg={1}></Col>
+            <Col></Col>
             <Col>
                 <Controller
                     rules={{

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     FieldArrayPath,
     FieldPath,
@@ -15,35 +15,37 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 
 import { Case } from "../../../shared/models/cases.model";
-import {
-    emptyItemCategoriaDadosPessoais,
-    itemCategoriaDadosPessoais,
-} from "../../../shared/models/case-helpers/case-helpers.model";
-import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
-import Section7FormRowSub from "./Section7FormRowSub";
+import { emptyAgenteTratamento } from "../../../shared/models/case-helpers/case-helpers.model";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { statusRadios } from "../../../shared/models/case-helpers/enums.model";
+import Section2ForRowSub from "./Section2ForRowSub";
 
 const Section2FormRow = (props: {
     tooltip?: JSX.Element;
     disabled: boolean;
-    name: FieldPath<Case>;
     className: string;
     itemRef: { number: string; title: string };
-    systems: string[];
     methods: UseFormReturn<Case>;
 }) => {
     const { fields, append, remove } = useFieldArray({
         control: props.methods.control, // control props comes from useForm
-        name: props.name as FieldArrayPath<Case>, // unique name for your Field Array
+        name: "operadores" as FieldArrayPath<Case>, // unique name for your Field Array
     });
 
     const handleTrataRadio = (status: statusRadios) => {
         if (status === statusRadios.NÃO) {
-            props.methods.setValue(props.name, []);
+            props.methods.setValue("operadores", []);
+            props.methods.setValue("fasesCicloTratamento.coleta", false);
+            props.methods.setValue("fasesCicloTratamento.retencao", false);
+            props.methods.setValue("fasesCicloTratamento.processamento", false);
+            props.methods.setValue(
+                "fasesCicloTratamento.compartilhamento",
+                false
+            );
+            props.methods.setValue("fasesCicloTratamento.eliminacao", false);
         }
         if (status === statusRadios.SIM) {
-            append(emptyItemCategoriaDadosPessoais());
+            append(emptyAgenteTratamento());
         }
     };
 
@@ -53,107 +55,110 @@ const Section2FormRow = (props: {
                 <Col lg={1}>
                     <p>{props.itemRef.number}</p>
                 </Col>
-                {props.tooltip ? (
-                    <OverlayTrigger
-                        placement="right"
-                        overlay={
-                            <Tooltip className="text-muted">
-                                {props.tooltip}
-                            </Tooltip>
-                        }
-                    >
-                        <Form.Label as={Col}>
-                            {props.itemRef.title} <AiFillQuestionCircle />
-                        </Form.Label>
-                    </OverlayTrigger>
-                ) : (
-                    <Form.Label as={Col}>{props.itemRef.title}</Form.Label>
-                )}
-                <Col className="d-grid justify-content-center">
-                    <Controller
-                        rules={{
-                            validate: {
-                                required: (value) => {
-                                    if (value === statusRadios.INVALID)
-                                        return false;
-                                    return true;
+                <Col className="d-flex justify-content-between">
+                    {props.tooltip ? (
+                        <OverlayTrigger
+                            placement="right"
+                            overlay={
+                                <Tooltip className="text-muted">
+                                    {props.tooltip}
+                                </Tooltip>
+                            }
+                        >
+                            <Form.Label as={Col}>
+                                {props.itemRef.title} <AiFillQuestionCircle />
+                            </Form.Label>
+                        </OverlayTrigger>
+                    ) : (
+                        <Form.Label as={Col}>{props.itemRef.title}</Form.Label>
+                    )}
+                    <Col className="d-grid justify-content-center">
+                        <Controller
+                            rules={{
+                                validate: {
+                                    required: (value) => {
+                                        if (value === statusRadios.INVALID)
+                                            return false;
+                                        return true;
+                                    },
                                 },
-                            },
-                        }}
-                        control={props.methods.control}
-                        name={
-                            `radiosClicked.${props.name
-                                .split(".")
-                                .join("")}` as FieldPath<Case>
-                        }
-                        render={({
-                            field: { onChange, onBlur, value, ref },
-                        }) => (
-                            <React.Fragment>
-                                <Form.Check
-                                    type="radio"
-                                    name={`radiosClicked.${props.name}-${props.itemRef.number}`}
-                                    label="Sim"
-                                    value={statusRadios.SIM}
-                                    checked={
-                                        (value as statusRadios) ===
-                                        statusRadios.SIM
-                                    }
-                                    disabled={props.disabled}
-                                    onChange={(val) => {
-                                        if (val.target.value === "2") {
-                                            handleTrataRadio(statusRadios.SIM);
-                                            onChange(statusRadios.SIM);
+                            }}
+                            control={props.methods.control}
+                            name={
+                                `radiosClicked.hasOperador` as FieldPath<Case>
+                            }
+                            render={({
+                                field: { onChange, onBlur, value, ref },
+                            }) => (
+                                <React.Fragment>
+                                    <Form.Check
+                                        type="radio"
+                                        name={`radiosClicked.hasOperador`}
+                                        label="Sim"
+                                        value={statusRadios.SIM}
+                                        checked={
+                                            (value as statusRadios) ===
+                                            statusRadios.SIM
                                         }
-                                    }}
-                                    isInvalid={value === statusRadios.INVALID}
-                                    onBlur={onBlur}
-                                    ref={ref}
-                                />
-                                <Form.Check
-                                    type="radio"
-                                    name={`radiosClicked.${props.name}-${props.itemRef.number}`}
-                                    label="Não"
-                                    value={statusRadios.NÃO}
-                                    checked={
-                                        (value as statusRadios) ===
-                                        statusRadios.NÃO
-                                    }
-                                    disabled={props.disabled}
-                                    onChange={(val) => {
-                                        if (val.target.value === "1") {
-                                            handleTrataRadio(statusRadios.NÃO);
-                                            onChange(statusRadios.NÃO);
+                                        disabled={props.disabled}
+                                        onChange={(val: {
+                                            target: { value: string };
+                                        }) => {
+                                            if (val.target.value === "2") {
+                                                handleTrataRadio(
+                                                    statusRadios.SIM
+                                                );
+                                                onChange(statusRadios.SIM);
+                                            }
+                                        }}
+                                        isInvalid={
+                                            value === statusRadios.INVALID
                                         }
-                                    }}
-                                    isInvalid={value === statusRadios.INVALID}
-                                    onBlur={onBlur}
-                                    ref={ref}
-                                />
-                            </React.Fragment>
-                        )}
-                    />
+                                        onBlur={onBlur}
+                                        ref={ref}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name={`radiosClicked.hasOperador`}
+                                        label="Não"
+                                        value={statusRadios.NÃO}
+                                        checked={
+                                            (value as statusRadios) ===
+                                            statusRadios.NÃO
+                                        }
+                                        disabled={props.disabled}
+                                        onChange={(val: {
+                                            target: { value: string };
+                                        }) => {
+                                            if (val.target.value === "1") {
+                                                handleTrataRadio(
+                                                    statusRadios.NÃO
+                                                );
+                                                onChange(statusRadios.NÃO);
+                                            }
+                                        }}
+                                        isInvalid={
+                                            value === statusRadios.INVALID
+                                        }
+                                        onBlur={onBlur}
+                                        ref={ref}
+                                    />
+                                </React.Fragment>
+                            )}
+                        />
+                    </Col>
                 </Col>
                 <Col></Col>
                 <Col></Col>
                 <Col></Col>
-                <Col lg={2}></Col>
-                <Col lg={1}>
-                    <Row>
-                        <CreateCommentBox item={props.itemRef} />
-                    </Row>
-                </Col>
+                <Col></Col>
             </Row>
             <React.Fragment>
                 {fields && fields.length > 0 ? (
                     fields.map((field, index) => (
                         <React.Fragment key={field.id}>
-                            <Section7FormRowSub
-                                systems={props.systems}
-                                className={props.className}
-                                name={
-                                    `${props.name}[${index}]` as FieldPath<Case>
-                                }
+                            <Section2ForRowSub
+                                name={`operadores[${index}]` as FieldPath<Case>}
                                 disabled={props.disabled}
                                 methods={props.methods}
                             />
@@ -167,9 +172,7 @@ const Section2FormRow = (props: {
                                         variant="primary"
                                         disabled={props.disabled}
                                         onClick={() =>
-                                            append(
-                                                emptyItemCategoriaDadosPessoais()
-                                            )
+                                            append(emptyAgenteTratamento())
                                         }
                                     >
                                         +
@@ -180,19 +183,8 @@ const Section2FormRow = (props: {
                                         onClick={() => {
                                             remove(index);
                                             if (fields.length - 1 < 1) {
-                                                console.log("hi");
-                                                console.log(
-                                                    `radiosClicked.${props.name
-                                                        .split(".")
-                                                        .join("")}`
-                                                );
-
                                                 props.methods.setValue(
-                                                    `radiosClicked.${props.name
-                                                        .split(".")
-                                                        .join(
-                                                            ""
-                                                        )}` as FieldPath<Case>,
+                                                    `radiosClicked.hasOperador` as FieldPath<Case>,
                                                     statusRadios.INVALID
                                                 );
                                             }
@@ -212,15 +204,11 @@ const Section2FormRow = (props: {
                                 disabled={
                                     !(
                                         props.methods.watch(
-                                            `radiosClicked.${props.name
-                                                .split(".")
-                                                .join("")}` as FieldPath<Case>
+                                            `radiosClicked.hasOperador` as FieldPath<Case>
                                         ) === statusRadios.SIM
                                     )
                                 }
-                                onClick={() =>
-                                    append(emptyItemCategoriaDadosPessoais())
-                                }
+                                onClick={() => append(emptyAgenteTratamento())}
                             >
                                 +
                             </Button>

@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using data_models.ResponseData.DTOs;
+using data_models.ResponseData.Models.ChangeLogging;
 using data_models.Responses;
 using RestSharp;
 
@@ -33,10 +35,10 @@ var cases = getAllCasesResponse.Data?.CaseListItems;
 Console.WriteLine("Count: " + cases?.Count);
 
 if (cases != null)
+    //- foreach case in cases
     foreach (var @case in cases)
     {
-        Console.WriteLine("Case ID: " + @case.Id);
-        //- foreach case in cases
+        //Console.WriteLine("Case ID: " + @case.Id);
         //  - get case
 
         var caseResource = "cases/" + @case.Id;
@@ -47,34 +49,24 @@ if (cases != null)
 
         var fullCase = getCaseResponse.Data?.UniqueCase;
 
-        Console.WriteLine("Full Case ID: " + fullCase?.Id);
-        Console.WriteLine("Grupo Criador ID: " + fullCase?.GrupoCriadorId);
-        Console.WriteLine("Extensão Encarregado: " + fullCase?.ExtensaoEncarregado);
-
-        //  - select owner group
-        //  - get comite member for group
-
-        var comiteMemberResource = "users/comite-members/" + fullCase?.GrupoCriadorId;
-        var comiteMemberRequest = new RestRequest(comiteMemberResource, Method.Get);
-        comiteMemberRequest.AddHeader("Content-Type", "application/json");
-        comiteMemberRequest.AddHeader("Authorization", "Bearer " + token);
-
-        var comiteMemberResponse = await client.ExecuteAsync<ComiteMemberResponse>(comiteMemberRequest);
-
-        var comiteMember = comiteMemberResponse.Data?.ComiteMember;
-        Console.WriteLine("Comite Member: " + comiteMember);
-
-        //  - select comite member area
-        //  - replace in case
-
+        Console.WriteLine("\n\nFull Case ID: " + fullCase?.Id + "\n\n");
 
         if (fullCase != null)
         {
-            fullCase.ExtensaoEncarregado = comiteMember;
+            Console.WriteLine("Operador before: \n");
+            Console.WriteLine(fullCase.Operador + "\n");
 
+            //-add operador to operadores array
+            var oldOperador = fullCase.Operador;
+            fullCase.Operadores.Add(oldOperador);
 
-            //  - save case
-            Console.WriteLine("Extensão Encarregado: " + fullCase?.ExtensaoEncarregado);
+            Console.WriteLine("Operadores: \n");
+            foreach (var operador in fullCase.Operadores)
+            {
+                Console.WriteLine(operador);
+            }
+
+            //-save case
             //var saveCaseResource = "cases/" + fullCase?.Id;
             //var saveCaseRequest = new RestRequest(saveCaseResource, Method.Post);
             //saveCaseRequest.AddHeader("Content-Type", "application/json");
@@ -84,7 +76,7 @@ if (cases != null)
             //    Case = fullCase,
             //    ChangeLog = new ChangeLog()
             //    {
-            //        CaseDiff = "Update corretivo Extensão Encarregado: alterando área para a registrada no AD. 29/07",
+            //        CaseDiff = "Update corretivo Operadores: Migrando Operador para um array. 08/08",
             //        CaseId = fullCase?.Id,
             //        CaseRef = fullCase?.Ref,
             //        ChangeDate = DateTime.Now,
@@ -97,10 +89,10 @@ if (cases != null)
             //var saveCaseResponse = await client.ExecuteAsync<SaveCaseResponse>(saveCaseRequest);
 
             //Console.WriteLine(saveCaseResponse.Content);
+
+            //var savedCase = saveCaseResponse.Data?.CaseToSave;
+
+            //Console.WriteLine(savedCase?.ToString());
         }
-
-        //var savedCase = saveCaseResponse.Data?.CaseToSave;
-
-        //Console.WriteLine(savedCase?.ToString());
     }
 //- end

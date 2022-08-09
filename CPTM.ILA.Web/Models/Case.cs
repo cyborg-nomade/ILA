@@ -35,6 +35,7 @@ namespace CPTM.ILA.Web.Models
         public AgenteTratamento ExtensaoEncarregado { get; set; }
         public AgenteTratamento AreaTratamentoDados { get; set; }
         public AgenteTratamento Operador { get; set; }
+        public ICollection<AgenteTratamento> Operadores { get; set; }
 
         public FasesCicloTratamento FasesCicloTratamento { get; set; }
         public string DescricaoFluxoTratamento { get; set; }

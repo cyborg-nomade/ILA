@@ -43,37 +43,60 @@ namespace CPTM.ILA.Web.Controllers.API
         {
             try
             {
-                var diretorias = await _context.ILA_VW_ESTRUTURA_ORG.Where(os => os.FL_ATIVO == 1 && os.NR_NIVEL == 1)
+                var diretorias = await _context.ILA_VW_ESTRUTURA_ORG
+                    .Where(os =>
+                        os.FL_ATIVO == 1 &&
+                        os.CD_TIPO_ESTRUTURA == "DIR" &&
+                        os.TX_SIGLA != "CED" && os.TX_SIGLA != "APOS" && os.TX_SIGLA != "LICSVENC")
                     .Select(os => os.DIR_SIGLA)
                     .Distinct()
                     .OrderBy(s => s.Trim()
                         .ToLower())
                     .ToListAsync();
                 var gerenciasGerais = await _context.ILA_VW_ESTRUTURA_ORG
-                    .Where(os => os.FL_ATIVO == 1 && os.NR_NIVEL == 2)
+                    .Where(os =>
+                        os.FL_ATIVO == 1 &&
+                        os.CD_TIPO_ESTRUTURA == "GG" &&
+                        os.TX_SIGLA != "CED" && os.TX_SIGLA != "APOS" && os.TX_SIGLA != "LICSVENC")
                     .OrderBy(os => os.DIR_SIGLA)
                     .Select(os => os.GG_SIGLA)
                     .Distinct()
                     .OrderBy(s => s.Trim()
                         .ToLower())
                     .ToListAsync();
-                var gerencias = await _context.ILA_VW_ESTRUTURA_ORG.Where(os => os.FL_ATIVO == 1 && os.NR_NIVEL == 3)
+                var gerencias = await _context.ILA_VW_ESTRUTURA_ORG
+                    .Where(os =>
+                        os.FL_ATIVO == 1 &&
+                        os.CD_TIPO_ESTRUTURA == "GER" &&
+                        os.TX_SIGLA != "CED" && os.TX_SIGLA != "APOS" && os.TX_SIGLA != "LICSVENC")
                     .OrderBy(os => os.DIR_SIGLA)
                     .Select(os => os.GER_SIGLA)
                     .Distinct()
                     .OrderBy(s => s.Trim()
                         .ToLower())
                     .ToListAsync();
-                var deptos = await _context.ILA_VW_ESTRUTURA_ORG.Where(os => os.FL_ATIVO == 1 && os.NR_NIVEL == 4)
+                var deptos = await _context.ILA_VW_ESTRUTURA_ORG
+                    .Where(os =>
+                        os.FL_ATIVO == 1 &&
+                        os.CD_TIPO_ESTRUTURA == "D" &&
+                        os.TX_SIGLA != "CED" && os.TX_SIGLA != "APOS" && os.TX_SIGLA != "LICSVENC")
                     .OrderBy(os => os.DIR_SIGLA)
                     .Select(os => os.DEP_SIGLA)
                     .Distinct()
                     .OrderBy(s => s.Trim()
                         .ToLower())
                     .ToListAsync();
+                var nucleos = await _context.ILA_VW_ESTRUTURA_ORG
+                    .Where(os => os.FL_ATIVO == 1 && os.TX_NOME.Contains("NUCLEO"))
+                    .OrderBy(os => os.DIR_SIGLA)
+                    .Select(os => os.TX_NOME)
+                    .Distinct()
+                    .OrderBy(s => s.Trim()
+                        .ToLower())
+                    .ToListAsync();
 
                 return Request.CreateResponse(HttpStatusCode.OK,
-                    new { diretorias, gerenciasGerais, gerencias, deptos });
+                    new { diretorias, gerenciasGerais, gerencias, deptos, nucleos });
             }
             catch (Exception e)
             {

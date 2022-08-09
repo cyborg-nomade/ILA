@@ -266,7 +266,7 @@ namespace CPTM.ILA.Web.Controllers.API
 
                 var comiteMember = new AgenteTratamento()
                 {
-                    Area = selectedGroup.Nome,
+                    Area = comiteMemberUserAd.Departamento,
                     Email = comiteMemberUserAd.Email,
                     Nome = comiteMemberUserAd.Nome,
                     Telefone = comiteMemberUserAd.TelefoneComercial

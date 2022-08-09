@@ -36,6 +36,7 @@ namespace CPTM.ILA.Web.DTOs
         public AgenteTratamento ExtensaoEncarregado { get; set; }
         public AgenteTratamento AreaTratamentoDados { get; set; }
         public AgenteTratamento Operador { get; set; }
+        public ICollection<AgenteTratamento> Operadores { get; set; }
 
         public FasesCicloTratamento FasesCicloTratamento { get; set; }
         public string DescricaoFluxoTratamento { get; set; }
@@ -272,6 +273,7 @@ namespace CPTM.ILA.Web.DTOs
                 MedidasSegurancaPrivacidade = fullCase.MedidasSegurancaPrivacidade,
                 ObservacoesProcesso = fullCase.ObservacoesProcesso,
                 Operador = fullCase.Operador,
+                Operadores = fullCase.Operadores,
                 QtdeDadosSensiveisTratados = fullCase.QtdeDadosSensiveisTratados,
                 QtdeDadosTratados = fullCase.QtdeDadosTratados,
                 RiscosPrivacidade = fullCase.RiscosPrivacidade,
@@ -319,6 +321,7 @@ namespace CPTM.ILA.Web.DTOs
                 MedidasSegurancaPrivacidade = caseDto.MedidasSegurancaPrivacidade,
                 ObservacoesProcesso = caseDto.ObservacoesProcesso,
                 Operador = caseDto.Operador,
+                Operadores = caseDto.Operadores,
                 QtdeDadosSensiveisTratados = caseDto.QtdeDadosSensiveisTratados,
                 QtdeDadosTratados = caseDto.QtdeDadosTratados,
                 RiscosPrivacidade = caseDto.RiscosPrivacidade,

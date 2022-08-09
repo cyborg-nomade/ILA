@@ -100,7 +100,9 @@ const Section7FormRow = (props: {
                                         statusRadios.SIM
                                     }
                                     disabled={props.disabled}
-                                    onChange={(val) => {
+                                    onChange={(val: {
+                                        target: { value: string };
+                                    }) => {
                                         if (val.target.value === "2") {
                                             handleTrataRadio(statusRadios.SIM);
                                             onChange(statusRadios.SIM);
@@ -120,7 +122,9 @@ const Section7FormRow = (props: {
                                         statusRadios.NÃO
                                     }
                                     disabled={props.disabled}
-                                    onChange={(val) => {
+                                    onChange={(val: {
+                                        target: { value: string };
+                                    }) => {
                                         if (val.target.value === "1") {
                                             handleTrataRadio(statusRadios.NÃO);
                                             onChange(statusRadios.NÃO);

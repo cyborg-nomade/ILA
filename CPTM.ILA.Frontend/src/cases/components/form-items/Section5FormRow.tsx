@@ -2,6 +2,7 @@ import React from "react";
 import _ from "lodash";
 import { Controller, FieldPath, UseFormReturn } from "react-hook-form";
 import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,6 +10,19 @@ import Col from "react-bootstrap/Col";
 import { Case } from "../../../shared/models/cases.model";
 import { CaseIndexDictionary } from "../../../shared/models/case-index.dictionary";
 import CreateCommentBox from "./../../../threads-comments/components/CreateCommentBox";
+
+const getSelectValue = (value: string, fontes: string[]) => {
+    if (fontes.includes(value)) {
+        return fontes
+            .map((s) => ({
+                value: s,
+                label: s,
+            }))
+            .find((c) => c.value === value);
+    } else {
+        return { value: value, label: value };
+    }
+};
 
 const Section5FormRow = (props: {
     disabled: boolean;
@@ -30,18 +44,16 @@ const Section5FormRow = (props: {
                     control={props.methods.control}
                     name={`${props.name}.value` as FieldPath<Case>}
                     render={({ field: { onChange, value, ref } }) => (
-                        <Select
+                        <CreatableSelect
                             ref={ref}
                             options={props.fonteSystems.map((s) => ({
                                 value: s,
                                 label: s,
                             }))}
-                            value={props.fonteSystems
-                                .map((s) => ({
-                                    value: s,
-                                    label: s,
-                                }))
-                                .find((c) => c.value === value)}
+                            value={getSelectValue(
+                                value as string,
+                                props.fonteSystems
+                            )}
                             onChange={(val) => onChange(val?.value)}
                             isSearchable
                             isDisabled={props.disabled}

@@ -19,7 +19,12 @@ const Section7FormRowSub = (props: {
     disabled: boolean;
     methods: UseFormReturn<Case>;
 }) => {
-    const [isSystemSelect, setIsSystemSelect] = useState(false);
+    const tipoFonteRetInit = props.methods.getValues(
+        `${props.name}.fonteRetencao.value` as FieldPath<Case>
+    );
+    const [isSystemSelect, setIsSystemSelect] = useState(
+        tipoFonteRetInit === tipoFontesRetencao.sistema
+    );
 
     const handleChangeFonteRetencao = (
         event: React.ChangeEvent<HTMLSelectElement>

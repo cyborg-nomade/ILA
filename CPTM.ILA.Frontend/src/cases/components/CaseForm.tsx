@@ -2117,7 +2117,11 @@ const CaseForm = (props: {
                                                                 </Button>
                                                                 <Button
                                                                     disabled={
-                                                                        !isEditing
+                                                                        !isEditing ||
+                                                                        fonteDados
+                                                                            .fields
+                                                                            .length <=
+                                                                            1
                                                                     }
                                                                     variant="danger"
                                                                     onClick={() =>

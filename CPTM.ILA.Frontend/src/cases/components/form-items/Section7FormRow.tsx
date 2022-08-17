@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     FieldArrayPath,
     FieldPath,
@@ -15,10 +15,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 
 import { Case } from "../../../shared/models/cases.model";
-import {
-    emptyItemCategoriaDadosPessoais,
-    itemCategoriaDadosPessoais,
-} from "../../../shared/models/case-helpers/case-helpers.model";
+import { emptyItemCategoriaDadosPessoais } from "../../../shared/models/case-helpers/case-helpers.model";
 import CreateCommentBox from "../../../threads-comments/components/CreateCommentBox";
 import Section7FormRowSub from "./Section7FormRowSub";
 import { AiFillQuestionCircle } from "react-icons/ai";

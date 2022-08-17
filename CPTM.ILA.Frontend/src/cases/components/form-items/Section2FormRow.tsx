@@ -170,7 +170,13 @@ const Section2FormRow = (props: {
                                 >
                                     <Button
                                         variant="primary"
-                                        disabled={props.disabled}
+                                        disabled={
+                                            !(
+                                                props.methods.watch(
+                                                    `radiosClicked.hasOperador` as FieldPath<Case>
+                                                ) === statusRadios.SIM
+                                            ) || props.disabled
+                                        }
                                         onClick={() =>
                                             append(emptyAgenteTratamento())
                                         }
@@ -179,7 +185,13 @@ const Section2FormRow = (props: {
                                     </Button>
                                     <Button
                                         variant="danger"
-                                        disabled={props.disabled}
+                                        disabled={
+                                            !(
+                                                props.methods.watch(
+                                                    `radiosClicked.hasOperador` as FieldPath<Case>
+                                                ) === statusRadios.SIM
+                                            ) || props.disabled
+                                        }
                                         onClick={() => {
                                             remove(index);
                                             if (fields.length - 1 < 1) {

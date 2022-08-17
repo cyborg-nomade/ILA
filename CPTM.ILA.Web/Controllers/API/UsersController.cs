@@ -78,6 +78,55 @@ namespace CPTM.ILA.Web.Controllers.API
         }
 
         /// <summary>
+        /// Retorna todos o nome de um usuário cadastrado para acesso ao sistema ILA.
+        /// Endpoint disponibilizado apenas para o DPO.
+        /// </summary>
+        /// <returns>
+        /// Status da transação e um objeto JSON com uma chave "userDto" onde se encontram os dados do usuário do sistema, em formato reduzido (UserDto).
+        /// Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
+        /// </returns>
+        [ResponseType(typeof(ApiResponseType<UserDto>))]
+        [Route("{uid:int}")]
+        [Authorize]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetName(int uid)
+        {
+            if (User.Identity is ClaimsIdentity identity)
+            {
+                var claims = TokenUtil.GetTokenClaims(identity);
+
+                if (!(claims.IsDpo || claims.IsDeveloper))
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
+                }
+            }
+
+            try
+            {
+                var user = await _context.Users.Include(u => u.GroupAccessExpirations.Select(gae => gae.Group))
+                    .SingleOrDefaultAsync(u => u.Id == uid);
+                if (user == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound, new
+                    {
+                        message = "Usuário não encontrado"
+                    });
+                ;
+
+                var userDto = Models.AccessControl.User.ReduceToUserDto(user);
+
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new { userDto, message = "Usuários obtidos com sucesso!" });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                var errorReport = await ErrorReportingUtil.SendErrorReport(e, _context);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError,
+                    new { message = ErrorMessage, e, errorReport });
+            }
+        }
+
+        /// <summary>
         /// Realiza o login do usuário.
         /// Endpoint disponibilizado publicamente
         /// </summary>

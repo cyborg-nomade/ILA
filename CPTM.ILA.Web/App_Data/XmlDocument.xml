@@ -1010,6 +1010,16 @@
             Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
             </returns>
         </member>
+        <member name="M:CPTM.ILA.Web.Controllers.API.UsersController.GetName(System.Int32)">
+            <summary>
+            Retorna todos o nome de um usuário cadastrado para acesso ao sistema ILA.
+            Endpoint disponibilizado apenas para o DPO.
+            </summary>
+            <returns>
+            Status da transação e um objeto JSON com uma chave "userDto" onde se encontram os dados do usuário do sistema, em formato reduzido (UserDto).
+            Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
+            </returns>
+        </member>
         <member name="M:CPTM.ILA.Web.Controllers.API.UsersController.Login(CPTM.ILA.Web.DTOs.AuthUser)">
             <summary>
             Realiza o login do usuário.

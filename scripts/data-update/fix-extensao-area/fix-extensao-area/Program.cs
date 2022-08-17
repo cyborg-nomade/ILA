@@ -1,12 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using data_models.ResponseData.DTOs;
+using data_models.ResponseData.Models.ChangeLogging;
 using data_models.Responses;
 using RestSharp;
 
 Console.WriteLine("Hello, World!");
 
 //-login
-var client = new RestClient("http://localhost:7000/ILA/api");
+var client = new RestClient("http://lgpd.cptm.info:7000/ILA/api");
 
 var loginRequest = new RestRequest("users/login", Method.Post);
 loginRequest.AddHeader("Content-Type", "application/json");
@@ -61,46 +63,44 @@ if (cases != null)
 
         var comiteMemberResponse = await client.ExecuteAsync<ComiteMemberResponse>(comiteMemberRequest);
 
+        //  - select comite member area
         var comiteMember = comiteMemberResponse.Data?.ComiteMember;
         Console.WriteLine("Comite Member: " + comiteMember);
 
-        //  - select comite member area
-        //  - replace in case
-
-
         if (fullCase != null)
         {
+            //  - replace in case
             fullCase.ExtensaoEncarregado = comiteMember;
 
 
             //  - save case
             Console.WriteLine("Extensão Encarregado: " + fullCase?.ExtensaoEncarregado);
-            //var saveCaseResource = "cases/" + fullCase?.Id;
-            //var saveCaseRequest = new RestRequest(saveCaseResource, Method.Post);
-            //saveCaseRequest.AddHeader("Content-Type", "application/json");
-            //saveCaseRequest.AddHeader("Authorization", "Bearer " + token);
-            //saveCaseRequest.AddBody(new CaseChange()
-            //{
-            //    Case = fullCase,
-            //    ChangeLog = new ChangeLog()
-            //    {
-            //        CaseDiff = "Update corretivo Extensão Encarregado: alterando área para a registrada no AD. 29/07",
-            //        CaseId = fullCase?.Id,
-            //        CaseRef = fullCase?.Ref,
-            //        ChangeDate = DateTime.Now,
-            //        UserId = user?.Id,
-            //        UsernameResp = user?.Username
-            //    }
-            //});
+            var saveCaseResource = "cases/" + fullCase?.Id;
+            var saveCaseRequest = new RestRequest(saveCaseResource, Method.Post);
+            saveCaseRequest.AddHeader("Content-Type", "application/json");
+            saveCaseRequest.AddHeader("Authorization", "Bearer " + token);
+            saveCaseRequest.AddBody(new CaseChange()
+            {
+                Case = fullCase,
+                ChangeLog = new ChangeLog()
+                {
+                    CaseDiff = "Update corretivo Extensão Encarregado: alterando área para a registrada no AD. 29/07",
+                    CaseId = fullCase?.Id,
+                    CaseRef = fullCase?.Ref,
+                    ChangeDate = DateTime.Now,
+                    UserId = user?.Id,
+                    UsernameResp = user?.Username
+                }
+            });
 
 
-            //var saveCaseResponse = await client.ExecuteAsync<SaveCaseResponse>(saveCaseRequest);
+            var saveCaseResponse = await client.ExecuteAsync<SaveCaseResponse>(saveCaseRequest);
 
-            //Console.WriteLine(saveCaseResponse.Content);
+            Console.WriteLine(saveCaseResponse.Content);
+
+            var savedCase = saveCaseResponse.Data?.CaseToSave;
+
+            Console.WriteLine(savedCase?.ToString());
         }
-
-        //var savedCase = saveCaseResponse.Data?.CaseToSave;
-
-        //Console.WriteLine(savedCase?.ToString());
     }
 //- end

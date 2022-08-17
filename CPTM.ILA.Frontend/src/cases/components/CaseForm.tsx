@@ -7,7 +7,6 @@ import {
     FieldError,
     FieldErrors,
 } from "react-hook-form";
-import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -31,7 +30,6 @@ import { Case } from "../../shared/models/cases.model";
 import { CaseIndexDictionary } from "../../shared/models/case-index.dictionary";
 import {
     hipotesesTratamento,
-    statusRadios,
     tipoAbrangenciaGeografica,
     tipoFrequenciaTratamento,
 } from "../../shared/models/case-helpers/enums.model";
@@ -295,27 +293,6 @@ const CaseForm = (props: {
         control: methods.control,
         name: "observacoesProcesso",
     });
-
-    const toggleEnableOperador = (value: statusRadios) => {
-        console.log("hasOperador: ", value);
-        if (value === statusRadios.NÃO) {
-            methods.clearErrors([
-                "operador.nome",
-                "operador.area",
-                "operador.telefone",
-                "operador.email",
-            ]);
-            methods.setValue("operador.nome", "");
-            methods.setValue("operador.area", "");
-            methods.setValue("operador.telefone", "");
-            methods.setValue("operador.email", "");
-            methods.setValue("fasesCicloTratamento.coleta", false);
-            methods.setValue("fasesCicloTratamento.retencao", false);
-            methods.setValue("fasesCicloTratamento.processamento", false);
-            methods.setValue("fasesCicloTratamento.compartilhamento", false);
-            methods.setValue("fasesCicloTratamento.eliminacao", false);
-        }
-    };
 
     const onStartEditing = () => {
         setIsEditing(true);

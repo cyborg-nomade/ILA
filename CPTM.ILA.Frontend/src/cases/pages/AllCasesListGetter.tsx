@@ -11,7 +11,7 @@ import CasesList from "../components/CasesList";
 const AllCasesListGetter = () => {
     const [cases, setCases] = useState<CaseListItem[]>([]);
 
-    const { token, currentGroup } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
         useHttpClient();
@@ -33,7 +33,7 @@ const AllCasesListGetter = () => {
         getAllCases().catch((error) => {
             console.log(error);
         });
-    }, [sendRequest, token, currentGroup]);
+    }, [sendRequest, token]);
 
     if (isLoading) {
         return (

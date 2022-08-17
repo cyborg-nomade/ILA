@@ -17,7 +17,7 @@ const GroupCasesByStatusDashboard = () => {
     const [pendenteAprovacao, setPendenteAprovacao] = useState(0);
     const [reprovado, setReprovado] = useState(0);
 
-    const { token, currentGroup, user, currentComiteMember } =
+    const { token, currentGroup, user, currentComiteMember, isGroupTodos } =
         useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
@@ -66,10 +66,10 @@ const GroupCasesByStatusDashboard = () => {
             }
         };
 
-        const getAllComiteGroupCaseTotals = async () => {
+        const getAllUserGroupCaseTotals = async () => {
             try {
                 const responseData = await sendRequest(
-                    `${process.env.REACT_APP_CONNSTR}/cases/extensao-encarregado/${user.id}/status/totals`,
+                    `${process.env.REACT_APP_CONNSTR}/cases/user/${user.id}/status/totals`,
                     undefined,
                     undefined,
                     {
@@ -109,7 +109,7 @@ const GroupCasesByStatusDashboard = () => {
         const getDpoExtensaoEncarregadoCaseTotals = async () => {
             try {
                 const responseData = await sendRequest(
-                    `${process.env.REACT_APP_CONNSTR}/cases/extensao-encarregado/${currentComiteMember.id}/status/totals`,
+                    `${process.env.REACT_APP_CONNSTR}/cases/user/${currentComiteMember.id}/status/totals`,
                     undefined,
                     undefined,
                     {
@@ -186,8 +186,8 @@ const GroupCasesByStatusDashboard = () => {
             }
         };
 
-        if (user.isComite && currentGroup.nome === "TODOS") {
-            getAllComiteGroupCaseTotals().catch((error) => {
+        if (isGroupTodos) {
+            getAllUserGroupCaseTotals().catch((error) => {
                 console.log(error);
             });
         } else if (user.isDPO && currentComiteMember.nome === "TODOS") {
@@ -220,6 +220,7 @@ const GroupCasesByStatusDashboard = () => {
         user.isDPO,
         currentComiteMember.nome,
         currentComiteMember.id,
+        isGroupTodos,
     ]);
 
     if (isLoading) {

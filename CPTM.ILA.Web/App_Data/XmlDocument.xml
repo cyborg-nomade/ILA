@@ -725,10 +725,10 @@
             Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
             </returns>
         </member>
-        <member name="M:CPTM.ILA.Web.Controllers.API.CasesController.GetByExtensaoEncarregado(System.Int32)">
+        <member name="M:CPTM.ILA.Web.Controllers.API.CasesController.GetByUser(System.Int32)">
             <summary>
-            Retorna todos os Casos de Uso dos grupos de acesso de um membro especificado do Comitê LGPD (Extensão Encarregado).
-            Endpoint disponibilizado apenas para o DPO.
+            Retorna todos os Casos de Uso dos grupos de acesso de um usuário específico.
+            Endpoint disponibilizado para todos os usuário do ILA.
             </summary>
             <param name="uid">Id do membro do comitê</param>
             <returns>
@@ -763,10 +763,10 @@
             Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
             </returns>
         </member>
-        <member name="M:CPTM.ILA.Web.Controllers.API.CasesController.GetByExtensaoEncarregadoByStatus(System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:CPTM.ILA.Web.Controllers.API.CasesController.GetByUserByStatus(System.Int32,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            Retorna todos os Casos de Uso dos grupos de um membro do Comitê LGPD que estejam em um certo status de aprovação.
-            Endpoint disponibilizado apenas para o DPO e para o membro do Comitê LGPD em questão.
+            Retorna todos os Casos de Uso dos grupos de um usuário que estejam em um certo status de aprovação.
+            Endpoint disponibilizado apenas para todos os usuários do ILA, para os seus grupos de acesso.
             </summary>
             <param name="uid">Id do membro do comitê</param>
             <param name="encaminhadoAprovacao">Bool definindo se os casos de uso a serem selecionados já foram encaminhados para aprovação</param>
@@ -780,7 +780,7 @@
         <member name="M:CPTM.ILA.Web.Controllers.API.CasesController.GetTotalsByUserGroups(System.Int32)">
             <summary>
             Retorna os totais de Casos de Uso por grupo de um usuário.
-            Endpoint disponibilizado para os membros do Comitê LGPD, com cada membro tendo acesso apenas a seus grupos.
+            Endpoint disponibilizado todos os usuários do ILA, com cada usuário tendo acesso apenas a seus grupos.
             </summary>
             <param name="uid">Id do usuário selecionado</param>
             <returns>
@@ -850,10 +850,10 @@
             Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
             </returns>
         </member>
-        <member name="M:CPTM.ILA.Web.Controllers.API.CasesController.GetTotalsByExtensaoEncarregadoByStatus(System.Int32)">
+        <member name="M:CPTM.ILA.Web.Controllers.API.CasesController.GetTotalsByUserGroupsByStatus(System.Int32)">
             <summary>
             Retorna os totais dos Casos de Uso dos grupos de acesso de um Mebro do Comitê por status de aprovação.
-            Endpoint disponibilizado apenas para o DPO e para o membro do comitê em questão.
+            Endpoint disponibilizado para todos os usuários do ILA, com cada usuário tendo acesso apenas aos seus grupos.
             </summary>
             <param name="uid">Id do membro do Comitê especificado</param>
             <returns>
@@ -960,6 +960,16 @@
             </summary>
             <returns>
             Status da transação e um objeto JSON com chaves "diretorias", "gerencias" e "dptos", contendo listas de strings com os nomes das áreas da CPTM.
+            Em caso de erro, um objeto JSON com uma chave "message" descrevendo o erro ocorrido.
+            </returns>
+        </member>
+        <member name="M:CPTM.ILA.Web.Controllers.API.GroupsController.Get(System.Int32)">
+            <summary>
+            Retorna um grupo de acesso determinado.
+            Endpoint disponibilizado para todos os usuários do ILA.
+            </summary>
+            <returns>
+            Status da transação e um objeto JSON com chave "grupo" contendo o objeto do grupo de acesso.
             Em caso de erro, um objeto JSON com uma chave "message" descrevendo o erro ocorrido.
             </returns>
         </member>

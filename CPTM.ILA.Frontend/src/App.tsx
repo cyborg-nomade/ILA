@@ -83,6 +83,7 @@ const App = () => {
         logout,
         changeGroup,
         changeComiteMember,
+        isGroupTodos,
     } = useAuth();
 
     let routes;
@@ -242,6 +243,7 @@ const App = () => {
                 logout,
                 changeGroup,
                 changeComiteMember,
+                isGroupTodos,
             }}
         >
             <MainHeader />

@@ -44,3 +44,11 @@ code {
     border: 1px solid #dc3545;
     border-radius: 0.25rem;
 }
+
+.footerItem {
+    color: white !important;
+}
+
+.footerWarning {
+    color: red !important;
+}

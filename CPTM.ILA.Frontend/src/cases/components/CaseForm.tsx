@@ -363,7 +363,7 @@ const CaseForm = (props: {
 
     // handle auto-save
     useEffect(() => {
-        if (token && tokenExpirationDate && minutes === 10) {
+        if (token && tokenExpirationDate && minutes < 10) {
             props.onSaveProgressSubmit!(getValues());
         }
         return () => {};

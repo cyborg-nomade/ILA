@@ -191,12 +191,12 @@ const CasesDashboard = () => {
             getDpoCasesTotals().catch((error) => {
                 console.log(error);
             });
-        } else if (currentGroup.nome === "TODOS") {
-            getUserGroupCasesTotals().catch((error) => {
-                console.log(error);
-            });
         } else if (user.isDPO && currentComiteMember.nome === "TODOS") {
             getDpoAllComiteMembersTotals().catch((error) => {
+                console.log(error);
+            });
+        } else if (currentGroup.nome === "TODOS") {
+            getUserGroupCasesTotals().catch((error) => {
                 console.log(error);
             });
         } else {

@@ -186,16 +186,16 @@ const GroupCasesByStatusDashboard = () => {
             }
         };
 
-        if (isGroupTodos) {
-            getAllUserGroupCaseTotals().catch((error) => {
-                console.log(error);
-            });
-        } else if (user.isDPO && currentComiteMember.nome === "TODOS") {
+        if (user.isDPO && currentComiteMember.nome === "TODOS") {
             getAllDpoCaseTotals().catch((error) => {
                 console.log(error);
             });
         } else if (user.isDPO && currentComiteMember.nome !== "TODOS") {
             getDpoExtensaoEncarregadoCaseTotals().catch((error) => {
+                console.log(error);
+            });
+        } else if (isGroupTodos) {
+            getAllUserGroupCaseTotals().catch((error) => {
                 console.log(error);
             });
         } else {

@@ -17,31 +17,30 @@ import {
     ComiteMember,
     emptyComiteMember,
 } from "../../shared/models/DTOs/comite-member";
+import { emptyUserDto, UserDto } from "../../shared/models/DTOs/user-dto";
 
-const CMGroupMgmtCockpit = () => {
+const UserGroupMgmtCockpit = () => {
     const { token } = useContext(AuthContext);
 
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-    const [comiteMemberEditing, setComiteMemberEditing] = useState(
-        emptyComiteMember()
-    );
+    const [userEditing, setUserEditing] = useState(emptyUserDto());
     const [groups, setGroups] = useState<
         GroupBase<{
             value: string;
             label: string;
         }>[]
     >([]);
-    const [cmGroups, setCmGroups] = useState<Group[]>([]);
-    const [cmGroupsToAdd, setCmGroupsToAdd] = useState<string[]>([]);
+    const [userGroups, setUserGroups] = useState<Group[]>([]);
+    const [userGroupsToAdd, setUserGroupsToAdd] = useState<string[]>([]);
     const [message, setMessage] = useState("");
 
-    const cmid = useParams().cmid;
+    const ueid = useParams().uid;
 
     useEffect(() => {
-        const getComiteMemberEditing = async () => {
+        const getUserEditing = async () => {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/users/comite-members`,
+                `${process.env.REACT_APP_CONNSTR}/users/${ueid}`,
                 undefined,
                 undefined,
                 {
@@ -50,31 +49,25 @@ const CMGroupMgmtCockpit = () => {
                 }
             );
 
-            const loadedMembers: ComiteMember[] = responseData.comiteMembers;
-            console.log("loadedMembers", loadedMembers);
+            const loadedUser: UserDto = responseData.userDto;
+            console.log("loadedUser", loadedUser);
 
-            const cmEditing = loadedMembers.find(
-                (cm) => cm.id.toString() === cmid
-            );
-            console.log("cmEditing", cmEditing);
-
-            if (cmEditing) setComiteMemberEditing(cmEditing);
-            else setComiteMemberEditing(emptyComiteMember());
+            setUserEditing(loadedUser);
         };
 
-        getComiteMemberEditing().catch((error) => {
+        getUserEditing().catch((error) => {
             console.log(error);
         });
 
         return () => {
-            setComiteMemberEditing(emptyComiteMember());
+            setUserEditing(emptyUserDto());
         };
-    }, [cmid, sendRequest, token]);
+    }, [ueid, sendRequest, token]);
 
     useEffect(() => {
-        const getCmGroups = async () => {
+        const getUserGroups = async () => {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${cmid}`,
+                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${ueid}`,
                 undefined,
                 undefined,
                 {
@@ -83,28 +76,28 @@ const CMGroupMgmtCockpit = () => {
                 }
             );
 
-            const cmLoadedGroups: Group[] = responseData.userGroups;
-            console.log("cmLoadedGroups", cmLoadedGroups);
+            const userLoadedGroups: Group[] = responseData.userGroups;
+            console.log("userLoadedGroups", userLoadedGroups);
 
-            setCmGroups(cmLoadedGroups);
+            setUserGroups(userLoadedGroups);
         };
 
-        getCmGroups().catch((error) => {
+        getUserGroups().catch((error) => {
             console.log(error);
         });
 
         return () => {
-            setCmGroups([]);
+            setUserGroups([]);
         };
-    }, [cmid, sendRequest, token]);
+    }, [ueid, sendRequest, token]);
 
     const handleGroupsToAddChange = (
         options: MultiValue<{ value: string; label: string }>,
         actionMeta: ActionMeta<{ value: string; label: string }>
     ) => {
-        if (actionMeta.action === "clear") setCmGroupsToAdd([]);
+        if (actionMeta.action === "clear") setUserGroupsToAdd([]);
         const values = options.map((o) => o.value);
-        if (options) setCmGroupsToAdd(values);
+        if (options) setUserGroupsToAdd(values);
     };
 
     useEffect(() => {
@@ -130,6 +123,13 @@ const CMGroupMgmtCockpit = () => {
                     })),
                 },
                 {
+                    label: "Gerencias Gerais",
+                    options: responseData.gerenciasGerais.map((gg: string) => ({
+                        value: gg,
+                        label: gg,
+                    })),
+                },
+                {
                     label: "Gerencias",
                     options: responseData.gerencias.map((g: string) => ({
                         value: g,
@@ -141,6 +141,13 @@ const CMGroupMgmtCockpit = () => {
                     options: responseData.deptos.map((dpto: string) => ({
                         value: dpto,
                         label: dpto,
+                    })),
+                },
+                {
+                    label: "Núcleos",
+                    options: responseData.nucleos.map((n: string) => ({
+                        value: n,
+                        label: n,
                     })),
                 },
             ];
@@ -159,25 +166,25 @@ const CMGroupMgmtCockpit = () => {
         };
     }, [sendRequest]);
 
-    const handleAddCmGroups = async () => {
-        console.log(cmGroupsToAdd);
+    const handleAddUserGroups = async () => {
+        console.log(userGroupsToAdd);
 
         try {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${cmid}/add`,
+                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${ueid}/add`,
                 "POST",
-                JSON.stringify(cmGroupsToAdd),
+                JSON.stringify(userGroupsToAdd),
                 {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + token,
                 }
             );
 
-            console.log("add cm groups response: ", responseData);
+            console.log("add user groups response: ", responseData);
             setMessage(responseData.message);
 
-            const responseDataCmGroups = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${cmid}`,
+            const responseDataUserGroups = await sendRequest(
+                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${ueid}`,
                 undefined,
                 undefined,
                 {
@@ -186,22 +193,22 @@ const CMGroupMgmtCockpit = () => {
                 }
             );
 
-            const cmLoadedGroups: Group[] = responseDataCmGroups.userGroups;
-            console.log("cmLoadedGroups: ", cmLoadedGroups);
+            const userLoadedGroups: Group[] = responseDataUserGroups.userGroups;
+            console.log("cmLoadedGroups: ", userLoadedGroups);
 
-            setCmGroups(cmLoadedGroups);
-            setCmGroupsToAdd([]);
+            setUserGroups(userLoadedGroups);
+            setUserGroupsToAdd([]);
         } catch (err) {
             console.log(err);
         }
     };
 
-    const handleRemoveCmGroups = async (gid: number) => {
+    const handleRemoveUserGroups = async (gid: number) => {
         console.log("gid to remove: ", gid);
 
         try {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${cmid}/remove`,
+                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${ueid}/remove`,
                 "POST",
                 JSON.stringify(gid),
                 {
@@ -210,11 +217,11 @@ const CMGroupMgmtCockpit = () => {
                 }
             );
 
-            console.log("remove cm group response: ", responseData);
+            console.log("remove user group response: ", responseData);
             setMessage(responseData.message);
 
-            const responseDataCmGroups = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${cmid}`,
+            const responseDataUserGroups = await sendRequest(
+                `${process.env.REACT_APP_CONNSTR}/access-requests/groups/user/${ueid}`,
                 undefined,
                 undefined,
                 {
@@ -223,10 +230,10 @@ const CMGroupMgmtCockpit = () => {
                 }
             );
 
-            const cmLoadedGroups: Group[] = responseDataCmGroups.userGroups;
-            console.log("cmLoadedGroups: ", cmLoadedGroups);
+            const userLoadedGroups: Group[] = responseDataUserGroups.userGroups;
+            console.log("userLoadedGroups: ", userLoadedGroups);
 
-            setCmGroups(cmLoadedGroups);
+            setUserGroups(userLoadedGroups);
         } catch (err) {
             console.log(err);
         }
@@ -248,9 +255,7 @@ const CMGroupMgmtCockpit = () => {
 
     return (
         <React.Fragment>
-            <h2>
-                Alterar Grupos do Membro do Comitê - {comiteMemberEditing.nome}{" "}
-            </h2>
+            <h2>Alterar Grupos do Usuário - {userEditing.nome} </h2>
             {error && (
                 <Row className="justify-content-center mx-auto">
                     <Alert variant="danger" onClose={clearError} dismissible>
@@ -273,7 +278,7 @@ const CMGroupMgmtCockpit = () => {
                         <div className="form-control p-0">
                             <Select
                                 options={groups}
-                                value={cmGroupsToAdd.map((v) => ({
+                                value={userGroupsToAdd.map((v) => ({
                                     value: v,
                                     label: v,
                                 }))}
@@ -284,7 +289,7 @@ const CMGroupMgmtCockpit = () => {
                                 placeholder="Selecione os grupos a serem acessados"
                             />
                         </div>
-                        <Button onClick={handleAddCmGroups}>Adicionar</Button>
+                        <Button onClick={handleAddUserGroups}>Adicionar</Button>
                     </InputGroup>
                 </Card.Body>
             </Card>
@@ -295,23 +300,19 @@ const CMGroupMgmtCockpit = () => {
                 <Card.Title className="pt-3 px-3">Grupos Atuais</Card.Title>
                 <Card.Body>
                     <ListGroup>
-                        {cmGroups.map((cm) => (
-                            <ListGroup.Item className="p-0" key={cm.id}>
+                        {userGroups.map((g) => (
+                            <ListGroup.Item className="p-0" key={g.id}>
                                 <InputGroup>
-                                    <InputGroup.Text
-                                        key={cm.id}
-                                        as={Col}
-                                        lg={9}
-                                    >
-                                        {cm.nome}
+                                    <InputGroup.Text key={g.id} as={Col} lg={9}>
+                                        {g.nome}
                                     </InputGroup.Text>
                                     <Col lg={3} className="m-0">
                                         <Button
                                             className="w-100"
                                             variant="danger"
                                             onClick={async () => {
-                                                await handleRemoveCmGroups(
-                                                    cm.id
+                                                await handleRemoveUserGroups(
+                                                    g.id
                                                 );
                                             }}
                                         >
@@ -328,4 +329,4 @@ const CMGroupMgmtCockpit = () => {
     );
 };
 
-export default CMGroupMgmtCockpit;
+export default UserGroupMgmtCockpit;

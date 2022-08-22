@@ -13,11 +13,15 @@ const Footer = () => {
 
     return (
         <Navbar
-            bg="transparent"
+            bg="dark"
             variant="dark"
             expand={"md"}
             collapseOnSelect
-            style={{ background: "none" }}
+            style={{
+                background: "none",
+                fontWeight: "bolder",
+                fontSize: "1.1em",
+            }}
             className="swiss721"
             fixed="bottom"
         >
@@ -26,9 +30,17 @@ const Footer = () => {
                     className="justify-content-around flex-grow-1 pe-3"
                     variant="pills"
                 >
-                    <Nav.Link>Usuário: {user.username}</Nav.Link>
-                    <Nav.Link>Grupo: {currentGroup.nome}</Nav.Link>
-                    <Nav.Link>
+                    <Nav.Link className="footerItem">
+                        Usuário: {user.username}
+                    </Nav.Link>
+                    <Nav.Link className="footerItem">
+                        Grupo: {currentGroup.nome}
+                    </Nav.Link>
+                    <Nav.Link
+                        className={`footerItem ${
+                            minutes < 10 ? "footerWarning" : ""
+                        }`}
+                    >
                         Sua sessão expira em: {hours < 10 && "0"}
                         {hours}:{minutes < 10 && "0"}
                         {minutes}:{seconds < 10 && "0"}

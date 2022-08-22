@@ -4,8 +4,6 @@ import { Controller, FieldPath, UseFormReturn } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-import ToggleButton from "react-bootstrap/ToggleButton";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 
@@ -24,7 +22,13 @@ const Section10FormRow = (props: {
     itemRef: { number: string; title: string };
     methods: UseFormReturn<Case>;
 }) => {
-    const [isDescricaoEnabled, setIsDescricaoEnabled] = useState(!props.full);
+    const trataDadosInit = props.methods.getValues(
+        `${props.name}.trataDados` as FieldPath<Case>
+    );
+
+    const [isDescricaoEnabled, setIsDescricaoEnabled] = useState(
+        (trataDadosInit as string) === "SIM"
+    );
 
     const toggleEnableDescricao = (value: string) => {
         if (value === "NÃO") {
@@ -132,32 +136,76 @@ const Section10FormRow = (props: {
                             render={({
                                 field: { onChange, onBlur, value, ref },
                             }) => (
-                                <ToggleButtonGroup
-                                    name={`${props.name}.trataDados-${props.itemRef.number}`}
-                                    type="radio"
-                                    value={value}
-                                    onChange={(val: string) => {
-                                        toggleEnableDescricao(val);
-                                        onChange(val);
-                                    }}
-                                    onBlur={onBlur}
-                                    ref={ref}
-                                >
-                                    <ToggleButton
-                                        id={`${props.name}.trataDados-${props.itemRef.number}-1`}
+                                // <ToggleButtonGroup
+                                //     name={`${props.name}.trataDados-${props.itemRef.number}`}
+                                //     type="radio"
+                                //     value={value}
+                                //     onChange={(val: string) => {
+                                //         toggleEnableDescricao(val);
+                                //         onChange(val);
+                                //     }}
+                                //     onBlur={onBlur}
+                                //     ref={ref}
+                                // >
+                                //     <ToggleButton
+                                //         id={`${props.name}.trataDados-${props.itemRef.number}-1`}
+                                //         disabled={props.disabled}
+                                //         value="SIM"
+                                //     >
+                                //         SIM
+                                //     </ToggleButton>
+                                //     <ToggleButton
+                                //         id={`${props.name}.trataDados-${props.itemRef.number}-2`}
+                                //         disabled={props.disabled}
+                                //         value="NÃO"
+                                //     >
+                                //         NÃO
+                                //     </ToggleButton>
+                                // </ToggleButtonGroup>
+                                <React.Fragment>
+                                    <Form.Check
+                                        type="radio"
+                                        name={`${props.name}.trataDados-${props.itemRef.number}`}
+                                        label="Sim"
+                                        value={"SIM"}
+                                        checked={(value as string) === "SIM"}
                                         disabled={props.disabled}
-                                        value="SIM"
-                                    >
-                                        SIM
-                                    </ToggleButton>
-                                    <ToggleButton
-                                        id={`${props.name}.trataDados-${props.itemRef.number}-2`}
+                                        onChange={(val: {
+                                            target: { value: string };
+                                        }) => {
+                                            if (val.target.value === "SIM") {
+                                                toggleEnableDescricao("SIM");
+                                                onChange("SIM");
+                                            }
+                                        }}
+                                        isInvalid={
+                                            value !== "NÃO" && value !== "SIM"
+                                        }
+                                        onBlur={onBlur}
+                                        ref={ref}
+                                    />
+                                    <Form.Check
+                                        type="radio"
+                                        name={`${props.name}.trataDados-${props.itemRef.number}`}
+                                        label="Não"
+                                        value={"NÃO"}
+                                        checked={(value as string) === "NÃO"}
                                         disabled={props.disabled}
-                                        value="NÃO"
-                                    >
-                                        NÃO
-                                    </ToggleButton>
-                                </ToggleButtonGroup>
+                                        onChange={(val: {
+                                            target: { value: string };
+                                        }) => {
+                                            if (val.target.value === "NÃO") {
+                                                toggleEnableDescricao("NÃO");
+                                                onChange("NÃO");
+                                            }
+                                        }}
+                                        isInvalid={
+                                            value !== "NÃO" && value !== "SIM"
+                                        }
+                                        onBlur={onBlur}
+                                        ref={ref}
+                                    />
+                                </React.Fragment>
                             )}
                         />
                     </Col>

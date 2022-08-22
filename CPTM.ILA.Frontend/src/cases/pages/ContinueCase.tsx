@@ -66,7 +66,7 @@ const ContinueCase = () => {
         getCaseToEdit().catch((error) => {
             console.log(error);
         });
-    }, [cid, sendRequest, token]);
+    }, [cid, sendRequest, token, user.groups]);
 
     useEffect(() => {
         const getComiteMembers = async () => {

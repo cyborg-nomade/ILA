@@ -84,6 +84,7 @@ const NewCase = () => {
         currentGroup.nome,
         sendRequest,
         token,
+        user.groups,
     ]);
 
     const dismissModalHandler = () => {

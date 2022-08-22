@@ -123,7 +123,7 @@ const CasesList = (props: {
     redirect: boolean;
     minimal?: boolean;
 }) => {
-    const { user } = useContext(AuthContext);
+    const { user, changeGroup } = useContext(AuthContext);
 
     let navigate = useNavigate();
 
@@ -140,10 +140,14 @@ const CasesList = (props: {
 
     const handleRowClick = (row: CaseListItem) => {
         if (props.redirect && !props.minimal) {
+            changeGroup(user.originGroup);
+
             navigate(`${row.id}`);
         }
 
         if (props.redirect && props.minimal) {
+            changeGroup(user.originGroup);
+
             navigate(`../cases/edit/${row.id}`);
         }
     };

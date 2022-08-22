@@ -11,7 +11,7 @@ import CasesList from "../../cases/components/CasesList";
 const ComiteCasesListGetter = () => {
     const [cases, setCases] = useState<CaseListItem[]>([]);
 
-    const { token, currentGroup, user } = useContext(AuthContext);
+    const { token, currentGroup, user, isGroupTodos } = useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
         useHttpClient();
@@ -34,7 +34,7 @@ const ComiteCasesListGetter = () => {
         };
         const getAllComiteApprovedCases = async () => {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/cases/extensao-encarregado/${user.id}/`,
+                `${process.env.REACT_APP_CONNSTR}/cases/user/${user.id}/`,
                 undefined,
                 undefined,
                 {
@@ -48,7 +48,7 @@ const ComiteCasesListGetter = () => {
             setCases(loadedCases);
         };
 
-        if (user.isComite && currentGroup.nome === "TODOS") {
+        if (user.isComite && isGroupTodos) {
             getAllComiteApprovedCases().catch((error) => {
                 console.log(error);
             });
@@ -64,6 +64,7 @@ const ComiteCasesListGetter = () => {
         user.isComite,
         user.id,
         currentGroup.nome,
+        isGroupTodos,
     ]);
 
     if (isLoading) {

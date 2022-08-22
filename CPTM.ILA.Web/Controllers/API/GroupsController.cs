@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CPTM.ILA.Web.Models;
+using CPTM.ILA.Web.Models.AccessControl;
 using CPTM.ILA.Web.Util;
 
 namespace CPTM.ILA.Web.Controllers.API
@@ -97,6 +98,36 @@ namespace CPTM.ILA.Web.Controllers.API
 
                 return Request.CreateResponse(HttpStatusCode.OK,
                     new { diretorias, gerenciasGerais, gerencias, deptos, nucleos });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                var erroReport = await ErrorReportingUtil.SendErrorReport(e, _context);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError,
+                    new { message = ErrorMessage, e, erroReport });
+            }
+        }
+
+        /// <summary>
+        /// Retorna um grupo de acesso determinado.
+        /// Endpoint disponibilizado para todos os usuários do ILA.
+        /// </summary>
+        /// <returns>
+        /// Status da transação e um objeto JSON com chave "grupo" contendo o objeto do grupo de acesso.
+        /// Em caso de erro, um objeto JSON com uma chave "message" descrevendo o erro ocorrido.
+        /// </returns>
+        [ResponseType(typeof(ApiResponseType<Group>))]
+        [Route("{gid:int}")]
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<HttpResponseMessage> Get(int gid)
+        {
+            try
+            {
+                var grupo = await _context.Groups.FindAsync(gid);
+
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new { grupo, message = "Grupo obtido com sucesso" });
             }
             catch (Exception e)
             {

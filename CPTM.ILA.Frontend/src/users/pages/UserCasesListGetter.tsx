@@ -11,7 +11,7 @@ import CasesList from "../../cases/components/CasesList";
 const UserCasesListGetter = () => {
     const [cases, setCases] = useState<CaseListItem[]>([]);
 
-    const { token, currentGroup } = useContext(AuthContext);
+    const { token, currentGroup, user, isGroupTodos } = useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
         useHttpClient();
@@ -32,11 +32,40 @@ const UserCasesListGetter = () => {
             console.log("loadedCases: ", loadedCases);
             setCases(loadedCases);
         };
+        const getAllUserGroupsCases = async () => {
+            const responseData = await sendRequest(
+                `${process.env.REACT_APP_CONNSTR}/cases/user/${user.id}/`,
+                undefined,
+                undefined,
+                {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                }
+            );
 
-        getUserCases().catch((error) => {
-            console.log(error);
-        });
-    }, [sendRequest, token, currentGroup.id]);
+            const loadedCases: CaseListItem[] = responseData.caseListItems;
+            console.log("loadedCases: ", loadedCases);
+            setCases(loadedCases);
+        };
+
+        if (isGroupTodos) {
+            getAllUserGroupsCases().catch((error) => {
+                console.log(error);
+            });
+        } else {
+            getUserCases().catch((error) => {
+                console.log(error);
+            });
+        }
+    }, [
+        sendRequest,
+        token,
+        currentGroup.id,
+        user.isComite,
+        user.id,
+        currentGroup.nome,
+        isGroupTodos,
+    ]);
 
     if (isLoading) {
         return (

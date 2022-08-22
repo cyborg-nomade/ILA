@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { AuthContext } from "../../../shared/context/auth-context";
+import { useCountdown } from "../../../shared/hooks/timer-hook";
 
 const SaveProgressModal = (props: {
     onSaveProgressSubmit: () => void;
@@ -12,6 +14,9 @@ const SaveProgressModal = (props: {
     isLoading: boolean;
     hasError: boolean;
 }) => {
+    const { tokenExpirationDate } = useContext(AuthContext);
+    const { minutes } = useCountdown(tokenExpirationDate);
+
     return (
         <Modal
             show={props.showSaveProgressModal}
@@ -27,7 +32,11 @@ const SaveProgressModal = (props: {
             </Modal.Header>
             <Modal.Body>
                 {!props.showChildrenContent &&
+                    minutes >= 10 &&
                     "Você tem certeza que deseja salvar o seu progresso?"}
+                {!props.showChildrenContent &&
+                    minutes < 10 &&
+                    "Sua sessão está espirando! Salve o seu progresso agora!"}
                 {props.showChildrenContent && props.children}
             </Modal.Body>
             <Modal.Footer>

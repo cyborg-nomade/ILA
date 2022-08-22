@@ -11,7 +11,7 @@ import { CaseListItem } from "../../shared/models/DTOs/case-list-item.model";
 const ApproveCasesListGetter = () => {
     const [cases, setCases] = useState<CaseListItem[]>([]);
 
-    const { token, currentGroup, user } = useContext(AuthContext);
+    const { token, currentGroup, user, isGroupTodos } = useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
         useHttpClient();
@@ -30,7 +30,7 @@ const ApproveCasesListGetter = () => {
         };
         const getAllCasesToApprove = async () => {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/cases/extensao-encarregado/${user.id}/status/true/false/false`,
+                `${process.env.REACT_APP_CONNSTR}/cases/user/${user.id}/status/true/false/false`,
                 undefined,
                 undefined,
                 { Authorization: "Bearer " + token }
@@ -40,8 +40,8 @@ const ApproveCasesListGetter = () => {
             setCases(loadedCases);
         };
 
-        if (user.isComite && currentGroup.nome === "TODOS") {
-            getAllCasesToApprove().catch((error) => {
+        if (user.isComite && isGroupTodos) {
+            getAllCasesToApprove().catch((error: any) => {
                 console.log(error);
             });
         } else {
@@ -52,6 +52,7 @@ const ApproveCasesListGetter = () => {
     }, [
         currentGroup.id,
         currentGroup.nome,
+        isGroupTodos,
         sendRequest,
         token,
         user.id,

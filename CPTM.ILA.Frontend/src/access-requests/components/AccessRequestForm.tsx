@@ -19,6 +19,7 @@ import Select, {
     GroupBase,
     MultiValue,
     OptionsOrGroups,
+    SingleValue,
 } from "react-select";
 import AsyncSelect from "react-select/async";
 
@@ -170,12 +171,15 @@ const AccessRequestForm = (props: {
     };
 
     const handleGroupsToAddChange = (
-        options: MultiValue<{ value: string; label: string }>,
+        option: SingleValue<{ value: string; label: string }>,
         actionMeta: ActionMeta<{ value: string; label: string }>
     ) => {
         if (actionMeta.action === "clear") methods.setValue("groupNames", []);
-        const values = options.map((o) => o.value);
-        if (options) methods.setValue("groupNames", values);
+        const values: string[] = [];
+        if (option) {
+            values.push(option.value);
+            methods.setValue("groupNames", values);
+        }
     };
 
     const loadUsernameOptions = async (
@@ -244,19 +248,6 @@ const AccessRequestForm = (props: {
                         Solicitação de Acesso
                     </Card.Title>
                     <Card.Body>
-                        {/* {props.register && (
-                <Row className="mb-3">
-                  <Form.Group as={Col} controlId="validationFormik00">
-                    <Form.Check
-                      checked={isComiteReq}
-                      onChange={handleCheckIsComiteReq}
-                      type="switch"
-                      id="custom-switch"
-                      label="Membro do Comitê LGPD?"
-                    />
-                  </Form.Group>
-                </Row>
-              )} */}
                         {(props.register || props.approve) && (
                             <Row className="mb-3">
                                 <Form.Group
@@ -411,7 +402,7 @@ const AccessRequestForm = (props: {
                                                 }
                                                 onBlur={onBlur}
                                                 isSearchable
-                                                isMulti
+                                                // isMulti
                                                 placeholder="Selecione os grupos a serem acessados"
                                                 isDisabled={props.approve}
                                             />

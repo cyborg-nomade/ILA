@@ -32,6 +32,7 @@ export const useAuth = () => {
         useState<ComiteMember>(emptyComiteMember());
     const [areaTratamentoDados, setAreaTratamentoDados] =
         useState<AgenteTratamento>(emptyAgenteTratamento());
+    const [isGroupTodos, setIsGroupTodos] = useState(false);
 
     const login = useCallback(
         (
@@ -53,6 +54,9 @@ export const useAuth = () => {
                 tokenExpirationDate ||
                 new Date(new Date().getTime() + 1000 * 60 * 60);
             setTokenExpirationDate(expDate);
+            if (currentGroup.nome === "TODOS") {
+                setIsGroupTodos(true);
+            }
 
             const userToStore: storageObject = {
                 user,
@@ -80,11 +84,19 @@ export const useAuth = () => {
         localStorage.removeItem("userData");
     }, []);
 
-    const changeGroup = (g: Group) => {
+    const changeGroup = useCallback((g: Group) => {
         setCurrentGroup(g);
         console.log("change group, group: ", g);
-        setAreaTratamentoDados((prevState) => ({ ...prevState, area: g.nome }));
-    };
+        if (g.nome === "TODOS") {
+            setIsGroupTodos(true);
+        } else {
+            setIsGroupTodos(false);
+            setAreaTratamentoDados((prevState) => ({
+                ...prevState,
+                area: g.nome,
+            }));
+        }
+    }, []);
 
     const changeComiteMember = (cm: ComiteMember) => {
         console.log("cm change, comite member: ", cm);
@@ -145,5 +157,6 @@ export const useAuth = () => {
         logout,
         changeGroup,
         changeComiteMember,
+        isGroupTodos,
     };
 };

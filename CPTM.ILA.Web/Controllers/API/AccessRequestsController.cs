@@ -15,6 +15,7 @@ using System.Web.Http.Description;
 using CPTM.ILA.Web.Models;
 using CPTM.ILA.Web.Models.AccessControl;
 using CPTM.ActiveDirectory;
+using CPTM.GNU.Library;
 using CPTM.ILA.Web.DTOs;
 using CPTM.ILA.Web.Util;
 using Microsoft.Ajax.Utilities;
@@ -652,6 +653,28 @@ namespace CPTM.ILA.Web.Controllers.API
                     _context.AccessRequests.Remove(accessRequest);
                     await _context.SaveChangesAsync();
 
+                    var userEmailId = _context.ILA_VW_USUARIO
+                        .Where(u => u.TX_USERNAME == accessRequest.UsernameSolicitante.ToUpper())
+                        .Select(u => u.ID_CODUSUARIO)
+                        .SingleOrDefault();
+
+                    var usernameCriador = accessRequest.UsernameSolicitante.ToUpper();
+
+                    var userWithAccessAd = Seguranca.ObterUsuario(usernameCriador);
+                    var assunto = $"Acesso ao Inventário LGPD";
+                    var mensagem =
+                        $@"Prezado, 
+
+Você acaba de receber acesso ao sistema do Inventário LGPD. Faça login em http://lgpd.cptm.info/ .
+
+Att,
+Comitê LGPD";
+                    var erro = "Algo deu errado no envio do e-mail. Contate o suporte técnico";
+                    //send email
+                    var enviado = Email.Enviar("ILA", userWithAccessAd.Nome, userWithAccessAd.Email,
+                        new List<string>() { "encarregado.dados@cptm.sp.gov.br" }, assunto, mensagem, DateTime.Now,
+                        userEmailId,
+                        ref erro);
 
                     return Request.CreateResponse(HttpStatusCode.OK,
                         new { message = "Requisição de Acesso aprovada", newUser });

@@ -11,7 +11,7 @@ import CasesList from "../components/CasesList";
 const ReprovadosCaseListGetter = () => {
     const [cases, setCases] = useState<CaseListItem[]>([]);
 
-    const { token, currentGroup } = useContext(AuthContext);
+    const { token, currentGroup, user, isGroupTodos } = useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
         useHttpClient();
@@ -31,10 +31,30 @@ const ReprovadosCaseListGetter = () => {
             setCases(loadedCases);
         };
 
-        getReprovadosCases().catch((error) => {
-            console.log(error);
-        });
-    }, [sendRequest, token, currentGroup]);
+        const getAllGroupsReprovadosCases = async () => {
+            const responseData = await sendRequest(
+                `${process.env.REACT_APP_CONNSTR}/cases/user/${user.id}/status/false/false/true`,
+                undefined,
+                undefined,
+                { Authorization: "Bearer " + token }
+            );
+            const loadedCases: CaseListItem[] = responseData.caseListItems;
+            console.log("currentGroup: ", currentGroup);
+            console.log("loadedCases: ", loadedCases);
+
+            setCases(loadedCases);
+        };
+
+        if (!isGroupTodos) {
+            getReprovadosCases().catch((error) => {
+                console.log(error);
+            });
+        } else {
+            getAllGroupsReprovadosCases().catch((error) => {
+                console.log(error);
+            });
+        }
+    }, [sendRequest, token, currentGroup, isGroupTodos, user.id]);
 
     if (isLoading) {
         return (

@@ -16,6 +16,7 @@ import SendToApprovalModal from "../components/modals/SendToApprovalModal";
 import LoadingModal from "./../components/modals/LoadingModal";
 import { AgenteTratamento } from "../../shared/models/case-helpers/case-helpers.model";
 import { usePrompt } from "../../shared/hooks/prompt-hook";
+import { Group } from "../../shared/models/access-control/group.model";
 
 const ReprovadosEditCase = () => {
     const { user, token, currentGroup, areaTratamentoDados } =

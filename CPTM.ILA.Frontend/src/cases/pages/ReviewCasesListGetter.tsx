@@ -11,7 +11,7 @@ import CasesList from "../components/CasesList";
 const ReviewCasesListGetter = () => {
     const [cases, setCases] = useState<CaseListItem[]>([]);
 
-    const { token, currentGroup } = useContext(AuthContext);
+    const { token, currentGroup, user, isGroupTodos } = useContext(AuthContext);
 
     const { isLoading, error, isWarning, sendRequest, clearError } =
         useHttpClient();
@@ -38,11 +38,38 @@ const ReviewCasesListGetter = () => {
 
             setCases(filteredCases);
         };
+        const getAllGroupsApprovedCases = async () => {
+            const responseData = await sendRequest(
+                `${process.env.REACT_APP_CONNSTR}/cases/user/${user.id}/status/false/true/false`,
+                undefined,
+                undefined,
+                { Authorization: "Bearer " + token }
+            );
+            const loadedCases: CaseListItem[] = responseData.caseListItems;
+            console.log("currentGroup: ", currentGroup);
+            console.log("loadedCases: ", loadedCases);
 
-        getApprovedCases().catch((error) => {
-            console.log(error);
-        });
-    }, [sendRequest, token, currentGroup]);
+            const filteredCases: CaseListItem[] = loadedCases.filter((c) =>
+                c.dataProxRevisao
+                    ? new Date(c.dataProxRevisao) < new Date()
+                    : true
+            );
+
+            console.log("filteredCases: ", filteredCases);
+
+            setCases(filteredCases);
+        };
+
+        if (!isGroupTodos) {
+            getApprovedCases().catch((error) => {
+                console.log(error);
+            });
+        } else {
+            getAllGroupsApprovedCases().catch((error) => {
+                console.log(error);
+            });
+        }
+    }, [sendRequest, token, currentGroup, isGroupTodos, user.id]);
 
     if (isLoading) {
         return (

@@ -8,7 +8,7 @@ using RestSharp;
 Console.WriteLine("Hello, World!");
 
 //-login
-var client = new RestClient("http://localhost:7000/ILA/api");
+var client = new RestClient("http://lgpd.cptm.info:7000/ILA/api");
 
 var loginRequest = new RestRequest("users/login", Method.Post);
 loginRequest.AddHeader("Content-Type", "application/json");
@@ -67,32 +67,32 @@ if (cases != null)
             }
 
             //-save case
-            //var saveCaseResource = "cases/" + fullCase?.Id;
-            //var saveCaseRequest = new RestRequest(saveCaseResource, Method.Post);
-            //saveCaseRequest.AddHeader("Content-Type", "application/json");
-            //saveCaseRequest.AddHeader("Authorization", "Bearer " + token);
-            //saveCaseRequest.AddBody(new CaseChange()
-            //{
-            //    Case = fullCase,
-            //    ChangeLog = new ChangeLog()
-            //    {
-            //        CaseDiff = "Update corretivo Operadores: Migrando Operador para um array. 08/08",
-            //        CaseId = fullCase?.Id,
-            //        CaseRef = fullCase?.Ref,
-            //        ChangeDate = DateTime.Now,
-            //        UserId = user?.Id,
-            //        UsernameResp = user?.Username
-            //    }
-            //});
+            var saveCaseResource = "cases/" + fullCase?.Id;
+            var saveCaseRequest = new RestRequest(saveCaseResource, Method.Post);
+            saveCaseRequest.AddHeader("Content-Type", "application/json");
+            saveCaseRequest.AddHeader("Authorization", "Bearer " + token);
+            saveCaseRequest.AddBody(new CaseChange()
+            {
+                Case = fullCase,
+                ChangeLog = new ChangeLog()
+                {
+                    CaseDiff = "Update corretivo Operadores: Migrando Operador para um array. 08/08",
+                    CaseId = fullCase?.Id,
+                    CaseRef = fullCase?.Ref,
+                    ChangeDate = DateTime.Now,
+                    UserId = user?.Id,
+                    UsernameResp = user?.Username
+                }
+            });
 
 
-            //var saveCaseResponse = await client.ExecuteAsync<SaveCaseResponse>(saveCaseRequest);
+            var saveCaseResponse = await client.ExecuteAsync<SaveCaseResponse>(saveCaseRequest);
 
-            //Console.WriteLine(saveCaseResponse.Content);
+            Console.WriteLine(saveCaseResponse.Content);
 
-            //var savedCase = saveCaseResponse.Data?.CaseToSave;
+            var savedCase = saveCaseResponse.Data?.CaseToSave;
 
-            //Console.WriteLine(savedCase?.ToString());
+            Console.WriteLine(savedCase?.ToString());
         }
     }
 //- end

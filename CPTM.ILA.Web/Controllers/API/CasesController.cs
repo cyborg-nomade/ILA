@@ -137,8 +137,8 @@ namespace CPTM.ILA.Web.Controllers.API
         }
 
         /// <summary>
-        /// Retorna todos os Casos de Uso dos grupos de acesso de um membro especificado do Comitê LGPD (Extensão Encarregado).
-        /// Endpoint disponibilizado apenas para o DPO.
+        /// Retorna todos os Casos de Uso dos grupos de acesso de um usuário específico.
+        /// Endpoint disponibilizado para todos os usuário do ILA.
         /// </summary>
         /// <param name="uid">Id do membro do comitê</param>
         /// <returns>
@@ -146,19 +146,19 @@ namespace CPTM.ILA.Web.Controllers.API
         /// Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
         /// </returns>
         [ResponseType(typeof(ApiResponseType<List<CaseListItem>>))]
-        [Route("extensao-encarregado/{uid:int}")]
+        [Route("user/{uid:int}")]
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetByExtensaoEncarregado(int uid)
+        public async Task<HttpResponseMessage> GetByUser(int uid)
         {
             if (User.Identity is ClaimsIdentity identity)
             {
                 var claims = TokenUtil.GetTokenClaims(identity);
 
-                if (!(claims.UserId == uid || claims.IsDpo || claims.IsDeveloper))
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
-                }
+                //if (!(claims.UserId == uid || claims.IsDpo || claims.IsDeveloper))
+                //{
+                //    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
+                //}
             }
 
             if (uid <= 0)
@@ -168,23 +168,23 @@ namespace CPTM.ILA.Web.Controllers.API
 
             try
             {
-                var comiteMember = await _context.Users.Where(u => u.Id == uid)
+                var user = await _context.Users.Where(u => u.Id == uid)
                     .Include(u => u.GroupAccessExpirations.Select(gae => gae.Group))
                     .SingleOrDefaultAsync();
-                if (comiteMember == null)
+                if (user == null)
                     return Request.CreateResponse(HttpStatusCode.NotFound, new
                     {
                         message = "Usuário não encontrado."
                     });
 
-                var comiteMemberGroupsIds = comiteMember.GroupAccessExpirations.Select(g => g.Group.Id)
+                var userGroupsIds = user.GroupAccessExpirations.Select(g => g.Group.Id)
                     .ToList();
 
-                var pendingCases = await _context.Cases.Include(c => c.FinalidadeTratamento)
-                    .Where(c => comiteMemberGroupsIds.Contains(c.GrupoCriadorId))
+                var casesList = await _context.Cases.Include(c => c.FinalidadeTratamento)
+                    .Where(c => userGroupsIds.Contains(c.GrupoCriadorId))
                     .ToListAsync();
 
-                var caseListItems = pendingCases.ConvertAll<CaseListItem>(CaseListItem.ReduceToListItem);
+                var caseListItems = casesList.ConvertAll<CaseListItem>(CaseListItem.ReduceToListItem);
 
                 return Request.CreateResponse(HttpStatusCode.OK,
                     new { caseListItems, message = CaseListSuccessMessage });
@@ -313,8 +313,8 @@ namespace CPTM.ILA.Web.Controllers.API
         }
 
         /// <summary>
-        /// Retorna todos os Casos de Uso dos grupos de um membro do Comitê LGPD que estejam em um certo status de aprovação.
-        /// Endpoint disponibilizado apenas para o DPO e para o membro do Comitê LGPD em questão.
+        /// Retorna todos os Casos de Uso dos grupos de um usuário que estejam em um certo status de aprovação.
+        /// Endpoint disponibilizado apenas para todos os usuários do ILA, para os seus grupos de acesso.
         /// </summary>
         /// <param name="uid">Id do membro do comitê</param>
         /// <param name="encaminhadoAprovacao">Bool definindo se os casos de uso a serem selecionados já foram encaminhados para aprovação</param>
@@ -325,20 +325,20 @@ namespace CPTM.ILA.Web.Controllers.API
         /// Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
         /// </returns>
         [ResponseType(typeof(ApiResponseType<List<CaseListItem>>))]
-        [Route("extensao-encarregado/{uid:int}/status/{encaminhadoAprovacao:bool}/{aprovado:bool}/{reprovado:bool}")]
+        [Route("user/{uid:int}/status/{encaminhadoAprovacao:bool}/{aprovado:bool}/{reprovado:bool}")]
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetByExtensaoEncarregadoByStatus(int uid, bool encaminhadoAprovacao,
+        public async Task<HttpResponseMessage> GetByUserByStatus(int uid, bool encaminhadoAprovacao,
             bool aprovado, bool reprovado)
         {
             if (User.Identity is ClaimsIdentity identity)
             {
                 var claims = TokenUtil.GetTokenClaims(identity);
 
-                if (!(claims.UserId == uid || claims.IsDpo || claims.IsDeveloper))
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
-                }
+                //if (!(claims.UserId == uid || claims.IsDpo || claims.IsDeveloper))
+                //{
+                //    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
+                //}
             }
 
             if (uid <= 0)
@@ -348,20 +348,20 @@ namespace CPTM.ILA.Web.Controllers.API
 
             try
             {
-                var comiteMember = await _context.Users.Where(u => u.Id == uid && u.IsComite)
+                var user = await _context.Users.Where(u => u.Id == uid)
                     .Include(u => u.GroupAccessExpirations.Select(gae => gae.Group))
                     .SingleOrDefaultAsync();
-                if (comiteMember == null)
+                if (user == null)
                     return Request.CreateResponse(HttpStatusCode.NotFound, new
                     {
                         message = "Usuário requisitado não encontrado."
                     });
 
-                var comiteMemberGroupsIds = comiteMember.GroupAccessExpirations.Select(g => g.Group.Id)
+                var userGroupsIds = user.GroupAccessExpirations.Select(g => g.Group.Id)
                     .ToList();
 
                 var filteredCases = await _context.Cases.Include(c => c.FinalidadeTratamento)
-                    .Where(c => comiteMemberGroupsIds.Contains(c.GrupoCriadorId) &&
+                    .Where(c => userGroupsIds.Contains(c.GrupoCriadorId) &&
                                 c.Aprovado == aprovado &&
                                 c.EncaminhadoAprovacao == encaminhadoAprovacao &&
                                 c.Reprovado == reprovado)
@@ -383,7 +383,7 @@ namespace CPTM.ILA.Web.Controllers.API
 
         /// <summary>
         /// Retorna os totais de Casos de Uso por grupo de um usuário.
-        /// Endpoint disponibilizado para os membros do Comitê LGPD, com cada membro tendo acesso apenas a seus grupos.
+        /// Endpoint disponibilizado todos os usuários do ILA, com cada usuário tendo acesso apenas a seus grupos.
         /// </summary>
         /// <param name="uid">Id do usuário selecionado</param>
         /// <returns>
@@ -401,10 +401,10 @@ namespace CPTM.ILA.Web.Controllers.API
             {
                 var claims = TokenUtil.GetTokenClaims(identity);
 
-                if (!(claims.IsComite || claims.IsDeveloper))
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
-                }
+                //if (!(claims.IsComite || claims.IsDeveloper))
+                //{
+                //    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
+                //}
             }
 
             try
@@ -777,7 +777,7 @@ namespace CPTM.ILA.Web.Controllers.API
 
         /// <summary>
         /// Retorna os totais dos Casos de Uso dos grupos de acesso de um Mebro do Comitê por status de aprovação.
-        /// Endpoint disponibilizado apenas para o DPO e para o membro do comitê em questão.
+        /// Endpoint disponibilizado para todos os usuários do ILA, com cada usuário tendo acesso apenas aos seus grupos.
         /// </summary>
         /// <param name="uid">Id do membro do Comitê especificado</param>
         /// <returns>
@@ -786,37 +786,37 @@ namespace CPTM.ILA.Web.Controllers.API
         /// Em caso de erro, retorna um objeto JSON com uma chave "message" onde se encontra a mensagem de erro.
         /// </returns>
         [ResponseType(typeof(TotalsResponseType<StatusTotals>))]
-        [Route("extensao-encarregado/{uid:int}/status/totals")]
+        [Route("user/{uid:int}/status/totals")]
         [Authorize]
         [HttpGet]
-        public async Task<HttpResponseMessage> GetTotalsByExtensaoEncarregadoByStatus(int uid)
+        public async Task<HttpResponseMessage> GetTotalsByUserGroupsByStatus(int uid)
         {
             if (User.Identity is ClaimsIdentity identity)
             {
                 var claims = TokenUtil.GetTokenClaims(identity);
 
-                if (!(claims.UserId == uid || claims.IsDpo || claims.IsDeveloper))
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
-                }
+                //if (!(claims.UserId == uid || claims.IsDpo || claims.IsDeveloper))
+                //{
+                //    return Request.CreateResponse(HttpStatusCode.NotFound, new { message = "Recurso não encontrado" });
+                //}
             }
 
             try
             {
-                var comiteMember = await _context.Users.Where(u => u.Id == uid)
+                var user = await _context.Users.Where(u => u.Id == uid)
                     .Include(u => u.GroupAccessExpirations.Select(gae => gae.Group))
                     .SingleOrDefaultAsync();
-                if (comiteMember == null)
+                if (user == null)
                     return Request.CreateResponse(HttpStatusCode.NotFound, new
                     {
                         message = "Membro do comitê buscado não foi encontrado."
                     });
 
-                var comiteMemberGroupsIds = comiteMember.GroupAccessExpirations.Select(g => g.Group.Id)
+                var userGroupsIds = user.GroupAccessExpirations.Select(g => g.Group.Id)
                     .ToList();
 
 
-                var totals = await _context.Cases.Where(c => comiteMemberGroupsIds.Contains(c.GrupoCriadorId))
+                var totals = await _context.Cases.Where(c => userGroupsIds.Contains(c.GrupoCriadorId))
                     .GroupBy(c => new
                     {
                         c.Aprovado,
@@ -845,7 +845,7 @@ namespace CPTM.ILA.Web.Controllers.API
                     })
                     .ToListAsync();
 
-                var totalQuantity = await _context.Cases.Where(c => comiteMemberGroupsIds.Contains(c.GrupoCriadorId))
+                var totalQuantity = await _context.Cases.Where(c => userGroupsIds.Contains(c.GrupoCriadorId))
                     .CountAsync();
 
                 return Request.CreateResponse(HttpStatusCode.OK,

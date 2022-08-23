@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useNavigate } from "react-router-dom";
 import PendingCasesCounter from "./PendingCasesCounter";
+import { Group } from "../../shared/models/access-control/group.model";
 
 const GroupSelector = () => {
     const { changeGroup, user, currentGroup } = useContext(AuthContext);
@@ -29,28 +30,26 @@ const GroupSelector = () => {
                         vertical
                         className="d-block align-content-center text-center"
                     >
-                        {user.isComite && (
-                            <Button
-                                key={"TODOS"}
-                                variant="outline-secondary"
-                                onClick={() =>
-                                    changeGroup({
-                                        id: 0,
-                                        nome: "TODOS",
-                                        users: [],
-                                    })
-                                }
-                                active={currentGroup.nome === "TODOS"}
-                            >
-                                TODOS
-                            </Button>
-                        )}
-                        {user.groups.map((g) => (
+                        <Button
+                            key={"TODOS"}
+                            variant="outline-secondary"
+                            onClick={() =>
+                                changeGroup({
+                                    id: 0,
+                                    nome: "TODOS",
+                                    users: [],
+                                })
+                            }
+                            active={currentGroup.nome === "TODOS"}
+                        >
+                            TODOS
+                        </Button>
+                        {user.groups.map((g: Group) => (
                             <Button
                                 key={g.id}
                                 variant="outline-secondary"
                                 onClick={() => changeGroup(g)}
-                                active={g === currentGroup}
+                                active={g.nome === currentGroup.nome}
                             >
                                 {g.nome}
                                 {user.isComite && (

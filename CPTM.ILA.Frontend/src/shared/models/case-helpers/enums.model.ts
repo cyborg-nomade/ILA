@@ -114,13 +114,13 @@ export enum tipoRiscoPrivacidade {
 }
 
 export enum tipoTempoRetencao {
-    ano1 = "1 ano",
-    ano5 = "5 anos",
-    ano10 = "10 anos",
-    ano15 = "15 anos",
-    ano20 = "20 anos",
-    ano30 = "30 anos",
-    maisQue30 = "Mais que 30 anos",
+    ano1 = "até 1 ano",
+    ano5 = "mais que 1 até 5 anos",
+    ano10 = "mais que 5 até 10 anos",
+    ano15 = "mais que 10 até 15 anos",
+    ano20 = "mais que 15 até 20 anos",
+    ano30 = "mais que 20 até 30 anos",
+    maisQue30 = "mais que 30 anos",
     na = "",
 }
 

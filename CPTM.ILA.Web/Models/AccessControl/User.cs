@@ -32,6 +32,25 @@ namespace CPTM.ILA.Web.Models.AccessControl
 
         public static UserDto ReduceToUserDto(User user)
         {
+            if (user.Username == "LGPDCOMUM")
+            {
+                var lgpdComumUserDto = new UserDto()
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    IsComite = user.IsComite,
+                    IsDPO = user.IsDPO,
+                    IsSystem = user.IsSystem,
+                    OriginGroup = user.OriginGroup,
+                    Groups = user.GroupAccessExpirations.OrderBy(gae => gae.Group.Nome)
+                        .Select(gae => gae.Group)
+                        .ToList(),
+                    Nome = @"LGPDCOMUM"
+                };
+
+                return lgpdComumUserDto;
+            }
+
             var userDto = new UserDto()
             {
                 Id = user.Id,

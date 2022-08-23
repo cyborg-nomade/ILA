@@ -24,6 +24,8 @@ const UsersMgmtCockpit = () => {
     const [userSearch, setUserSearch] = useState("");
     const [message, setMessage] = useState("");
 
+    let navigate = useNavigate();
+
     useEffect(() => {
         const getAllUsers = async () => {
             const responseData = await sendRequest(
@@ -109,6 +111,10 @@ const UsersMgmtCockpit = () => {
         console.log("show users: ", showUsers);
     };
 
+    const handleEditGroups = (uid: number) => {
+        navigate(`/dpo/alter-groups/${uid}`);
+    };
+
     const clearMessage = () => {
         setMessage("");
     };
@@ -166,7 +172,14 @@ const UsersMgmtCockpit = () => {
                             <ListGroup.Item className="p-0" key={u.id}>
                                 <InputGroup>
                                     <InputGroup.Text key={u.id} as={Col} lg={9}>
-                                        <div>{u.nome}</div>
+                                        <div
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() =>
+                                                handleEditGroups(u.id)
+                                            }
+                                        >
+                                            {u.nome}
+                                        </div>
                                     </InputGroup.Text>
                                     <Col lg={3} className="m-0">
                                         <Button

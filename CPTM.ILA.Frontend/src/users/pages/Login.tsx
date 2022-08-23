@@ -55,7 +55,7 @@ const Login = () => {
                 receivedUser,
                 isDeveloper,
                 responseData.token,
-                receivedUser.originGroup,
+                { id: 0, nome: "TODOS", users: [] },
                 { id: 0, nome: "TODOS" },
                 receivedAreaTratamentoDados
             );

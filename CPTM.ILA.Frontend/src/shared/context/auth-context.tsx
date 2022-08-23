@@ -28,4 +28,5 @@ export const AuthContext = createContext({
     logout: () => {},
     changeGroup: (g: Group) => {},
     changeComiteMember: (cm: ComiteMember) => {},
+    isGroupTodos: false,
 });

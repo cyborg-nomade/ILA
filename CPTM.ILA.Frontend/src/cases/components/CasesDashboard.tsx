@@ -11,7 +11,6 @@ import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
-import { CategoricalChartState } from "recharts/types/chart/generateCategoricalChart";
 
 type PieChartData = {
     name: string;
@@ -89,7 +88,7 @@ const CasesDashboard = () => {
             }
         };
 
-        const getComiteCasesTotals = async () => {
+        const getUserGroupCasesTotals = async () => {
             const responseData = await sendRequest(
                 `${process.env.REACT_APP_CONNSTR}/cases/user/${user.id}/group/totals`,
                 undefined,
@@ -124,7 +123,7 @@ const CasesDashboard = () => {
 
         const getDpoCasesTotals = async () => {
             const responseData = await sendRequest(
-                `${process.env.REACT_APP_CONNSTR}/cases/extensao-encarregado/${currentComiteMember.id}/status/totals`,
+                `${process.env.REACT_APP_CONNSTR}/cases/user/${currentComiteMember.id}/status/totals`,
                 undefined,
                 undefined,
                 {
@@ -192,12 +191,12 @@ const CasesDashboard = () => {
             getDpoCasesTotals().catch((error) => {
                 console.log(error);
             });
-        } else if (user.isComite && currentGroup.nome === "TODOS") {
-            getComiteCasesTotals().catch((error) => {
-                console.log(error);
-            });
         } else if (user.isDPO && currentComiteMember.nome === "TODOS") {
             getDpoAllComiteMembersTotals().catch((error) => {
+                console.log(error);
+            });
+        } else if (currentGroup.nome === "TODOS") {
+            getUserGroupCasesTotals().catch((error) => {
                 console.log(error);
             });
         } else {

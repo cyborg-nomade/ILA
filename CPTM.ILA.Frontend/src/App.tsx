@@ -9,7 +9,7 @@ import { useAuth } from "./shared/hooks/auth-hook";
 import MainHeader from "./shared/components/nav/MainHeader";
 import "./App.css";
 import Footer from "./shared/components/footer/Footer";
-import CMGroupMgmtCockpit from "./access-requests/pages/CMGroupMgmtCockpit";
+import UserGroupMgmtCockpit from "./access-requests/pages/UserGroupMgmtCockpit";
 import ReprovadosCaseListGetter from "./cases/pages/ReprovadosCaseListGetter";
 import ReprovadosEditCase from "./cases/pages/ReprovadosEditCase";
 import DpoInventarioCasesListGetter from "./users/pages/DpoInventarioCasesListGetter";
@@ -62,8 +62,8 @@ const DpoPage = React.lazy(() => import("./users/pages/DpoPage"));
 const DpoPendingCasesListGetter = React.lazy(
     () => import("./users/pages/DpoPendingCasesListGetter")
 );
-const AlterComiteMemberCockpit = React.lazy(
-    () => import("./access-requests/pages/AlterComiteMemberCockpit")
+const ComiteMemberMgmtCockpit = React.lazy(
+    () => import("./access-requests/pages/ComiteMemberMgmtCockpit")
 );
 const DpoHomePage = React.lazy(() => import("./users/pages/DpoHomePage"));
 const DpoAllCasesListGetter = React.lazy(
@@ -83,6 +83,7 @@ const App = () => {
         logout,
         changeGroup,
         changeComiteMember,
+        isGroupTodos,
     } = useAuth();
 
     let routes;
@@ -215,11 +216,11 @@ const App = () => {
                 <Route path="/dpo/alter-users" element={<UsersMgmtCockpit />} />
                 <Route
                     path="/dpo/alter-comite-members"
-                    element={<AlterComiteMemberCockpit />}
+                    element={<ComiteMemberMgmtCockpit />}
                 />
                 <Route
-                    path="/dpo/alter-cm-groups/:cmid"
-                    element={<CMGroupMgmtCockpit />}
+                    path="/dpo/alter-groups/:uid"
+                    element={<UserGroupMgmtCockpit />}
                 />
                 <Route path="/" element={<Navigate replace to="../dpo/" />} />
                 <Route path="/*" element={<Navigate replace to="../dpo/" />} />
@@ -242,6 +243,7 @@ const App = () => {
                 logout,
                 changeGroup,
                 changeComiteMember,
+                isGroupTodos,
             }}
         >
             <MainHeader />
